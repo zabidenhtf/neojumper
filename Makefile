@@ -1,4 +1,4 @@
-TARGETS = src/main.cpp src/gfx.cpp src/system.cpp src/model.cpp src/game/timer.cpp
+TARGETS = src/main.cpp src/gfx.cpp src/system.cpp src/game/timer.cpp
 GLFW_INCLUDE = -Ilib/glfw/include
 GLFW_LIB = -Llib/glfw/lib -lglfw3 -lgdi32 -lopengl32
 LODE_PNG_INCLUDE = -Ilib/png
