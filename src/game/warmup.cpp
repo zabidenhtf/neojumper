@@ -3,6 +3,10 @@
 
 warmup::warmup(){
     write_dbg("WARMUP","Timer initialisated");
+    gfx::load_texture("assets/ui/digit1.png", digit1);
+    gfx::load_texture("assets/ui/digit2.png", digit2);
+    gfx::load_texture("assets/ui/digit3.png", digit3);
+    gfx::load_texture("assets/ui/message_go.png", message_go);
     reset();
 }
 
@@ -29,22 +33,24 @@ void warmup::render(){
     gfx::viewport(0,0,screen_width, screen_height);
     gfx::mapscreen(0,0, width,300);
 
-    // TODO: Make images like 3, 2, 1, GO!
     // TODO: Make cool animation
+    gfx::set_color(1,1,1,1);
+
     if (0 < time && time < timer_time/4){
-        gfx::set_color(1,0,0,1);
+        gfx::enable_texture(digit3);
     }
     else if (timer_time/4 < time && time < timer_time/2){
-        gfx::set_color(1,1,0,1);
+        gfx::enable_texture(digit2);
     }
     else if (timer_time/2 < time && time < timer_time/1.5){
-        gfx::set_color(0,1,0,1);
+        gfx::enable_texture(digit1);
     }
     else{
-        gfx::set_color(1,0,1,1);
+        gfx::enable_texture(message_go);
     }
 
     gfx::begin_quads();
     gfx::draw_2d_quad(width/2-150/2,150-150/2,150,150);
+    gfx::disable_texture();
     gfx::end();
 }

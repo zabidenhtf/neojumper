@@ -1,5 +1,6 @@
 #include "system.hpp"
 #include "interface.hpp"
+#include "lodepng/lodepng.h"
 
 using namespace std;
 
@@ -55,10 +56,53 @@ void gfx::set_color(float r, float g, float b, float a){
 
 // TODO: add 3D stuff
 void gfx::draw_2d_quad(int x, int y, int w, int h){
-    glVertex2f(x,y);
-    glVertex2f(x + w,y);
-    glVertex2f(x + w,y + h);
-    glVertex2f(x,y + h);
+    glTexCoord2f(0.f, 0.f); glVertex2f(x,     y);
+    glTexCoord2f(1.f, 0.f); glVertex2f(x + w, y);
+    glTexCoord2f(1.f, 1.f); glVertex2f(x + w, y + h);
+    glTexCoord2f(0.f, 1.f); glVertex2f(x,     y + h);
+}
+
+bool gfx::load_texture(const string &filename, texture &txture)
+{
+    std::vector<unsigned char> image;
+    unsigned int w, h;
+    unsigned error = lodepng::decode(image, w, h, filename.c_str()); // decompiling with
+    // if image not found
+
+    txture.width  = (int)w;
+    txture.height = (int)h;
+
+    if (error)
+    {
+        string buffer = "Failed to open " + filename + " image";
+        write_dbg("GFX", buffer);
+        return false;
+    }
+    else{
+        string buffer = "Opened " + filename + " image";
+        write_dbg("GFX", buffer);
+    }
+
+    glGenTextures(1, &txture.texture_id);
+    glBindTexture(GL_TEXTURE_2D, txture.texture_id);
+
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Maybe im change to GL_LINEAR_NEARLEST_LINEAR
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, txture.width, txture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data());
+
+    return true;
+}
+
+void gfx::enable_texture(texture &txture){
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, txture.texture_id);
+}
+
+void gfx::disable_texture(){
+    glDisable(GL_TEXTURE_2D);
 }
 
 void gfx::end(){

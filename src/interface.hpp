@@ -1,5 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <vector>
+#include <string>
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
@@ -9,6 +10,12 @@ static int screen_width = 1200;
 static int screen_height = 600;
 
 //vector<char> key_buffer; // keys buffer, it need to save keys
+
+struct texture{
+    GLuint texture_id;
+    int width;
+    int height;
+};
 
 // Interface GFX
 namespace gfx
@@ -24,6 +31,9 @@ namespace gfx
     void begin_quads();
     void set_color(float r, float g, float b, float a);
     void draw_2d_quad(int x, int y, int w, int h);
+    bool load_texture(const string &filename, texture &txture);
+    void enable_texture(texture &txture);
+    void disable_texture();
     void end();
     float screen_aspect();
     void kill();
