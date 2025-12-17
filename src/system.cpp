@@ -1,6 +1,6 @@
 #include "system.hpp"
 #include <iostream>
-#include <cstdlib>
+#include <random>
 
 void write(string msg){
     cout << msg << "\n";
@@ -11,5 +11,7 @@ void write_dbg(string about, string msg){
 }
 
 int randint(int min, int max){
-    return (rand() % max-min)+min;
+    static mt19937 rng(random_device{}());
+    uniform_int_distribution<int> dist(min, max);
+    return dist(rng);
 }

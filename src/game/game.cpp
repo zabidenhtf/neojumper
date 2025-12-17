@@ -1,11 +1,36 @@
 #include "game.hpp"
 
+// To generate dance
+DANCE_MOVEMENTS movements_list[] = {
+JUMP,
+KICK_LEFT,
+KICK_RIGHT,
+FLIP,
+SHUFFLE_FORWARD,
+SHUFFLE_BACKWARD
+};
+
 dance_sequence game_core::generate_dance(DANCE_LEVELS level){
     dance_sequence buffer;
 
     for (int i = 0; i < level; i++){
         DANCE_MOVEMENTS movement;
-        movement = JUMP;
+
+        if (buffer.movements.empty()){
+            movement = movements_list[randint(0,5)];
+        }
+        else if (buffer.movements.back() == JUMP){
+            movement = movements_list[randint(0,1)];
+        }
+        else if (buffer.movements.back() == FLIP){
+            movement = movements_list[randint(0,5)];
+        }
+        else if (buffer.movements.back() == KICK_LEFT || buffer.movements.back() == KICK_RIGHT){
+            movement = movements_list[randint(4,5)];
+        }
+        else if (buffer.movements.back() == SHUFFLE_BACKWARD || buffer.movements.back() == SHUFFLE_FORWARD){
+            movement = movements_list[FLIP];
+        }
 
         // Debug output
         switch (movement){
