@@ -20,16 +20,20 @@ dance_sequence game_core::generate_dance(DANCE_LEVELS level){
             movement = movements_list[randint(0,5)];
         }
         else if (buffer.movements.back() == JUMP){
-            movement = movements_list[randint(0,1)];
+            movement = movements_list[FLIP];
         }
         else if (buffer.movements.back() == FLIP){
-            movement = movements_list[randint(0,5)];
+            DANCE_MOVEMENTS buffer = movements_list[randint(0,5)];
+            while (buffer == FLIP){
+                buffer = movements_list[randint(0,5)];
+            }
+            movement = buffer;
         }
         else if (buffer.movements.back() == KICK_LEFT || buffer.movements.back() == KICK_RIGHT){
-            movement = movements_list[randint(4,5)];
+            movement = movements_list[randint(0,5)];
         }
         else if (buffer.movements.back() == SHUFFLE_BACKWARD || buffer.movements.back() == SHUFFLE_FORWARD){
-            movement = movements_list[FLIP];
+            movement = movements_list[randint(1,2)];
         }
 
         // Debug output
