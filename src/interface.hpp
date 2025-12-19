@@ -31,7 +31,7 @@ namespace gfx
     void begin_quads();
     void set_color(float r, float g, float b, float a);
     void draw_2d_quad(int x, int y, int w, int h);
-    bool load_texture(const string &filename, texture &txture);
+    texture load_texture(const string &filename);
     void enable_texture(texture &txture);
     void disable_texture();
     void end();

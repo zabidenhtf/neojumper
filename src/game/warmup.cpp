@@ -1,14 +1,10 @@
 #include "warmup.hpp"
 //#include <iostream>
 #include "game.hpp"
+#include "../data.hpp"
 
 warmup::warmup(){
     write_dbg("WARMUP","Timer initialisated");
-    gfx::load_texture("assets/ui/digit1.png", digit1);
-    gfx::load_texture("assets/ui/digit2.png", digit2);
-    gfx::load_texture("assets/ui/digit3.png", digit3);
-    gfx::load_texture("assets/ui/message_go.png", message_go);
-
     reset();
 }
 
@@ -41,16 +37,16 @@ void warmup::render(){
     gfx::set_color(1,1,1,1);
 
     if (0 < time && time < timer_time/4){
-        gfx::enable_texture(digit3);
+        gfx::enable_texture(data2d::textures[DIGIT3]);
     }
     else if (timer_time/4 < time && time < timer_time/2){
-        gfx::enable_texture(digit2);
+        gfx::enable_texture(data2d::textures[DIGIT2]);
     }
     else if (timer_time/2 < time && time < timer_time/1.5){
-        gfx::enable_texture(digit1);
+        gfx::enable_texture(data2d::textures[DIGIT1]);
     }
     else{
-        gfx::enable_texture(message_go);
+        gfx::enable_texture(data2d::textures[MESSAGE_GO]);
     }
 
     gfx::begin_quads();

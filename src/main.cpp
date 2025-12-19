@@ -1,4 +1,5 @@
 #include "interface.hpp"
+#include "data.hpp"
 #include "game/game.hpp"
 #include <chrono>
 #include <thread>
@@ -9,10 +10,28 @@ double last_time = glfwGetTime();
 
 game_core* game = nullptr;
 
+namespace data2d {
+    vector<string> textures_paths;
+    vector<texture> textures;
+}
+
 using namespace std;
+
+void load_textures(){
+    for (int i = 0; i<data2d::textures_paths.size(); i++){
+        data2d::textures.push_back(gfx::load_texture(data2d::textures_paths[i]));
+    }
+}
 
 int main(){
     gfx::init();
+    // load textures
+    data2d::textures_paths.push_back("assets/ui/digit1.png");
+    data2d::textures_paths.push_back("assets/ui/digit2.png");
+    data2d::textures_paths.push_back("assets/ui/digit3.png");
+    data2d::textures_paths.push_back("assets/ui/message_go.png");
+
+    load_textures();
 
     game = new game_core();
 

@@ -62,8 +62,9 @@ void gfx::draw_2d_quad(int x, int y, int w, int h){
     glTexCoord2f(0.f, 1.f); glVertex2f(x,     y + h);
 }
 
-bool gfx::load_texture(const string &filename, texture &txture)
+texture gfx::load_texture(const string &filename)
 {
+    texture txture;
     std::vector<unsigned char> image;
     unsigned int w, h;
     unsigned error = lodepng::decode(image, w, h, filename.c_str()); // decompiling with
@@ -76,7 +77,6 @@ bool gfx::load_texture(const string &filename, texture &txture)
     {
         string buffer = "Failed to open " + filename + " image";
         write_dbg("GFX", buffer);
-        return false;
     }
     else{
         string buffer = "Opened " + filename + " image";
@@ -93,7 +93,7 @@ bool gfx::load_texture(const string &filename, texture &txture)
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, txture.width, txture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data());
 
-    return true;
+    return txture;
 }
 
 void gfx::enable_texture(texture &txture){
