@@ -4,6 +4,7 @@
 #include <chrono>
 #include <thread>
 
+// Target fps and another configs
 const float FPS = 60.00f;
 const float frame_time = 1.0 / FPS;
 double last_time = glfwGetTime();
@@ -25,11 +26,18 @@ void load_textures(){
 
 int main(){
     gfx::init();
-    // load textures
+    // Load textures
     data2d::textures_paths.push_back("assets/ui/digit1.png");
     data2d::textures_paths.push_back("assets/ui/digit2.png");
     data2d::textures_paths.push_back("assets/ui/digit3.png");
     data2d::textures_paths.push_back("assets/ui/message_go.png");
+    // Action buttons
+    data2d::textures_paths.push_back("assets/ui/button_jump.png");
+    data2d::textures_paths.push_back("assets/ui/button_flip.png");
+    data2d::textures_paths.push_back("assets/ui/button_kick_left.png");
+    data2d::textures_paths.push_back("assets/ui/button_kick_right.png");
+    data2d::textures_paths.push_back("assets/ui/button_shuffle_forward.png");
+    data2d::textures_paths.push_back("assets/ui/button_shuffle_backward.png");
 
     load_textures();
 
