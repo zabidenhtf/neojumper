@@ -36,21 +36,49 @@ void warmup::render(){
     // TODO: Make cool animation
     gfx::set_color(1,1,1,1);
 
+    int state;
+
     if (0 < time && time < timer_time/4){
-        gfx::enable_texture(data2d::textures[DIGIT3]);
+        state = 4;
     }
     else if (timer_time/4 < time && time < timer_time/2){
-        gfx::enable_texture(data2d::textures[DIGIT2]);
+        state = 3;
     }
     else if (timer_time/2 < time && time < timer_time/1.5){
-        gfx::enable_texture(data2d::textures[DIGIT1]);
+        state = 2;
     }
     else{
-        gfx::enable_texture(data2d::textures[MESSAGE_GO]);
+        state = 1;
     }
 
-    gfx::begin_quads();
-    gfx::draw_2d_quad(width/2-150/2,150-150/2,150,150);
-    gfx::disable_texture();
-    gfx::end();
+    switch (state){
+    case 4:
+        gfx::enable_texture(data2d::textures[DIGIT3]);
+        gfx::begin_quads();
+        gfx::draw_2d_quad(width/2-150/2,150-150/2,150,150);
+        gfx::disable_texture();
+        gfx::end();
+        break;
+    case 3:
+        gfx::enable_texture(data2d::textures[DIGIT2]);
+        gfx::begin_quads();
+        gfx::draw_2d_quad(width/2-150/2,150-150/2,150,150);
+        gfx::disable_texture();
+        gfx::end();
+        break;
+    case 2:
+        gfx::enable_texture(data2d::textures[DIGIT1]);
+        gfx::begin_quads();
+        gfx::draw_2d_quad(width/2-150/2,150-150/2,150,150);
+        gfx::disable_texture();
+        gfx::end();
+        break;
+    case 1:
+        gfx::enable_texture(data2d::textures[MESSAGE_GO]);
+        gfx::begin_quads();
+        gfx::draw_2d_quad(width/2-300/2,150-150/2,300,150); // fixed size
+        gfx::disable_texture();
+        gfx::end();
+        break;
+    }
 }
