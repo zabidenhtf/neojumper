@@ -27,6 +27,7 @@ using namespace std;
 
 int main(){
     gfx::init();
+    input::init(gfx::get_window());
     // Load textures
     data2d::textures_paths.push_back("logo.png");
     data2d::textures_paths.push_back("ui/digit1.png");

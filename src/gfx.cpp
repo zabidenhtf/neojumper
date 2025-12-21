@@ -34,6 +34,9 @@ void gfx::init(){
         write_dbg("GFX", "Failed to create window");
     }
     glfwMakeContextCurrent(root);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void gfx::swap(){
@@ -68,6 +71,7 @@ texture gfx::load_texture(const string &filename)
     std::vector<unsigned char> image;
     unsigned int w, h;
     unsigned error = lodepng::decode(image, w, h, filename.c_str()); // decompiling with
+
     // if image not found
 
     txture.width  = (int)w;

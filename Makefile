@@ -1,4 +1,4 @@
-TARGETS = src/main.cpp src/gfx.cpp src/system.cpp src/game/warmup.cpp src/game/game.cpp src/game/controls.cpp
+TARGETS = src/main.cpp src/gfx.cpp src/system.cpp src/game/warmup.cpp src/game/game.cpp src/game/controls.cpp src/input.cpp
 GLFW_INCLUDE = -Ilib/glfw/include
 GLFW_LIB_WINDOWS = -Llib/glfw/lib -lglfw3 -lgdi32 -lopengl32
 GLFW_LIB_LINUX = -lglfw -lGL -lGLU -lX11 -lpthread -lrt -l dl

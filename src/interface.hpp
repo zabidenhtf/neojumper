@@ -9,7 +9,7 @@ using namespace std;
 static int screen_width = 1200;
 static int screen_height = 600;
 
-//vector<char> key_buffer; // keys buffer, it need to save keys
+extern vector<int> key_buffer; // keys buffer, it need to save keys
 
 struct texture{
     GLuint texture_id;
@@ -37,6 +37,12 @@ namespace gfx
     void end();
     float screen_aspect();
     void kill();
+}
+
+namespace input
+{
+    void callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    void init(GLFWwindow* window);
 }
 
 #endif // INTERFACE_H
