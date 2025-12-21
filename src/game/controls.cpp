@@ -59,4 +59,10 @@ void controls::render(){
         gfx::end();
         gfx::disable_texture();
     }
+    // helpfull arrow
+    gfx::enable_texture(data2d::textures[BUTTON_ARROW]);
+    gfx::begin_quads();
+    gfx::draw_2d_quad(size/8, 300-size*1.5, size/4, size/4);
+    gfx::end();
+    gfx::disable_texture();
 }

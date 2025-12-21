@@ -14,32 +14,34 @@ game_core* game = nullptr;
 namespace data2d {
     vector<string> textures_paths;
     vector<texture> textures;
+    void load_textures(){
+        for (int i = 0; i<data2d::textures_paths.size(); i++){
+            data2d::textures.push_back(gfx::load_texture("assets/" + data2d::textures_paths[i]));
+        }
+    }
 }
 
 using namespace std;
 
-void load_textures(){
-    for (int i = 0; i<data2d::textures_paths.size(); i++){
-        data2d::textures.push_back(gfx::load_texture(data2d::textures_paths[i]));
-    }
-}
+
 
 int main(){
     gfx::init();
     // Load textures
-    data2d::textures_paths.push_back("assets/ui/digit1.png");
-    data2d::textures_paths.push_back("assets/ui/digit2.png");
-    data2d::textures_paths.push_back("assets/ui/digit3.png");
-    data2d::textures_paths.push_back("assets/ui/message_go.png");
+    data2d::textures_paths.push_back("logo.png");
+    data2d::textures_paths.push_back("ui/digit1.png");
+    data2d::textures_paths.push_back("ui/digit2.png");
+    data2d::textures_paths.push_back("ui/digit3.png");
+    data2d::textures_paths.push_back("ui/message_go.png");
     // Action buttons
-    data2d::textures_paths.push_back("assets/ui/button_jump.png");
-    data2d::textures_paths.push_back("assets/ui/button_flip.png");
-    data2d::textures_paths.push_back("assets/ui/button_kick_left.png");
-    data2d::textures_paths.push_back("assets/ui/button_kick_right.png");
-    data2d::textures_paths.push_back("assets/ui/button_shuffle_forward.png");
-    data2d::textures_paths.push_back("assets/ui/button_shuffle_backward.png");
-
-    load_textures();
+    data2d::textures_paths.push_back("ui/button_jump.png");
+    data2d::textures_paths.push_back("ui/button_flip.png");
+    data2d::textures_paths.push_back("ui/button_kick_left.png");
+    data2d::textures_paths.push_back("ui/button_kick_right.png");
+    data2d::textures_paths.push_back("ui/button_shuffle_forward.png");
+    data2d::textures_paths.push_back("ui/button_shuffle_backward.png");
+    data2d::textures_paths.push_back("ui/button_arrow.png");
+    data2d::load_textures();
 
     game = new game_core();
 
