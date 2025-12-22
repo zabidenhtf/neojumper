@@ -72,7 +72,7 @@ void controls::render(){
             break;
         }
         gfx::begin_quads();
-        gfx::draw_2d_quad(i*(size+distance) - (time*(size+distance)/speed), 300-size, size, size);
+        gfx::draw_2d_quad((i*(size+distance) - (time*(size+distance)/speed)) + size/2, 300-size, size, size);
         gfx::end();
         gfx::disable_texture();
     }

@@ -15,7 +15,7 @@ public:
 
     double time=0;
     double step_time=0;
-    double speed = 2;
+    double speed = 0.5;
     int step = 0;
 private:
     int size = screen_height/12;

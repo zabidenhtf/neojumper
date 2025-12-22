@@ -29,7 +29,7 @@ extern int dance_binds[]; //binds
 struct dance_sequence{
 vector<DANCE_MOVEMENTS> movements;
 DANCE_LEVELS level;
-float beat_speed; // Speed of movements
+double beat_speed = 1; // Speed of movements
 };
 
 // main core, there is all game content

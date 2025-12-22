@@ -78,11 +78,13 @@ dance_sequence game_core::generate_dance(DANCE_LEVELS level){
 
 game_core::game_core(){
     write_dbg("GAME", "game launched");
+
+    now_dance = generate_dance(levels_list[randint(0,2)]);
+
     warmup_component = new warmup();
     controls_component = new controls();
 
-    now_dance = generate_dance(EASY);
-
+    controls_component->speed = now_dance.beat_speed;
     warmup_component->timer_time = WARMUP_TIME;
 }
 
