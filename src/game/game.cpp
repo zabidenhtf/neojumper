@@ -15,10 +15,10 @@ EASY,
 NORMAL,
 HARD
 };
-int dance_binds[] = {GLFW_KEY_E,
+int dance_binds[] = {GLFW_KEY_SPACE,
                      GLFW_KEY_A,
                      GLFW_KEY_D,
-                     GLFW_KEY_Q,
+                     GLFW_KEY_E,
                      GLFW_KEY_W,
                      GLFW_KEY_S}; // Binds
 
