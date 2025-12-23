@@ -1,5 +1,4 @@
 #include "controls.hpp"
-#include <iostream>
 #include "game.hpp"
 #include "../data.hpp"
 
@@ -49,7 +48,25 @@ void controls::render(){
 
     gfx::set_color(1,1,1,1);
 
-    // Making many buttons of dance, and animate it
+    // pretty line
+    for (int i = 0; i<screen_width/64; i++){
+            gfx::enable_texture(data2d::textures[BUTTONS_LINE]);
+        gfx::begin_quads();
+        gfx::draw_2d_quad(i*64, 300-size/2-8, 64, 16);
+        gfx::end();
+        gfx::disable_texture();
+    }
+
+    // Small animation
+    if (step == 0){
+        gfx::set_color(1,1,1,step_time * 4);
+    }
+    else{
+        gfx::set_color(1,1,1,1);
+    }
+
+
+    // Making many buttons of dance, and then animate it
     for (int i = 0; i < game->now_dance.level; i++){
         switch (game->now_dance.movements[i]){
         case JUMP:

@@ -44,7 +44,7 @@ void gfx::swap(){
     glfwSwapBuffers(root);
 }
 
-void gfx::clear(float r, float g, float b){
+void gfx::clear(double r, double g, double b){
     glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
@@ -53,12 +53,12 @@ void gfx::begin_quads(){
     glBegin(GL_QUADS);
 }
 
-void gfx::set_color(float r, float g, float b, float a){
+void gfx::set_color(double r, double g, double b, double a){
     glColor4f(r,g,b,a);
 }
 
 // TODO: add 3D stuff
-void gfx::draw_2d_quad(int x, int y, int w, int h){
+void gfx::draw_2d_quad(double x, double y, double w, double h){
     glTexCoord2f(0.f, 0.f); glVertex2f(x,     y);
     glTexCoord2f(1.f, 0.f); glVertex2f(x + w, y);
     glTexCoord2f(1.f, 1.f); glVertex2f(x + w, y + h);
@@ -113,7 +113,7 @@ void gfx::end(){
     glEnd();
 }
 
-float gfx::screen_aspect(){
+double gfx::screen_aspect(){
     return screen_width/screen_height;
 }
 

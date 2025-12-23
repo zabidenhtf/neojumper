@@ -26,15 +26,15 @@ namespace gfx
     void viewport(int x, int y, int w, int h);
     void init();
     void swap();
-    void clear(float r, float g, float b);
+    void clear(double r, double g, double b);
     void begin_quads();
-    void set_color(float r, float g, float b, float a);
-    void draw_2d_quad(int x, int y, int w, int h);
+    void set_color(double r, double g, double b, double a);
+    void draw_2d_quad(double x, double y, double w, double h);
     texture load_texture(const string &filename);
     void enable_texture(texture &txture);
     void disable_texture();
     void end();
-    float screen_aspect();
+    double screen_aspect();
     void kill();
 }
 

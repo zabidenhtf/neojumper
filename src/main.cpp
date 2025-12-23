@@ -41,6 +41,7 @@ int main(){
     data2d::textures_paths.push_back("ui/button_shuffle_forward.png");
     data2d::textures_paths.push_back("ui/button_shuffle_backward.png");
     data2d::textures_paths.push_back("ui/button_arrow.png");
+    data2d::textures_paths.push_back("ui/buttons_line.png");
     data2d::load_textures();
 
     game = new game_core();
