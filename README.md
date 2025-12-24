@@ -29,9 +29,9 @@ For build you need
 Use the powershell, and write
 <br>
 `
-git clone https://github.com/zabidenhtf/openjumper.git<br>
-cd openjumper<br>
-make PLATFORM=WINDOWS<br>
+git clone https://github.com/zabidenhtf/openjumper.git
+cd openjumper
+make PLATFORM=WINDOWS
 `
 
 ### Linux
@@ -42,10 +42,11 @@ For build you need
 * make // too
 <br>
 Use the terminal, and write
+<br>
 `
-git clone https://github.com/zabidenhtf/openjumper.git<br>
-cd openjumper<br>
-make PLATFORM=LINUX<br>
+git clone https://github.com/zabidenhtf/openjumper.git
+cd openjumper
+make PLATFORM=LINUX
 `
 
 -------------
