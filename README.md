@@ -15,9 +15,9 @@ S - Shuffle backward
 E - Flip
 
 ## Thanks for
-GLFW - Nice GL lib for C++
-Lodepng - Png loader
-GLM - For graphics mathematics
+GLFW - Nice GL lib for C++<br>
+Lodepng - Png loader<br>
+GLM - For graphics mathematics<br>
 
 ## Building
 ### Windows
@@ -25,11 +25,13 @@ For build you need
 * MinGW
 * make
 * G++
+<br>
 Use the powershell, and write
+<br>
 `
-git clone https://github.com/zabidenhtf/openjumper.git
-cd openjumper
-make PLATFORM=WINDOWS
+git clone https://github.com/zabidenhtf/openjumper.git<br>
+cd openjumper<br>
+make PLATFORM=WINDOWS<br>
 `
 
 ### Linux
@@ -38,11 +40,12 @@ For build you need
 * g++ // it can be preinstalled into your distro
 * libglfw3-dev
 * make // too
+<br>
 Use the terminal, and write
 `
-git clone https://github.com/zabidenhtf/openjumper.git
-cd openjumper
-make PLATFORM=LINUX
+git clone https://github.com/zabidenhtf/openjumper.git<br>
+cd openjumper<br>
+make PLATFORM=LINUX<br>
 `
 
 -------------
