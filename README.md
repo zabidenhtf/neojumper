@@ -18,6 +18,7 @@ E - Flip
 GLFW - Nice GL lib for C++<br>
 Lodepng - Png loader<br>
 GLM - For graphics mathematics<br>
+GLAD - For GL 3.3<br>
 
 ## Building
 ### Windows
