@@ -95,4 +95,7 @@ void game_core::update(double tick){
     scene_component->update(tick);
     warmup_component->update(tick);
     controls_component->update(tick);
+
+    string buffer = "Now score:" + to_string(score);
+    write_dbg("GAME", buffer);
 }
