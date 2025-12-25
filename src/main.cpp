@@ -1,4 +1,5 @@
 #include "interface.hpp"
+#include "system.hpp"
 #include "data.hpp"
 #include "game/game.hpp"
 #include "includes.hpp"
@@ -21,6 +22,11 @@ namespace data2d {
 }
 
 int main(){
+    config::init();
+
+    screen_width = stoi(string(config::load_data("Options", "screen_width", "800")));
+    screen_height = stoi(string(config::load_data("Options", "screen_height", "600")));
+
     gfx::init();
     input::init(gfx::get_window());
     // Load textures

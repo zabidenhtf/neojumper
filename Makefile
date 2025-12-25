@@ -6,6 +6,8 @@ GLFW_LIB_LINUX = -lglfw -lGL -lGLU -lX11 -lpthread -lrt -l dl
 
 GLM_INCLUDE = -Ilib/glm
 
+SIMPLE_INI_INCLUDE = -Ilib/simpleini
+
 LODE_PNG_INCLUDE = -Ilib/png
 LODE_PNG_TARGETS = lib/png/lodepng/lodepng.cpp
 
@@ -22,11 +24,13 @@ ifeq ($(PLATFORM),WINDOWS)
 	$(CXX) $(TARGETS) $(CXXFLAGS) $(GLFW_INCLUDE) \
 	$(LODE_PNG_INCLUDE) $(LODE_PNG_TARGETS) $(GLM_INCLUDE)  \
 	$(GLAD_INCLUDE) $(GLAD_TARGETS) \
+	$(SIMPLE_INI_INCLUDE) \
 	$(GLFW_LIB_WINDOWS) -o $(EXEC)
 else ifeq ($(PLATFORM),LINUX)
 	$(CXX) $(TARGETS) $(CXXFLAGS) \
 	$(LODE_PNG_INCLUDE) $(LODE_PNG_TARGETS) $(GLM_INCLUDE)  \
 	$(GLAD_INCLUDE) $(GLAD_TARGETS) \
+	$(SIMPLE_INI_INCLUDE) \
 	$(GLFW_LIB_LINUX) -o $(EXEC)
 else
 	$(error Platform is unsupported)

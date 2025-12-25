@@ -8,17 +8,18 @@ ZABIDEN - main developer of game
 
 ## Controls
 Space - Jump
-A - Kick left
-D - Kick right
-W - Shuffle forward
-S - Shuffle backward
-E - Flip
+- A - Kick left
+- D - Kick right
+- W - Shuffle forward
+- S - Shuffle backward
+- E - Flip
 
 ## Thanks for
-GLFW - Nice GL lib for C++<br>
-Lodepng - Png loader<br>
-GLM - For graphics mathematics<br>
-GLAD - For GL 3.3<br>
+- GLFW - Nice GL lib for C++
+- Lodepng - Png loader
+- GLM - For graphics mathematics
+- GLAD - For GL 3.3
+- SimpleIni - For configs
 
 ## Building
 ### Windows

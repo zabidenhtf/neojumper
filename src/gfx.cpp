@@ -1,4 +1,3 @@
-#include "system.hpp"
 #include "interface.hpp"
 
 GLFWwindow *root = nullptr;
@@ -31,7 +30,7 @@ void gfx::set_viewport(int x, int y, int w, int h){
 }
 
 void gfx::init(){
-    write_dbg("GFX", "test");
+    // Loading window data using config
     if (glfwInit()){
         write_dbg("GFX", "GLFW initialisated");
     }

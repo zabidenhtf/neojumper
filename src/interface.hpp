@@ -7,14 +7,15 @@
 #include <glm/vec4.hpp>
 #include <lodepng/lodepng.h>
 
+#include "system.hpp"
 #include "includes.hpp"
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
 using namespace glm;
 
-static int screen_width = 1200;
-static int screen_height = 600;
+inline int screen_width;
+inline int screen_height;
 
 extern vector<int> key_buffer; // keys buffer, it need to save keys
 

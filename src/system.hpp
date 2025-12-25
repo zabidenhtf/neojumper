@@ -2,13 +2,16 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include "includes.hpp"
+#include <string>
 
-using namespace std;
-
-void write(string msg);
-void write_dbg(string about, string msg);
+void write(std::string msg);
+void write_dbg(std::string about, std::string msg);
 int randint(int min, int max);
-string read_file(const char* path);
+std::string read_file(const char* path);
+
+namespace config{
+    bool init();
+    const char* load_data(const char* section, const char* key, const char* standart);
+}
 
 #endif // SYSTEM_H
