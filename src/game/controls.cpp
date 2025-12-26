@@ -30,7 +30,7 @@ void controls::update(double tick){
             if (key_buffer.back() == dance_binds[game->now_dance.movements[step]] && press_time == true){
                 //write("Pressed");
                 if (step%5 == 0){
-                    game->message_component->spawn(MESSAGE_EXCELLENT,1);
+                    game->message_component->spawn(MESSAGE_EXCELLENT);
                 }
                 press_time = false;
                 can_press = false;

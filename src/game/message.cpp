@@ -5,16 +5,15 @@ message::message(){
     write_dbg("MESSAGE", "Message system initialisated");
 }
 
-void message::spawn(int txture, double active_time){
+void message::spawn(int txture){
     this->txture = txture;
-    this->active_time = active_time;
     this->active = true;
 }
 
 void message::update(double tick){
     if (active == true){
         time += tick;
-        if (time >= active_time){
+        if (time > 1){
             active = false;
         }
         render();

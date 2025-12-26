@@ -8,7 +8,7 @@
 class message : public component{
 public:
     message();
-    void spawn(int txture, double active_time);
+    void spawn(int txture);
     virtual void reset(){};
     virtual void update(double tick);
     virtual void render();
