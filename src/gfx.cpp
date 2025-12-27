@@ -54,6 +54,8 @@ void gfx::init(){
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
     // After window init stuff 2D shaders stuff (because GL 3.3) (yep, a bit of AI code here)
     string vertex2d_shader_source = read_file("shaders/shader2D.vert");
     string fragment2d_shader_source = read_file("shaders/shader2D.frag");
@@ -129,10 +131,11 @@ void gfx::swap(){
 
 void gfx::clear(double r, double g, double b){
     glClearColor(r, g, b, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void gfx::draw_2d_quad(vec2 pos, vec2 size, vec4 color){
+    glDisable(GL_DEPTH_TEST);
     glUseProgram(shader2D);
 
     glUniform4f(glGetUniformLocation(shader2D, "uColor"),
@@ -221,6 +224,7 @@ void gfx::set_camera(vec3 pos, vec3 look_at, double fov){
 }
 
 void gfx::draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double yaw, double roll){
+    glEnable(GL_DEPTH_TEST);
     glUseProgram(shader3D);
 
     glUniform4f(glGetUniformLocation(shader3D, "uColor"),
@@ -231,7 +235,7 @@ void gfx::draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double ya
     float r_roll = radians(roll);
 
     mat4 model = translate(mat4(1.0f), pos);
-    model = scale(model, vec3(size, 1.0f));
+    model = scale(model, vec3(size.x, 1.0f, size.y));
     model = rotate(model, r_pitch, vec3(0,1,0));
     model = rotate(model, r_yaw, vec3(1,0,0));
     model = rotate(model, r_roll, vec3(0,0,1));
@@ -241,4 +245,13 @@ void gfx::draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double ya
     glBindVertexArray(quadVAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+}
+
+void gfx::draw_3d_box(vec3 pos, vec3 size, vec4 color){
+    gfx::draw_3d_plane(vec3(-1,0,-1), vec2(1,1),vec4(1,0,0,1), 0,90,0);
+    gfx::draw_3d_plane(vec3(0,0,0), vec2(1,1),vec4(0,1,0,1), 90,0,0);
+    gfx::draw_3d_plane(vec3(-1,0,0), vec2(1,1),vec4(0,1,1,1), 90,0,0);
+    gfx::draw_3d_plane(vec3(0,0,0), vec2(1,1),vec4(1,0,1,1), 0,0,90);
+    gfx::draw_3d_plane(vec3(0,0,-1), vec2(1,1),vec4(1,1,0,1), 0,0,90);
+    gfx::draw_3d_plane(vec3(-1,1,-1), vec2(1,1),vec4(0,0,1,1), 0,90,0);
 }
