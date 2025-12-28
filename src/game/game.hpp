@@ -8,8 +8,6 @@
 #include "controls.hpp"
 #include "message.hpp"
 
-#include "../scene/scene.hpp"
-
 #include "../interface.hpp"
 #include "../system.hpp"
 #include "../includes.hpp"
@@ -50,7 +48,6 @@ public:
 
     warmup *warmup_component;
     controls *controls_component;
-    scene *scene_component;
     message *message_component;
 };
 

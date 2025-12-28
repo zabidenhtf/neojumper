@@ -2,6 +2,7 @@
 #include "system.hpp"
 #include "data.hpp"
 #include "game/game.hpp"
+#include "scene/scene.hpp"
 #include "includes.hpp"
 
 // Target fps and another configs
@@ -10,6 +11,7 @@ const float frame_time = 1.0 / FPS;
 double last_time = glfwGetTime();
 
 game_core* game = nullptr;
+scene_core* scene = nullptr;
 
 namespace data2d {
     vector<string> textures_paths;
@@ -63,6 +65,7 @@ int main(){
     data2d::textures_paths.push_back("ui/buttons_line.png");
     data2d::load_textures();
 
+    scene = new scene_core();
     game = new game_core();
 
     while(!glfwWindowShouldClose(gfx::get_window())){
@@ -72,6 +75,7 @@ int main(){
         double delta = frame_start - last_time;
         last_time = frame_start;
 
+        scene->update(delta);
         game->update(delta);
 
         key_buffer.clear();

@@ -84,7 +84,6 @@ game_core::game_core(){
     // Initialisating all components
     warmup_component = new warmup();
     controls_component = new controls();
-    scene_component = new scene();
     message_component = new message();
 
     controls_component->speed = now_dance.beat_speed;
@@ -93,7 +92,6 @@ game_core::game_core(){
 
 void game_core::update(double tick){
     // Updating scene for first
-    scene_component->update(tick);
     warmup_component->update(tick);
     controls_component->update(tick);
     message_component->update(tick);
