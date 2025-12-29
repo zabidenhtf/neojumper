@@ -3,9 +3,9 @@
 
 #include "../interface.hpp"
 #include "../system.hpp"
-#include "../game/component.hpp" // TODO: Move to root dir
+#include "entity.hpp"
 
-class jumper_player : public component{
+class jumper_player : public entity{
 public:
 jumper_player();
 virtual void reset();
