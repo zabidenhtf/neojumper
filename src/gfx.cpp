@@ -300,10 +300,10 @@ void gfx::draw_skybox(){
     enable_texture(data2d::textures[SKYBOX_FRONT]);
     draw_3d_plane(cam_pos + vec3(0,0,half.z), vec2(size.x, size.y), vec4(1,1,1,1), 0, 0, 180); // front
     enable_texture(data2d::textures[SKYBOX_BACK]);
-    draw_3d_plane(cam_pos + vec3(0,0,-half.z), vec2(size.x, size.y), vec4(1,1,1,1), 0, 0, 180); // back
+    draw_3d_plane(cam_pos + vec3(0,0,-half.z), vec2(size.x, size.y), vec4(1,1,1,1), 0, 180, 0); // back
     enable_texture(data2d::textures[SKYBOX_LEFT]);
     draw_3d_plane(cam_pos + vec3(-half.x,0,0), vec2(size.z, size.y), vec4(1,1,1,1), 90, 0, 180); // left
     enable_texture(data2d::textures[SKYBOX_RIGHT]);
-    draw_3d_plane(cam_pos + vec3(half.x,0,0), vec2(size.z, size.y), vec4(1,1,1,1), 90, 0, 180); // right
+    draw_3d_plane(cam_pos + vec3(half.x,0,0), vec2(size.z, size.y), vec4(1,1,1,1), 90, 180, 0); // right
     disable_texture();
 }
