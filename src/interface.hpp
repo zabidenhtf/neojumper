@@ -54,6 +54,8 @@ namespace gfx
     void enable_texture(texture &txture);
     void disable_texture();
     double screen_aspect();
+    void blend_normal();
+    void blend_additive();
     void kill();
     // 3D stuff of my 3D Openjumper engine
     void set_camera(vec3 pos, vec3 look_at, double fov);

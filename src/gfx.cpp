@@ -62,8 +62,6 @@ void gfx::init(){
     shader2D = glCreateProgram();
     shader3D = glCreateProgram();
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     // After window init stuff 2D shaders stuff (because GL 3.3) (yep, a bit of AI code here)
@@ -241,6 +239,16 @@ void gfx::disable_texture(){
 
 double gfx::screen_aspect(){
     return static_cast<double>(screen_width) / static_cast<double>(screen_height);;
+}
+
+void gfx::blend_normal(){
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void gfx::blend_additive(){
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 }
 
 void gfx::kill(){

@@ -47,6 +47,7 @@ int main(){
     fullscreen = string(config::load_data("GFX", "fullscreen", "False"));
 
     gfx::init();
+    gfx::blend_normal();
     input::init(gfx::get_window());
     // Load textures
     data2d::textures_paths.push_back("logo.png");
