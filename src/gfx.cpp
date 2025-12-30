@@ -36,8 +36,14 @@ void gfx::init(){
     if (glfwInit()){
         write_dbg("GFX", "GLFW initialisated");
     }
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-    root = glfwCreateWindow(screen_width, screen_height, "Openjumper", NULL, NULL);
+    if (fullscreen == "True"){
+        root = glfwCreateWindow(screen_width, screen_height, "Openjumper", glfwGetPrimaryMonitor(), NULL);
+    }
+    else{
+        root = glfwCreateWindow(screen_width, screen_height, "Openjumper", NULL, NULL);
+    }
 
     if (!root){
         write_dbg("GFX", "Failed to create window");

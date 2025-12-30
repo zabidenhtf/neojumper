@@ -41,9 +41,10 @@ namespace data2d {
 int main(){
     config::init();
 
-    screen_width = stoi(string(config::load_data("Options", "screen_width", "800")));
-    screen_height = stoi(string(config::load_data("Options", "screen_height", "600")));
-    fov = stoi(string(config::load_data("Options", "fov", "90")));
+    screen_width = stoi(string(config::load_data("GFX", "screen_width", "800")));
+    screen_height = stoi(string(config::load_data("GFX", "screen_height", "600")));
+    fov = stoi(string(config::load_data("GFX", "fov", "90")));
+    fullscreen = string(config::load_data("GFX", "fullscreen", "False"));
 
     gfx::init();
     input::init(gfx::get_window());

@@ -17,6 +17,7 @@ using namespace glm;
 inline int screen_width;
 inline int screen_height;
 inline float fov;
+inline string fullscreen;
 
 extern vector<int> key_buffer; // keys buffer, it need to save keys
 
