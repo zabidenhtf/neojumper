@@ -189,36 +189,83 @@ void gfx::draw_2d_quad(vec2 pos, vec2 size, vec4 color){
 
 texture gfx::load_texture(const string &filename)
 {
-    texture txture;
-    std::vector<unsigned char> image;
-    unsigned int w, h;
-    unsigned error = lodepng::decode(image, w, h, filename.c_str()); // decompiling with
+    texture txture = {};
 
-    // if image not found
-
-    txture.width  = (int)w;
-    txture.height = (int)h;
-
-    if (error)
-    {
-        string buffer = "Failed to open " + filename + " image";
-        write_dbg("GFX", buffer);
+    // Reading PNG
+    ifstream file(filename, ios::binary);
+    if (!file) {
+        write_dbg("GFX", "Failed to open " + filename + " image");
+        return txture;
     }
-    else{
-        string buffer = "Opened " + filename + " image";
-        write_dbg("GFX", buffer);
+    vector<unsigned char> file_data((istreambuf_iterator<char>(file)),
+                                         istreambuf_iterator<char>());
+    file.close();
+
+    // Check PNG
+    if (file_data.size() < 8 || png_sig_cmp(file_data.data(), 0, 8)) {
+        write_dbg("GFX", "File " + filename + " is not a PNG");
+        return txture;
     }
 
+    png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
+    if (!png_ptr) return txture;
+
+    png_infop info_ptr = png_create_info_struct(png_ptr);
+    if (!info_ptr) { png_destroy_read_struct(&png_ptr, nullptr, nullptr); return txture; }
+
+    if (setjmp(png_jmpbuf(png_ptr))) {
+        png_destroy_read_struct(&png_ptr, &info_ptr, nullptr);
+        write_dbg("GFX", "Error reading PNG " + filename);
+        return txture;
+    }
+
+    struct MemReader { const unsigned char* data; size_t size; size_t offset; };
+    MemReader reader = { file_data.data() + 8, file_data.size() - 8, 0 }; // Signature check
+    png_set_sig_bytes(png_ptr, 8);
+    // Reading PNG
+    auto png_read_from_memory = [](png_structp png_ptr, png_bytep out_bytes, png_size_t byte_count_to_read) {
+        MemReader* r = (MemReader*)png_get_io_ptr(png_ptr);
+        if (r->offset + byte_count_to_read > r->size)
+            png_error(png_ptr, "Read beyond end of buffer");
+        memcpy(out_bytes, r->data + r->offset, byte_count_to_read);
+        r->offset += byte_count_to_read;
+    };
+
+    png_set_read_fn(png_ptr, &reader, png_read_from_memory);
+    png_set_sig_bytes(png_ptr, 8);
+    png_read_info(png_ptr, info_ptr);
+
+    txture.width  = png_get_image_width(png_ptr, info_ptr);
+    txture.height = png_get_image_height(png_ptr, info_ptr);
+    png_byte color_type = png_get_color_type(png_ptr, info_ptr);
+    png_byte bit_depth  = png_get_bit_depth(png_ptr, info_ptr);
+
+    if (bit_depth == 16) png_set_strip_16(png_ptr);
+    if (color_type == PNG_COLOR_TYPE_PALETTE) png_set_palette_to_rgb(png_ptr);
+    if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8) png_set_expand_gray_1_2_4_to_8(png_ptr);
+    if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) png_set_tRNS_to_alpha(png_ptr);
+    if (color_type == PNG_COLOR_TYPE_RGB || color_type == PNG_COLOR_TYPE_GRAY) png_set_filler(png_ptr, 0xFF, PNG_FILLER_AFTER);
+    if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA) png_set_gray_to_rgb(png_ptr);
+
+    png_read_update_info(png_ptr, info_ptr);
+
+    std::vector<png_byte> image_data(txture.width * txture.height * 4);
+    std::vector<png_bytep> row_pointers(txture.height);
+    for (int y = 0; y < txture.height; y++)
+        row_pointers[y] = image_data.data() + y * txture.width * 4;
+
+    png_read_image(png_ptr, row_pointers.data());
+    png_destroy_read_struct(&png_ptr, &info_ptr, nullptr);
+
+    // GL Textures
     glGenTextures(1, &txture.texture_id);
     glBindTexture(GL_TEXTURE_2D, txture.texture_id);
-
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Maybe im change to GL_LINEAR_NEARLEST_LINEAR
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, txture.width, txture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data.data());
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, txture.width, txture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data());
-
+    write_dbg("GFX", "Opened " + filename + " image");
     return txture;
 }
 

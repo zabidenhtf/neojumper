@@ -28,8 +28,8 @@ GLM_INCLUDE = -Ilib/glm
 
 SIMPLE_INI_INCLUDE = -Ilib/simpleini
 
-LODE_PNG_INCLUDE = -Ilib/png
-LODE_PNG_TARGETS = lib/png/lodepng/lodepng.cpp
+PNG_INCLUDE = -Ilib/png/include
+PNG_LIB_WIN64 = -Llib/png/lib -lpng -lpng16
 
 GLAD_INCLUDE = -Ilib/glad/include
 GLAD_TARGETS = lib/glad/src/glad.c
@@ -47,7 +47,7 @@ ifeq ($(PLATFORM),WIN64)
 	$(FREETYPE_INCLUDE) $(FREETYPE_LIB_WIN64) \
 	$(ZLIB_INCLUDE) $(ZLIB_LIB_WIN64) \
 	$(ASSIMP_INCLUDE) $(ASSIMP_LIB_WIN64) \
-	$(LODE_PNG_INCLUDE) $(LODE_PNG_TARGETS) \
+	$(PNG_INCLUDE) $(PNG_LIB_WIN64) \
 	$(GLM_INCLUDE)  \
 	$(GLAD_INCLUDE) $(GLAD_TARGETS) \
 	$(SIMPLE_INI_INCLUDE) \
