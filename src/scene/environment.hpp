@@ -1,9 +1,9 @@
 #ifndef SCENE_ENVIRONMENT_H
 #define SCENE_ENVIRONMENT_H
 
-#include "../interface.hpp"
-#include "../system.hpp"
-#include "../component.hpp"
+#include "interface.hpp"
+#include "system.hpp"
+#include "component.hpp"
 
 class environment : public component{
 public:

@@ -1,6 +1,6 @@
 #include "controls.hpp"
 #include "../game.hpp"
-#include "../../data.hpp"
+#include "data.hpp"
 
 controls::controls(){
     write_dbg("CONTROLS","initialisated");

@@ -1,9 +1,9 @@
 #ifndef GAME_WARMUP_H
 #define GAME_WARMUP_H
 
-#include "../../interface.hpp"
-#include "../../system.hpp"
-#include "../../component.hpp"
+#include "interface.hpp"
+#include "system.hpp"
+#include "component.hpp"
 
 class warmup : public component
 {

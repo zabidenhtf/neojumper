@@ -1,9 +1,9 @@
 #ifndef GAME_SCENE_H
 #define GAME_SCENE_H
 
-#include "../interface.hpp"
-#include "../system.hpp"
-#include "../includes.hpp"
+#include "interface.hpp"
+#include "system.hpp"
+#include "includes.hpp"
 
 // entities
 #include "entities/jumper.hpp"

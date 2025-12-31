@@ -1,9 +1,9 @@
 #ifndef GAME_CONTROLS_H
 #define GAME_CONTROLS_H
 
-#include "../../interface.hpp"
-#include "../../system.hpp"
-#include "../../component.hpp"
+#include "interface.hpp"
+#include "system.hpp"
+#include "component.hpp"
 
 class controls : public component
 {

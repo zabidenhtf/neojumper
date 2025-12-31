@@ -1,7 +1,7 @@
 #include "warmup.hpp"
 //#include <iostream>
 #include "../game.hpp"
-#include "../../data.hpp"
+#include "data.hpp"
 
 warmup::warmup(){
     write_dbg("WARMUP","Timer initialisated");

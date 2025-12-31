@@ -1,9 +1,9 @@
 #ifndef GAME_MESSAGE_H
 #define GAME_MESSAGE_H
 
-#include "../../interface.hpp"
-#include "../../system.hpp"
-#include "../../component.hpp"
+#include "interface.hpp"
+#include "system.hpp"
+#include "component.hpp"
 
 class message : public component{
 public:

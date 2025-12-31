@@ -1,5 +1,5 @@
 #include "message.hpp"
-#include "../../data.hpp"
+#include "data.hpp"
 
 message::message(){
     write_dbg("MESSAGE", "Message system initialisated");

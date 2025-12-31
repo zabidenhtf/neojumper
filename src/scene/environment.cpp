@@ -1,5 +1,5 @@
 #include "environment.hpp"
-#include "../data.hpp"
+#include "data.hpp"
 
 environment::environment(){
     write_dbg("ENVIRONMENT", "Environment initialisated");

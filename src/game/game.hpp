@@ -8,9 +8,9 @@
 #include "components/controls.hpp"
 #include "components/message.hpp"
 
-#include "../interface.hpp"
-#include "../system.hpp"
-#include "../includes.hpp"
+#include "interface.hpp"
+#include "system.hpp"
+#include "includes.hpp"
 
 
 enum DANCE_MOVEMENTS{ // TODO: Make keyboard movement
