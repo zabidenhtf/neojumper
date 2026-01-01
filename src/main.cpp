@@ -32,7 +32,7 @@ namespace data2d {
         null_tex.width = 1;
         null_tex.height = 1;
         data2d::textures.push_back(null_tex);
-        for (int i = 0; i<data2d::textures_paths.size(); i++){
+        for (long long unsigned int i = 0; i<data2d::textures_paths.size(); i++){
             data2d::textures.push_back(gfx::load_texture("assets/" + data2d::textures_paths[i]));
         }
     }
