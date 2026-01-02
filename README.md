@@ -17,7 +17,7 @@ Space - Jump
 
 ## Thanks for
 - GLFW - Nice GL lib for C++
-- Lodepng - Png loader
+- LIBPNG and ZLIB - For png loading
 - GLM - For graphics mathematics
 - GLAD - For GL 3.3
 - SimpleIni - For configs
