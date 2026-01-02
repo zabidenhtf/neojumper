@@ -14,14 +14,15 @@ void environment::reset(){
 void environment::update(double tick){
     static float radius = 4.0f;
     static float angle = 0.0f;
-    /*angle += tick;
+    angle += tick;
     cam_pos_x = radius * cos(angle);
-    cam_pos_z = radius * sin(angle);*/
+    cam_pos_z = radius * sin(angle);
     render();
 }
 void environment::render(){
-    gfx::draw_skybox();
+    gfx::set_light(vec3(3,3,3), vec3(0,0,0), vec4(1,1,1,1));
+    //gfx::draw_skybox();
     gfx::enable_texture(data2d::textures[NULL_TEX]);
     gfx::set_camera(vec3(cam_pos_x,2,cam_pos_z), vec3(0,0,0), fov);
-    gfx::draw_3d_plane(vec3(scene->scene_pos.x,0,scene->scene_pos.y), scene->scene_size,vec4(0,0,0,1), 0,90,0);
+    gfx::draw_3d_plane(vec3(scene->scene_pos.x,0,scene->scene_pos.y), scene->scene_size,vec4(1,0,0,1), 0,90,0);
 }

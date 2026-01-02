@@ -34,6 +34,7 @@ struct vertex3D
 {
     vec3 pos;
     vec2 tex;
+    vec3 normal;
 };
 
 struct texture{
@@ -63,6 +64,7 @@ namespace gfx
     void set_camera(vec3 pos, vec3 look_at, double fov);
     void draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double yaw, double roll); // Just quad, but in 3D
     void draw_3d_box(vec3 pos, vec3 size, vec4 color);
+    void set_light(vec3 pos, vec3 look_at, vec4 color);
     void draw_skybox();
 }
 

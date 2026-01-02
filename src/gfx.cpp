@@ -5,9 +5,13 @@ GLFWwindow *root = nullptr;
 GLuint shader2D; // 2D stuff
 GLuint shader3D; // 3D stuff
 // Camera
-vec3 cam_pos = vec3(0.0f,0.0f,3.0f);
+vec3 cam_pos = vec3(0,0,0);
 vec3 cam_look = vec3(0,0,0);
 vec3 cam_up = vec3(0,1,0);
+
+// Lighting
+vec3 light_pos = vec3(16,16,16);
+vec3 light_look = vec3(0,0,0);
 
 Assimp::Importer importer; // Now assimp do nothing, but im fix it
 
@@ -62,6 +66,7 @@ void gfx::init(){
     shader3D = glCreateProgram();
 
     glEnable(GL_DEPTH_TEST);
+
     glDepthFunc(GL_LESS);
     // After window init stuff 2D shaders stuff (because GL 3.3) (yep, a bit of AI code here)
     string vertex2d_shader_source = read_file("shaders/shader2D.vert");
@@ -108,13 +113,12 @@ void gfx::init(){
     {{0.0f, 1.0f}, {0.0f, 1.0f}}
     };
 
-    vertex2D quad_vertices_3d[4] = {
-        {{-0.5f, -0.5f}, {0.0f, 0.0f}},
-        {{ 0.5f, -0.5f}, {1.0f, 0.0f}},
-        {{ 0.5f,  0.5f}, {1.0f, 1.0f}},
-        {{-0.5f,  0.5f}, {0.0f, 1.0f}}
+    vertex3D quad_vertices_3d[4] = {
+        {{-0.5f, -0.5f, 0.0f}, {0.0f,0.0f}, {0,0,1}},
+        {{ 0.5f, -0.5f, 0.0f}, {1.0f,0.0f}, {0,0,1}},
+        {{ 0.5f,  0.5f, 0.0f}, {1.0f,1.0f}, {0,0,1}},
+        {{-0.5f,  0.5f, 0.0f}, {0.0f,1.0f}, {0,0,1}}
     };
-
     unsigned int quadIndices[6] = {0, 1, 2, 2, 3, 0};
 
     // 2D quads, to bottom right
@@ -151,11 +155,14 @@ void gfx::init(){
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad3dEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(vertex2D), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex3D), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertex2D), (void*)offsetof(vertex2D, tex));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertex3D), (void*)offsetof(vertex3D, tex));
     glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(vertex3D), (void*)offsetof(vertex3D, normal));
+    glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);
 }
@@ -310,32 +317,31 @@ void gfx::set_camera(vec3 pos, vec3 look_at, double fov){
     mat4 proj3D = glm::perspective(radians(static_cast<float>(fov)), static_cast<float>(gfx::screen_aspect()), 0.1f, 100.0f);
     mat4 view3D = glm::lookAt(cam_pos, cam_look, cam_up);
 
-    glUniformMatrix4fv(glGetUniformLocation(shader3D, "projection"),
-                   1, GL_FALSE, glm::value_ptr(proj3D));
-    glUniformMatrix4fv(glGetUniformLocation(shader3D, "view"),
-                   1, GL_FALSE, glm::value_ptr(view3D));
+    glUniformMatrix4fv(glGetUniformLocation(shader3D, "projection"), 1, GL_FALSE, value_ptr(proj3D));
+    glUniformMatrix4fv(glGetUniformLocation(shader3D, "view"), 1, GL_FALSE, value_ptr(view3D));
 }
 
 void gfx::draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double yaw, double roll) {
     glEnable(GL_DEPTH_TEST);
     glUseProgram(shader3D);
 
-    glUniform4f(glGetUniformLocation(shader3D, "uColor"),
-                color.x, color.y, color.z, color.w);
+    glUniform1i(glGetUniformLocation(shader3D, "tex"), 0);
 
-    float r_pitch = radians(pitch);
-    float r_yaw   = radians(yaw);
-    float r_roll  = radians(roll);
+    // Shader params
+    glUniform4fv(glGetUniformLocation(shader3D, "objectColor"), 1, value_ptr(color));
+    glUniform3fv(glGetUniformLocation(shader3D, "lightPos"), 1, value_ptr(light_pos));
+    glUniform3fv(glGetUniformLocation(shader3D, "viewPos"), 1, value_ptr(cam_pos));
 
+    // model
     mat4 model = mat4(1.0f);
     model = translate(model, pos);
-    model = rotate(model, r_roll, vec3(0, 0, 1));
-    model = rotate(model, r_yaw,   vec3(1, 0, 0));
-    model = rotate(model, r_pitch, vec3(0, 1, 0));
+    model = rotate(model, float(radians(roll)), vec3(0, 0, 1));
+    model = rotate(model, float(radians(yaw)), vec3(1, 0, 0));
+    model = rotate(model, float(radians(pitch)), vec3(0, 1, 0));
     model = scale(model, vec3(size.x, size.y, 1.0f));
-
     glUniformMatrix4fv(glGetUniformLocation(shader3D, "model"), 1, GL_FALSE, value_ptr(model));
 
+    // Render
     glBindVertexArray(quad3dVAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
@@ -344,11 +350,17 @@ void gfx::draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double ya
 void gfx::draw_3d_box(vec3 pos, vec3 size, vec4 color) {
     vec3 half = size * 0.5f;
     draw_3d_plane(pos + vec3(0,-half.y,0), vec2(size.x, size.z), color, 0, 90, 0); // bottom
-    draw_3d_plane(pos + vec3(0,half.y,0), vec2(size.x, size.z), vec4(0,0,1,1), 0, 90, 0); // top
-    draw_3d_plane(pos + vec3(0,0,half.z), vec2(size.x, size.y), vec4(1,0,1,1), 0, 0, 0); // front
-    draw_3d_plane(pos + vec3(0,0,-half.z), vec2(size.x, size.y), vec4(1,1,0,1), 0, 0, 0); // back
-    draw_3d_plane(pos + vec3(-half.x,0,0), vec2(size.z, size.y), vec4(0,1,0,1), 90, 0, 0); // left
-    draw_3d_plane(pos + vec3(half.x,0,0), vec2(size.z, size.y), vec4(0,1,1,1), 90, 0, 0); // right
+    draw_3d_plane(pos + vec3(0,half.y,0), vec2(size.x, size.z), color, 0, 90, 0); // top
+    draw_3d_plane(pos + vec3(0,0,half.z), vec2(size.x, size.y), color, 0, 0, 0); // front
+    draw_3d_plane(pos + vec3(0,0,-half.z), vec2(size.x, size.y), color, 0, 0, 0); // back
+    draw_3d_plane(pos + vec3(-half.x,0,0), vec2(size.z, size.y), color, 90, 0, 0); // left
+    draw_3d_plane(pos + vec3(half.x,0,0), vec2(size.z, size.y), color, 90, 0, 0); // right
+}
+
+void gfx::set_light(vec3 pos, vec3 look_at, vec4 color){
+    light_pos = pos;
+    light_look = look_at;
+    // TODO: Add colorfull lighting
 }
 
 void gfx::draw_skybox(){
