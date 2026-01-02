@@ -1,7 +1,9 @@
 #include "jumper.hpp"
+#include "../../game/game.hpp"
 
 jumper_player::jumper_player(){
     write_dbg("JUMPER", "Added to scene");
+    direction = 45;
     reset();
 }
 
@@ -9,9 +11,26 @@ void jumper_player::reset(){
     pos = vec3(0,0,0);
 }
 
+void jumper_player::move_forward(double tick){
+    pos += vec3(cos(direction)*tick,0,sin(direction) * tick);
+}
+
+void jumper_player::move_backward(double tick){
+    pos += vec3(cos(direction)*-tick,0,sin(direction) * -tick);
+}
+
 void jumper_player::update(double tick){
+    DANCE_MOVEMENTS move_now = game->now_dance.movements[game->controls_component->step];
+    if (move_now == SHUFFLE_FORWARD){ // Check movement's now
+        move_forward(tick);
+    }
+    else if (move_now == SHUFFLE_BACKWARD){
+        move_backward(tick);
+    }
+    else{
+        // Do nothing (on some time)
+    }
     render();
-    pos + vec3(tick,0,0);
 }
 
 void jumper_player::render(){

@@ -13,8 +13,8 @@ public:
     virtual void render();
 private:
     // For light debug and render debug
-    float cam_pos_x = 0;
-    float cam_pos_z = 0;
+    float cam_pos_x = 4;
+    float cam_pos_z = 4;
 };
 
 #endif // SCENE_ENVIRONMENT_H

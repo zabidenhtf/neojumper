@@ -16,6 +16,8 @@ public:
     scene_core();
     void reset(){return;};
     void update(double tick);
+    vec2 scene_size;
+    vec2 scene_pos;
 private:
     jumper_player *player;
     environment *environment_component;

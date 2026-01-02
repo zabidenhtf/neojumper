@@ -7,12 +7,15 @@
 
 class jumper_player : public entity{
 public:
-jumper_player();
-virtual void reset();
-virtual void update(double tick);
-virtual void render();
+    jumper_player();
+    virtual void reset();
+    virtual void update(double tick);
+    virtual void render();
 private:
-vec3 pos;
+    void move_forward(double tick);
+    void move_backward(double tick);
+    vec3 pos;
+    float direction;
 };
 
 #endif // SCENE_JUMPER_H

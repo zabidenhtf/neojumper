@@ -5,6 +5,9 @@ scene_core::scene_core(){
 
     player = new jumper_player();
     environment_component = new environment();
+
+    scene_pos = vec2(2,0);
+    scene_size = vec2(5,5);
 }
 
 void scene_core::update(double tick){
