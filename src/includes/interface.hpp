@@ -62,7 +62,7 @@ namespace gfx
     void kill();
     // 3D stuff of my 3D Openjumper engine
     void set_camera(vec3 pos, vec3 look_at, double fov);
-    void draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double yaw, double roll); // Just quad, but in 3D
+    void draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double yaw, double roll, bool have_lighting=true); // Just quad, but in 3D
     void draw_3d_box(vec3 pos, vec3 size, vec4 color);
     void set_light(vec3 pos, vec3 look_at, vec4 color);
     void draw_skybox();
