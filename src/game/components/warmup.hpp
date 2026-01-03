@@ -5,10 +5,10 @@
 #include "system.hpp"
 #include "component.hpp"
 
-class warmup : public component
+class game_warmup : public component
 {
 public:
-    warmup();
+    game_warmup();
     virtual void reset();
     virtual void update(double tick);
     virtual void render();

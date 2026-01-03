@@ -5,9 +5,9 @@
 #include "system.hpp"
 #include "component.hpp"
 
-class message : public component{
+class game_message : public component{
 public:
-    message();
+    game_message();
     void spawn(int txture);
     virtual void reset(){};
     virtual void update(double tick);

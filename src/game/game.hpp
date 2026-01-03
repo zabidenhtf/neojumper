@@ -46,9 +46,9 @@ public:
     dance_sequence now_dance;
     int score = 0;
 
-    warmup *warmup_component;
-    controls *controls_component;
-    message *message_component;
+    game_warmup *warmup;
+    game_controls *controls;
+    game_message *message;
 };
 
 extern game_core *game;

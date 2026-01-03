@@ -1,16 +1,16 @@
 #include "message.hpp"
 #include "data.hpp"
 
-message::message(){
+game_message::game_message(){
     write_dbg("MESSAGE", "Message system initialisated");
 }
 
-void message::spawn(int txture){
+void game_message::spawn(int txture){
     this->txture = txture;
     this->active = true;
 }
 
-void message::update(double tick){
+void game_message::update(double tick){
     if (active == true){
         time += tick;
         if (time > 1){
@@ -20,7 +20,7 @@ void message::update(double tick){
     }
 }
 
-void message::render(){
+void game_message::render(){
     int width = 300*gfx::screen_aspect();
     gfx::set_viewport(0,0,screen_width, screen_height);
     gfx::set_ortho(0,0, width,300);

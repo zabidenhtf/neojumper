@@ -5,9 +5,9 @@
 #include "system.hpp"
 #include "../entity.hpp"
 
-class jumper_player : public entity{
+class entity_jumper_player : public entity{
 public:
-    jumper_player();
+    entity_jumper_player();
     virtual void reset();
     virtual void update(double tick);
     virtual void render();

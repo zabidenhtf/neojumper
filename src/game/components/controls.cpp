@@ -2,12 +2,12 @@
 #include "../game.hpp"
 #include "data.hpp"
 
-controls::controls(){
+game_controls::game_controls(){
     write_dbg("CONTROLS","initialisated");
 }
 
 
-void controls::update(double tick){
+void game_controls::update(double tick){
     if (game->game_started == true){
         time += tick;
         step_time += tick;
@@ -29,8 +29,8 @@ void controls::update(double tick){
         if (!key_buffer.empty()){
             if (key_buffer.back() == dance_binds[game->now_dance.movements[step]] && press_time == true){
                 //write("Pressed");
-                if (step%5 == 0){
-                    game->message_component->spawn(MESSAGE_EXCELLENT);
+                if (step%5 == 0){ // TODO: add better combo system
+                    game->message->spawn(MESSAGE_EXCELLENT);
                 }
                 press_time = false;
                 can_press = false;
@@ -45,7 +45,7 @@ void controls::update(double tick){
     }
 }
 
-void controls::render(){
+void game_controls::render(){
     float width = screen_width / 1.5;
     float height = screen_height / 1.5;
     gfx::set_viewport(0,0,screen_width, screen_height);

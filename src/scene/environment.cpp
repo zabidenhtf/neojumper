@@ -2,16 +2,16 @@
 #include "scene.hpp"
 #include "data.hpp"
 
-environment::environment(){
+scene_environment::scene_environment(){
     write_dbg("ENVIRONMENT", "Environment initialisated");
     reset();
 }
 
-void environment::reset(){
+void scene_environment::reset(){
     return;
 }
 
-void environment::update(double tick){
+void scene_environment::update(double tick){
     static float radius = 4.0f;
     static float angle = 0.0f;
     angle += tick;
@@ -19,7 +19,7 @@ void environment::update(double tick){
     cam_pos_z = radius * sin(angle);
     render();
 }
-void environment::render(){
+void scene_environment::render(){
     gfx::set_light(vec3(3,3,3), vec3(0,0,0), vec4(1,1,1,1));
     gfx::draw_skybox();
     gfx::enable_texture(data2d::textures[NULL_TEX]);

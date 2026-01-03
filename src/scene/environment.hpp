@@ -5,9 +5,9 @@
 #include "system.hpp"
 #include "component.hpp"
 
-class environment : public component{
+class scene_environment : public component{
 public:
-    environment();
+    scene_environment();
     virtual void reset();
     virtual void update(double tick);
     virtual void render();

@@ -19,8 +19,8 @@ public:
     vec2 scene_size;
     vec2 scene_pos;
 private:
-    jumper_player *player;
-    environment *environment_component;
+    entity_jumper_player *player;
+    scene_environment *environment;
 };
 
 extern scene_core* scene;

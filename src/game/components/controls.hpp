@@ -5,10 +5,10 @@
 #include "system.hpp"
 #include "component.hpp"
 
-class controls : public component
+class game_controls : public component
 {
 public:
-    controls();
+    game_controls();
     virtual void reset(){return;};
     virtual void update(double tick);
     virtual void render();

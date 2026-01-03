@@ -3,18 +3,18 @@
 #include "../game.hpp"
 #include "data.hpp"
 
-warmup::warmup(){
+game_warmup::game_warmup(){
     write_dbg("WARMUP","Timer initialisated");
     reset();
 }
 
-void warmup::reset(){
+void game_warmup::reset(){
     write_dbg("WARMUP","Timer reset");
     time = 0;
     active = true;
 }
 
-void warmup::update(double tick){
+void game_warmup::update(double tick){
     if (active == true){
         time += tick;
         state_time += tick;
@@ -33,7 +33,7 @@ void warmup::update(double tick){
     }
 }
 
-void warmup::render(){
+void game_warmup::render(){
     int width = 300*gfx::screen_aspect();
     gfx::set_viewport(0,0,screen_width, screen_height);
     gfx::set_ortho(0,0, width,300);
