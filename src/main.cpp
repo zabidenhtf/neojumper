@@ -50,7 +50,7 @@ int main(){
     gfx::blend_normal();
     input::init(gfx::get_window());
     // Load textures
-    data2d::textures_paths.push_back("logo.png");
+    data2d::textures_paths.push_back("menu/logo.png");
     data2d::textures_paths.push_back("ui/digit1.png");
     data2d::textures_paths.push_back("ui/digit2.png");
     data2d::textures_paths.push_back("ui/digit3.png");
