@@ -88,6 +88,12 @@ int main(){
         scene->update(delta);
         game->update(delta);
 
+        if (!key_buffer.empty()){
+            if (key_buffer.back() == GLFW_KEY_ESCAPE){
+                gfx::kill();
+            }
+        }
+
         key_buffer.clear();
         gfx::swap();
 
@@ -101,4 +107,5 @@ int main(){
             );
         }
     }
+    return 0;
 }
