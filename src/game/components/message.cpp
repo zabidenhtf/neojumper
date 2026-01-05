@@ -26,7 +26,11 @@ void game_message::render(){
     gfx::set_viewport(0,0,screen_width, screen_height);
     gfx::set_ortho(0,0, width,300);
 
+    // Small animation
+    float m_height = 150*time;
+    float m_width = m_height*2;
+
     gfx::enable_texture(data2d::textures[txture]);
-    gfx::draw_2d_quad(vec2(width/2-300/2,150-150/2),vec2(300,150), vec4(1,1,1,1)); // fixed size
+    gfx::draw_2d_quad(vec2(width/2-m_width/2,150-m_height/2),vec2(m_width,m_height), vec4(1,1,1,1));
     gfx::disable_texture();
 }
