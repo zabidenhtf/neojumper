@@ -74,6 +74,7 @@ namespace input
     void callback(GLFWwindow* window, int key, int scancode, int action, int mods);
     void init(GLFWwindow* window);
     bool button_pressed(int key);
+    int last_button_pressed();
 }
 
 #endif // INTERFACE_H

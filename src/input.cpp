@@ -23,3 +23,9 @@ bool input::button_pressed(int key){
     }
     return false;
 }
+int last_button_pressed(){
+    if (!key_buffer.empty()){
+        return key_buffer.back();
+    }
+    return -1;
+}
