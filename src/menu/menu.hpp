@@ -10,13 +10,6 @@
 #include "components/selector.hpp"
 #include "menu_environment.hpp"
 
-enum{
-    PLAY,
-    CREDITS,
-    SETTINGS,
-    EXIT
-};
-
 enum MENU_STATES{
     MENU_MAIN,
     MENU_NEWGAME

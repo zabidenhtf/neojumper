@@ -6,6 +6,15 @@
 #include "includes.hpp"
 #include "component.hpp"
 
+extern bool game_enabled;
+
+enum{
+    PLAY,
+    CREDITS,
+    SETTINGS,
+    EXIT
+};
+
 class menu_selector : public component{
 public:
     menu_selector();

@@ -19,15 +19,29 @@ void menu_selector::update(double tick){
             case GLFW_KEY_DOWN:
                 if (button_selected_now != button_selector_max){
                     button_selected_now += 1;
-                    write_dbg("MENU", "Selector down");
-                    write_dbg("MENU", to_string(button_selected_now));
+                    write_dbg("SELECTOR", "Selector down");
                 }
                 break;
             case GLFW_KEY_UP:
                 if (button_selected_now != button_selector_min){
                     button_selected_now -= 1;
-                    write_dbg("MENU", "Selector up");
-                    write_dbg("MENU", to_string(button_selected_now));
+                    write_dbg("SELECTOR", "Selector up");
+
+                }
+                break;
+            case GLFW_KEY_ENTER:
+                switch (button_selected_now){
+                case PLAY:
+                    write_dbg("SELECTOR", "Selected play");
+                    game_enabled = true;
+                    break;
+                case EXIT:
+                    write_dbg("SELECTOR", "Selected exit");
+                    gfx::kill();
+                    break;
+                default:
+                    write_dbg("SELECTOR", "INDEV");
+                    break;
 
                 }
                 break;

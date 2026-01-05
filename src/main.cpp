@@ -15,6 +15,8 @@ menu_core* menu = nullptr;
 game_core* game = nullptr;
 scene_core* scene = nullptr;
 
+bool game_enabled = false;
+
 namespace data2d {
     vector<string> textures_paths;
     vector<texture> textures;
@@ -80,8 +82,8 @@ int main(){
 
     data2d::load_textures();
 
-    //scene = new scene_core();
-    //game = new game_core();
+    scene = new scene_core();
+    game = new game_core();
     menu = new menu_core();
 
     while(!glfwWindowShouldClose(gfx::get_window())){
@@ -91,13 +93,21 @@ int main(){
         double delta = frame_start - last_time;
         last_time = frame_start;
 
-        //scene->update(delta);
-        //game->update(delta);
-        menu->update(delta);
+        switch (game_enabled){
+        case true:
+            scene->update(delta);
+            game->update(delta);
+            break;
+        case false:
+            menu->update(delta);
+            break;
+        }
 
-        // Debuging stuff
-        if (input::button_pressed(GLFW_KEY_ESCAPE)){
-            gfx::kill();
+        // Exit from game to main menu
+        if (game_enabled == true){
+            if (input::button_pressed(GLFW_KEY_ESCAPE)){
+                game_enabled = false;
+            }
         }
 
         //if (input::button_pressed(GLFW_KEY_ENTER)){
