@@ -13,17 +13,20 @@ void scene_environment::reset(){
 }
 
 void scene_environment::update(double tick){
+    static float radius = 4.0f;
     // When warmup spin camera
     if (game->game_started == false){
-        static float radius = 4.0f;
         static float angle = 0.0f;
-        angle += tick;
+        float period = WARMUP_TIME;
+        float angular_speed = 2.0f * 3.1415926f / period;
+
+        angle += angular_speed * tick;
         cam_pos_x = radius * cos(angle);
         cam_pos_z = radius * sin(angle);
     }
     else{
-        cam_pos_x = 4;
-        cam_pos_z = 4;
+        cam_pos_x = radius * cos(360);
+        cam_pos_z = radius * sin(360);
     }
 
     render();
