@@ -61,12 +61,13 @@ int main(){
     data2d::textures_paths.push_back("ui/message_go.png");
     data2d::textures_paths.push_back("ui/message_excellent.png");
     // Action buttons
-    data2d::textures_paths.push_back("ui/button_jump.png");
-    data2d::textures_paths.push_back("ui/button_flip.png");
-    data2d::textures_paths.push_back("ui/button_kick_left.png");
-    data2d::textures_paths.push_back("ui/button_kick_right.png");
-    data2d::textures_paths.push_back("ui/button_shuffle_forward.png");
-    data2d::textures_paths.push_back("ui/button_shuffle_backward.png");
+    data2d::textures_paths.push_back("actions/action_kick_left_forward.png");
+    data2d::textures_paths.push_back("actions/action_kick_right_forward.png");
+    data2d::textures_paths.push_back("actions/action_kick_left_backward.png");
+    data2d::textures_paths.push_back("actions/action_kick_right_backward.png");
+    data2d::textures_paths.push_back("actions/action_stand_left.png");
+    data2d::textures_paths.push_back("actions/action_stand_right.png");
+    data2d::textures_paths.push_back("actions/action_flip.png");
     data2d::textures_paths.push_back("ui/button_arrow.png");
     data2d::textures_paths.push_back("ui/buttons_line.png");
 

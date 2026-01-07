@@ -20,7 +20,7 @@ void entity_jumper_player::move_backward(double tick, double speed){
 
 void entity_jumper_player::update(double tick){
     DANCE_MOVEMENTS move_now = game->now_dance.movements[game->controls->step];
-    if (move_now == SHUFFLE_FORWARD){ // Check movement's now
+    /*if (move_now == SHUFFLE_FORWARD){ // Check movement's now ON SOME TIME COMMENTED
         move_forward(tick, 3);
     }
     else if (move_now == SHUFFLE_BACKWARD){
@@ -31,7 +31,7 @@ void entity_jumper_player::update(double tick){
     }
     else{
         // Do nothing
-    }
+    }*/
     render();
 }
 

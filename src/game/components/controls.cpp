@@ -89,23 +89,23 @@ void game_controls::render(){
     for (int i = 0; i < width/(distance+size)+1; i++){ // Optimisated
         if (i + step < game->now_dance.movements.size()){
             switch (game->now_dance.movements[i+step]){
-                case JUMP:
-                    gfx::enable_texture(data2d::textures[BUTTON_JUMP]);
+                case KICK_LEFT_FORWARD:
+                    gfx::enable_texture(data2d::textures[ACTION_KICK_LEFT_FORWARD]);
                     break;
-                case FLIP:
-                    gfx::enable_texture(data2d::textures[BUTTON_FLIP]);
+                case KICK_RIGHT_FORWARD:
+                    gfx::enable_texture(data2d::textures[ACTION_KICK_RIGHT_FORWARD]);
                     break;
-                case KICK_LEFT:
-                    gfx::enable_texture(data2d::textures[BUTTON_KICK_LEFT]);
+                case KICK_LEFT_BACKWARD:
+                    gfx::enable_texture(data2d::textures[ACTION_KICK_LEFT_BACKWARD]);
                     break;
-                case KICK_RIGHT:
-                    gfx::enable_texture(data2d::textures[BUTTON_KICK_RIGHT]);
+                case KICK_RIGHT_BACKWARD:
+                    gfx::enable_texture(data2d::textures[ACTION_KICK_RIGHT_BACKWARD]);
                     break;
-                case SHUFFLE_FORWARD:
-                    gfx::enable_texture(data2d::textures[BUTTON_SHUFFLE_FORWARD]);
+                case STAND_LEFT:
+                    gfx::enable_texture(data2d::textures[ACTION_STAND_LEFT]);
                     break;
-                case SHUFFLE_BACKWARD:
-                    gfx::enable_texture(data2d::textures[BUTTON_SHUFFLE_BACKWARD]);
+                case STAND_RIGHT:
+                    gfx::enable_texture(data2d::textures[ACTION_STAND_RIGHT]);
                     break;
             }
             float x = i*(size+distance);

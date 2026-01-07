@@ -2,12 +2,13 @@
 
 // To generate dance
 DANCE_MOVEMENTS movements_list[] = {
-JUMP,
-KICK_LEFT,
-KICK_RIGHT,
-FLIP,
-SHUFFLE_FORWARD,
-SHUFFLE_BACKWARD
+KICK_LEFT_FORWARD,
+KICK_RIGHT_FORWARD,
+KICK_LEFT_BACKWARD,
+KICK_RIGHT_BACKWARD,
+STAND_LEFT,
+STAND_RIGHT,
+FLIP
 };
 
 DANCE_LEVELS levels_list[]{
@@ -15,12 +16,15 @@ EASY,
 NORMAL,
 HARD
 };
-int dance_binds[] = {GLFW_KEY_SPACE,
-                     GLFW_KEY_A,
-                     GLFW_KEY_D,
-                     GLFW_KEY_E,
-                     GLFW_KEY_W,
-                     GLFW_KEY_S}; // Binds
+int dance_binds[] = {
+                     GLFW_KEY_Q, // KICK_LEFT_FORWARD
+                     GLFW_KEY_E, // KICK_RIGHT_FORWARD
+                     GLFW_KEY_Z, // KICK_LEFT_BACKWARD
+                     GLFW_KEY_C, // KICK_RIGHT_BACKWARD
+                     GLFW_KEY_A, // STAND_LEFT
+                     GLFW_KEY_D,  // STAND_RIGHT
+                     GLFW_KEY_SPACE // FLIP
+                     }; // Binds
 
 dance_sequence game_core::generate_dance(DANCE_LEVELS level){
     dance_sequence buffer;
@@ -30,44 +34,31 @@ dance_sequence game_core::generate_dance(DANCE_LEVELS level){
         DANCE_MOVEMENTS movement;
 
         if (buffer.movements.empty()){
-            movement = movements_list[randint(0,5)];
+            movement = movements_list[randint(0,6)];
         }
-        else if (buffer.movements.back() == JUMP){
-            movement = movements_list[FLIP];
-        }
-        else if (buffer.movements.back() == FLIP){
-            DANCE_MOVEMENTS buffer = movements_list[randint(0,5)];
-            while (buffer == FLIP){
-                buffer = movements_list[randint(0,5)];
-            }
-            movement = buffer;
-        }
-        else if (buffer.movements.back() == KICK_LEFT || buffer.movements.back() == KICK_RIGHT){
-            movement = movements_list[randint(0,5)];
-        }
-        else if (buffer.movements.back() == SHUFFLE_BACKWARD || buffer.movements.back() == SHUFFLE_FORWARD){
-            movement = movements_list[randint(1,2)];
-        }
-
+        
         // Debug output
         switch (movement){
-        case JUMP:
-            write_dbg("GAME:generate_dance", "Added JUMP to dance");
+        case KICK_LEFT_FORWARD:
+            write_dbg("GAME:generate_dance", "Added KICK_LEFT_FORWARD to dance");
             break;
-        case KICK_LEFT:
-            write_dbg("GAME:generate_dance", "Added KICK_LEFT to dance");
+        case KICK_RIGHT_FORWARD:
+            write_dbg("GAME:generate_dance", "Added KICK_RIGHT_FORWARD to dance");
             break;
-        case KICK_RIGHT:
-            write_dbg("GAME:generate_dance", "Added KICK_RIGHT to dance");
+        case KICK_LEFT_BACKWARD:
+            write_dbg("GAME:generate_dance", "Added KICK_LEFT_BACKWARD to dance");
+            break;
+        case KICK_RIGHT_BACKWARD:
+            write_dbg("GAME:generate_dance", "Added KICK_RIGHT_BACKWARD to dance");
+            break;
+        case STAND_LEFT:
+            write_dbg("GAME:generate_dance", "Added STAND_LEFT to dance");
+            break;
+        case STAND_RIGHT:
+            write_dbg("GAME:generate_dance", "Added STAND_RIGHT to dance");
             break;
         case FLIP:
             write_dbg("GAME:generate_dance", "Added FLIP to dance");
-            break;
-        case SHUFFLE_FORWARD:
-            write_dbg("GAME:generate_dance", "Added SHUFFLE_FORWARD to dance");
-            break;
-        case SHUFFLE_BACKWARD:
-            write_dbg("GAME:generate_dance", "Added SHUFFLE_BACKWARD to dance");
             break;
         }
         buffer.movements.push_back(movement);
