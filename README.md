@@ -8,12 +8,13 @@ Open Jumper - 3D game about jumpstyle dancing
 Mykyta Polishyk - main developer of game
 
 ## Controls
-- Space - Jump
-- A - Kick left
-- D - Kick right
-- W - Shuffle forward
-- S - Shuffle backward
-- E - Flip
+- Q - Kick forward with left leg
+- E - Kick forward with right leg
+- A - Stand on left feet
+- D - Stand on right feet
+- Z - Kick backward with left leg
+- C - Kick backward with right leg
+- Space - Flip
 
 ## Thanks for
 - GLFW - Nice GL lib for C++
