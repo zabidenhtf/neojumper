@@ -1,3 +1,6 @@
+/* Copyright (C) 2025-2026 Mykyta Polishyk */
+/* This project is licensed under the GNU General Public License v3.0 or later. */
+/* See the LICENSE file for details. */
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>

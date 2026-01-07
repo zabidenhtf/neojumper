@@ -1,3 +1,6 @@
+/* Copyright (C) 2025-2026 Mykyta Polishyk */
+/* This project is licensed under the GNU General Public License v3.0 or later. */
+/* See the LICENSE file for details. */
 #ifndef GAME_SCENE_H
 #define GAME_SCENE_H
 
