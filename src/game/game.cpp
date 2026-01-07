@@ -26,42 +26,82 @@ int dance_binds[] = {
                      GLFW_KEY_SPACE // FLIP
                      }; // Binds
 
+// Dance patterns
+vector<DANCE_MOVEMENTS> pattern_jump_leftside = {KICK_LEFT_FORWARD, KICK_LEFT_FORWARD, KICK_RIGHT_FORWARD, KICK_RIGHT_BACKWARD, STAND_LEFT}; // On keyboard Q Q E C A
+vector<DANCE_MOVEMENTS> pattern_flip_leftside = {KICK_LEFT_FORWARD, KICK_LEFT_FORWARD, FLIP}; // On keyboard Q Q Space
+
 dance_sequence game_core::generate_dance(DANCE_LEVELS level){
     dance_sequence buffer;
     buffer.level = level;
 
+    // For level patterns count cloning patterns
     for (int i = 0; i < level; i++){
         DANCE_MOVEMENTS movement;
-
-        if (buffer.movements.empty()){
-            movement = movements_list[randint(0,6)];
+        // Selector
+        int d = randint(0,1);
+        if (d == 0){
+            for (int x = 0; x<pattern_jump_leftside.size(); x++){
+                movement = pattern_jump_leftside[x];
+                buffer.movements.push_back(movement);
+                // Debug output
+                switch (movement){
+                    case KICK_LEFT_FORWARD:
+                        write_dbg("GAME:generate_dance", "Added KICK_LEFT_FORWARD to dance");
+                        break;
+                    case KICK_RIGHT_FORWARD:
+                        write_dbg("GAME:generate_dance", "Added KICK_RIGHT_FORWARD to dance");
+                        break;
+                    case KICK_LEFT_BACKWARD:
+                        write_dbg("GAME:generate_dance", "Added KICK_LEFT_BACKWARD to dance");
+                        break;
+                    case KICK_RIGHT_BACKWARD:
+                        write_dbg("GAME:generate_dance", "Added KICK_RIGHT_BACKWARD to dance");
+                        break;
+                    case STAND_LEFT:
+                        write_dbg("GAME:generate_dance", "Added STAND_LEFT to dance");
+                        break;
+                    case STAND_RIGHT:
+                        write_dbg("GAME:generate_dance", "Added STAND_RIGHT to dance");
+                        break;
+                    case FLIP:
+                        write_dbg("GAME:generate_dance", "Added FLIP to dance");
+                        break;
+                }
+                buffer.movements_count ++;
+            }
+        }
+        else{
+             for (int x = 0; x<pattern_flip_leftside.size(); x++){
+                movement = pattern_flip_leftside[x];
+                buffer.movements.push_back(movement);
+                // Debug output
+                switch (movement){
+                    case KICK_LEFT_FORWARD:
+                        write_dbg("GAME:generate_dance", "Added KICK_LEFT_FORWARD to dance");
+                        break;
+                    case KICK_RIGHT_FORWARD:
+                        write_dbg("GAME:generate_dance", "Added KICK_RIGHT_FORWARD to dance");
+                        break;
+                    case KICK_LEFT_BACKWARD:
+                        write_dbg("GAME:generate_dance", "Added KICK_LEFT_BACKWARD to dance");
+                        break;
+                    case KICK_RIGHT_BACKWARD:
+                        write_dbg("GAME:generate_dance", "Added KICK_RIGHT_BACKWARD to dance");
+                        break;
+                    case STAND_LEFT:
+                        write_dbg("GAME:generate_dance", "Added STAND_LEFT to dance");
+                        break;
+                    case STAND_RIGHT:
+                        write_dbg("GAME:generate_dance", "Added STAND_RIGHT to dance");
+                        break;
+                    case FLIP:
+                        write_dbg("GAME:generate_dance", "Added FLIP to dance");
+                        break;
+                }
+                buffer.movements_count ++;
+            }
         }
         
-        // Debug output
-        switch (movement){
-        case KICK_LEFT_FORWARD:
-            write_dbg("GAME:generate_dance", "Added KICK_LEFT_FORWARD to dance");
-            break;
-        case KICK_RIGHT_FORWARD:
-            write_dbg("GAME:generate_dance", "Added KICK_RIGHT_FORWARD to dance");
-            break;
-        case KICK_LEFT_BACKWARD:
-            write_dbg("GAME:generate_dance", "Added KICK_LEFT_BACKWARD to dance");
-            break;
-        case KICK_RIGHT_BACKWARD:
-            write_dbg("GAME:generate_dance", "Added KICK_RIGHT_BACKWARD to dance");
-            break;
-        case STAND_LEFT:
-            write_dbg("GAME:generate_dance", "Added STAND_LEFT to dance");
-            break;
-        case STAND_RIGHT:
-            write_dbg("GAME:generate_dance", "Added STAND_RIGHT to dance");
-            break;
-        case FLIP:
-            write_dbg("GAME:generate_dance", "Added FLIP to dance");
-            break;
-        }
-        buffer.movements.push_back(movement);
     }
 
     return buffer;

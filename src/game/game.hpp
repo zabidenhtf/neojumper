@@ -23,10 +23,15 @@ STAND_RIGHT,
 FLIP
 };
 
-enum DANCE_LEVELS{
-EASY=20,
-NORMAL=50,
-HARD=70
+enum DANCE_LEVELS{ // Count of patterns
+EASY=4,
+NORMAL=6,
+HARD=8
+};
+
+enum DANCE_SIDE{
+	LEFT,
+	RIGHT
 };
 
 extern int dance_binds[]; //binds
@@ -34,6 +39,7 @@ extern int dance_binds[]; //binds
 struct dance_sequence{
 vector<DANCE_MOVEMENTS> movements;
 DANCE_LEVELS level;
+int movements_count = 0;
 double beat_speed = 1; // Speed of movements
 };
 

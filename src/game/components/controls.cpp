@@ -65,7 +65,7 @@ void game_controls::update(double tick){
             }
         }
 
-        if (step >= game->now_dance.level){
+        if (step >= game->now_dance.movements_count){
             game->game_started = false;
         }
         render();
