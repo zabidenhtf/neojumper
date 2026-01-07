@@ -107,6 +107,9 @@ void game_controls::render(){
                 case STAND_RIGHT:
                     gfx::enable_texture(data2d::textures[ACTION_STAND_RIGHT]);
                     break;
+                case FLIP:
+                    gfx::enable_texture(data2d::textures[ACTION_FLIP]);
+                    break;
             }
             float x = i*(size+distance);
             float time_x = step_time*(size+distance)/speed;
