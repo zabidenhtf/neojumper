@@ -18,6 +18,14 @@ vec3 light_look = vec3(0,0,0);
 
 Assimp::Importer importer; // Now assimp do nothing, but im fix it
 
+// FT stuff
+FT_Library    library;
+FT_Face       face;
+FT_GlyphSlot  slot;
+FT_Matrix     matrix;
+FT_Vector     pen;
+FT_Error      error;
+
 GLuint quadVAO, quadVBO, quadEBO;
 GLuint quad3dVAO, quad3dVBO, quad3dEBO;
 
@@ -41,6 +49,7 @@ void gfx::set_viewport(int x, int y, int w, int h){
 }
 
 void gfx::init(){
+    // GLFW initialisation
     if (glfwInit()){
         write_dbg("GFX", "GLFW initialisated");
     }
@@ -58,11 +67,21 @@ void gfx::init(){
     }
     glfwMakeContextCurrent(root);
 
+    // GLAD initialisation
     if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         write_dbg("GFX", "GLAD initialisated");
     } else {
         write_dbg("GFX", "Failed to initialize GLAD");
         return;
+    }
+    error = FT_Init_FreeType(&library);
+
+    // Freetype initialisation
+    if (!error){
+        write_dbg("GFX", "Freetype intialisated");
+    }
+    else{
+        write_dbg("GFX", "Failed to initialisate Freetype");
     }
 
     shader2D = glCreateProgram();
@@ -170,6 +189,18 @@ void gfx::init(){
     glBindVertexArray(0);
 }
 
+void gfx::load_font(string path, int id){
+    // Creating face
+    error = FT_New_Face(library, path.c_str(), 0, &face);
+
+    if (!error){
+        write_dbg("GFX", "Loaded "+path+" font");
+    }
+    else{
+        write_dbg("GFX", "Failed to load font");
+    }
+}
+
 void gfx::swap(){
     glfwPollEvents();
     glfwSwapBuffers(root);
@@ -195,6 +226,15 @@ void gfx::draw_2d_quad(vec2 pos, vec2 size, vec4 color){
     glBindVertexArray(quadVAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+}
+
+void gfx::draw_2d_text(vec2 pos, int font_size, string text){
+    /* Render font texture HERE */
+    for (int i = 0; i<text.length(); i++){
+        gfx::enable_texture(data2d::textures[NULL_TEX]);
+        gfx::draw_2d_quad(pos + vec2(i*font_size,0), vec2(font_size,font_size), vec4(1,0,0,1));
+        gfx::disable_texture();
+    }
 }
 
 texture gfx::load_texture(const string &filename)
@@ -275,7 +315,7 @@ texture gfx::load_texture(const string &filename)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, txture.width, txture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data.data());
 
-    write_dbg("GFX", "Opened " + filename + " image");
+    write_dbg("GFX", "Loaded " + filename + " image");
     return txture;
 }
 

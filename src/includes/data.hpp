@@ -14,7 +14,11 @@ namespace data2d {
     extern void load_textures();
 }
 
-enum{
+namespace data_fonts {
+    extern vector<string> font_paths;
+}
+
+enum{ // Texture
     NULL_TEX,
     LOGO,
     DIGIT1,
@@ -42,6 +46,10 @@ enum{
 
     // Menu textures
     BACKGROUND_TILE
+};
+
+enum{ // Fonts
+    EUROSTILE_ROMAN
 };
 
 #endif // DATA_H

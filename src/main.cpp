@@ -45,6 +45,10 @@ namespace data2d {
     }
 }
 
+namespace data_fonts {
+    vector<string> font_paths;
+}
+
 int main(){
     config::init();
 
@@ -73,7 +77,6 @@ int main(){
     data2d::textures_paths.push_back("actions/action_flip.png");
     data2d::textures_paths.push_back("ui/button_arrow.png");
     data2d::textures_paths.push_back("ui/buttons_line.png");
-
     // Skybox
     data2d::textures_paths.push_back("sky/up.png");
     data2d::textures_paths.push_back("sky/down.png");
@@ -82,6 +85,10 @@ int main(){
     data2d::textures_paths.push_back("sky/left.png");
     data2d::textures_paths.push_back("sky/right.png");
 
+    // Fonts
+    data_fonts::font_paths.push_back("assets/fonts/eurostile_roman.ttf");
+
+    gfx::load_font(data_fonts::font_paths[EUROSTILE_ROMAN],0);
     data2d::textures_paths.push_back("menu/background_tile.png");
 
     data2d::load_textures();

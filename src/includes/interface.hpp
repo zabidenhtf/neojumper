@@ -12,7 +12,8 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #include "system.hpp"
 #include "includes.hpp"
@@ -54,9 +55,11 @@ namespace gfx
     void set_ortho(int x, int y, int w, int h);
     void set_viewport(int x, int y, int w, int h);
     void init();
+    void load_font(string path, int id);
     void swap();
     void clear(double r, double g, double b);
     void draw_2d_quad(vec2 pos, vec2 size, vec4 color);
+    void draw_2d_text(vec2 pos, int font_size, string text);
     texture load_texture(const string &filename);
     void enable_texture(texture &txture);
     void disable_texture();
