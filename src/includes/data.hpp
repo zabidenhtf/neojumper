@@ -45,7 +45,18 @@ enum{ // Texture
     SKYBOX_RIGHT,
 
     // Menu textures
-    BACKGROUND_TILE
+    BACKGROUND_TILE,
+
+    // Button frame tiles
+    BUTTON_CENTER,
+    BUTTON_LEFT_TOP,
+    BUTTON_RIGHT_TOP,
+    BUTTON_MIDDLE_TOP,
+    BUTTON_MIDDLE_LEFT,
+    BUTTON_MIDDLE_RIGHT,
+    BUTTON_LEFT_BOTTOM,
+    BUTTON_RIGHT_BOTTOM,
+    BUTTON_MIDDLE_BOTTOM
 };
 
 enum{ // Fonts

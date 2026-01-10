@@ -61,12 +61,13 @@ int main(){
     gfx::blend_normal();
     input::init(gfx::get_window());
     // Load textures
+    // Game stuff
     data2d::textures_paths.push_back("menu/logo.png");
-    data2d::textures_paths.push_back("ui/digit1.png");
-    data2d::textures_paths.push_back("ui/digit2.png");
-    data2d::textures_paths.push_back("ui/digit3.png");
-    data2d::textures_paths.push_back("ui/message_go.png");
-    data2d::textures_paths.push_back("ui/message_excellent.png");
+    data2d::textures_paths.push_back("game/digit1.png");
+    data2d::textures_paths.push_back("game/digit2.png");
+    data2d::textures_paths.push_back("game/digit3.png");
+    data2d::textures_paths.push_back("game/message_go.png");
+    data2d::textures_paths.push_back("game/message_excellent.png");
     // Action buttons
     data2d::textures_paths.push_back("actions/action_kick_left_forward.png");
     data2d::textures_paths.push_back("actions/action_kick_right_forward.png");
@@ -75,8 +76,8 @@ int main(){
     data2d::textures_paths.push_back("actions/action_stand_left.png");
     data2d::textures_paths.push_back("actions/action_stand_right.png");
     data2d::textures_paths.push_back("actions/action_flip.png");
-    data2d::textures_paths.push_back("ui/button_arrow.png");
-    data2d::textures_paths.push_back("ui/buttons_line.png");
+    data2d::textures_paths.push_back("game/button_arrow.png");
+    data2d::textures_paths.push_back("game/buttons_line.png");
     // Skybox
     data2d::textures_paths.push_back("sky/up.png");
     data2d::textures_paths.push_back("sky/down.png");
@@ -84,13 +85,23 @@ int main(){
     data2d::textures_paths.push_back("sky/back.png");
     data2d::textures_paths.push_back("sky/left.png");
     data2d::textures_paths.push_back("sky/right.png");
+    // Menu
+    data2d::textures_paths.push_back("menu/background_tile.png");
+    // Button frame tiles
+    data2d::textures_paths.push_back("ui/button_center.png");
+    data2d::textures_paths.push_back("ui/button_left_top.png");
+    data2d::textures_paths.push_back("ui/button_right_top.png");
+    data2d::textures_paths.push_back("ui/button_middle_top.png");
+    data2d::textures_paths.push_back("ui/button_middle_left.png");
+    data2d::textures_paths.push_back("ui/button_middle_right.png");
+    data2d::textures_paths.push_back("ui/button_left_bottom.png");
+    data2d::textures_paths.push_back("ui/button_right_bottom.png");
+    data2d::textures_paths.push_back("ui/button_middle_bottom.png");
 
     // Fonts
     data_fonts::font_paths.push_back("assets/fonts/eurostile_roman.ttf");
 
     gfx::load_font(data_fonts::font_paths[EUROSTILE_ROMAN],0);
-    data2d::textures_paths.push_back("menu/background_tile.png");
-
     data2d::load_textures();
 
     scene = new scene_core();

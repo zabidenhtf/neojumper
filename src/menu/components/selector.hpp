@@ -21,6 +21,7 @@ enum{
 class menu_selector : public component{
 public:
     menu_selector();
+    void draw_button(vec2 pos, float height, int lenght, string text, vec4 color);
     virtual void reset();
     virtual void update(double tick);
     virtual void render();

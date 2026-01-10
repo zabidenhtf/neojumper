@@ -53,12 +53,44 @@ void menu_selector::update(double tick){
     render();
 }
 
+void menu_selector::draw_button(vec2 pos, float height, int lenght, string text, vec4 color){
+    float tile_size = height/3;
+    // Left part
+    gfx::enable_texture(data2d::textures[BUTTON_LEFT_TOP]);
+    gfx::draw_2d_quad(pos, vec2(tile_size,tile_size), color);
+    gfx::enable_texture(data2d::textures[BUTTON_MIDDLE_LEFT]);
+    gfx::draw_2d_quad(pos + vec2(0,tile_size), vec2(tile_size,tile_size), color);
+    gfx::enable_texture(data2d::textures[BUTTON_LEFT_BOTTOM]);
+    gfx::draw_2d_quad(pos + vec2(0,tile_size*2), vec2(tile_size,tile_size), color);
+    gfx::disable_texture();
+    for (int i = 0; i < lenght; i++){
+        // Center part
+        vec2 offset_pos = pos + vec2(tile_size*(i+1),0);
+        gfx::enable_texture(data2d::textures[BUTTON_MIDDLE_TOP]);
+        gfx::draw_2d_quad(offset_pos, vec2(tile_size,tile_size), color);
+        gfx::enable_texture(data2d::textures[BUTTON_CENTER]);
+        gfx::draw_2d_quad(offset_pos + vec2(0,tile_size), vec2(tile_size,tile_size), color);
+        gfx::enable_texture(data2d::textures[BUTTON_MIDDLE_BOTTOM]);
+        gfx::draw_2d_quad(offset_pos + vec2(0,tile_size*2), vec2(tile_size,tile_size), color);
+        gfx::disable_texture();
+    }
+    // Left part
+    vec2 offset_pos = pos + vec2(tile_size*(lenght+1),0);
+    gfx::enable_texture(data2d::textures[BUTTON_RIGHT_TOP]);
+    gfx::draw_2d_quad(offset_pos, vec2(tile_size,tile_size), color);
+    gfx::enable_texture(data2d::textures[BUTTON_MIDDLE_RIGHT]);
+    gfx::draw_2d_quad(offset_pos + vec2(0,tile_size), vec2(tile_size,tile_size), color);
+    gfx::enable_texture(data2d::textures[BUTTON_RIGHT_BOTTOM]);
+    gfx::draw_2d_quad(offset_pos + vec2(0,tile_size*2), vec2(tile_size,tile_size), color);
+    gfx::disable_texture();
+}
+
 void menu_selector::render(){
     int width = 300*gfx::screen_aspect();
     gfx::set_viewport(0,0,screen_width, screen_height);
     gfx::set_ortho(0,0, width,300);
     float frame_width = width/3;
-    float button_height = 24;
+    float button_height = 16;
     float frame_height = (button_height+8)*(button_selector_max+1);
 
     vec2 frame_pos = vec2(16,128);
@@ -71,16 +103,14 @@ void menu_selector::render(){
 
     for (int i = 0; i < button_selector_max + 1; i++){
         // buttons
-        gfx::enable_texture(data2d::textures[NULL_TEX]);
         vec4 color;
         // If selected change color
         if (i == button_selected_now){
             color = vec4(1,0,0,1);
         }
         else{
-            color = vec4(0.5,0.5,0.5,1);
-        }
-        gfx::draw_2d_quad(frame_pos + vec2(2, 4+(i*(button_height+8))), vec2(frame_width-4,button_height), color);
-        gfx::disable_texture();
+            color = vec4(1,1,1,1);
+        } 
+        draw_button(frame_pos + vec2(2, 4+i*(button_height+8)), button_height, 16, "Play", color); // TODO: remove magic number in lenght
     }
 }
