@@ -21,13 +21,19 @@ enum{
 class menu_selector : public component{
 public:
     menu_selector();
-    void draw_button(vec2 pos, float height, int lenght, string text, vec4 color);
+    void draw_selection(vec2 pos, vec2 size, string text, vec4 color, bool selected, double tick);
     virtual void reset();
     virtual void update(double tick);
     virtual void render();
+    void render_selections(double tick);
 private:
+    int width;
     int button_selector_max;
     int button_selector_min;
     int button_selected_now;
+    float frame_width;
+    float selection_height;
+    float frame_height;
+    vec2 frame_pos;
 };
 #endif

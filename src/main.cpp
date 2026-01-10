@@ -87,16 +87,10 @@ int main(){
     data2d::textures_paths.push_back("sky/right.png");
     // Menu
     data2d::textures_paths.push_back("menu/background_tile.png");
-    // Button frame tiles
-    data2d::textures_paths.push_back("ui/button_center.png");
-    data2d::textures_paths.push_back("ui/button_left_top.png");
-    data2d::textures_paths.push_back("ui/button_right_top.png");
-    data2d::textures_paths.push_back("ui/button_middle_top.png");
-    data2d::textures_paths.push_back("ui/button_middle_left.png");
-    data2d::textures_paths.push_back("ui/button_middle_right.png");
-    data2d::textures_paths.push_back("ui/button_left_bottom.png");
-    data2d::textures_paths.push_back("ui/button_right_bottom.png");
-    data2d::textures_paths.push_back("ui/button_middle_bottom.png");
+    // Selector stuff
+    data2d::textures_paths.push_back("ui/selection_state1.png");
+    data2d::textures_paths.push_back("ui/selection_state2.png");
+    data2d::textures_paths.push_back("ui/selection_state3.png");
 
     // Fonts
     data_fonts::font_paths.push_back("assets/fonts/eurostile_roman.ttf");

@@ -59,7 +59,8 @@ namespace gfx
     void swap();
     void clear(double r, double g, double b);
     void draw_2d_quad(vec2 pos, vec2 size, vec4 color);
-    void draw_2d_text(vec2 pos, int font_size, string text);
+    void draw_2d_text(vec2 pos, int font_size, string text, vec4 color);
+    int text_2d_width(int font_size, string text);
     texture load_texture(const string &filename);
     void enable_texture(texture &txture);
     void disable_texture();

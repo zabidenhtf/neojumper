@@ -228,13 +228,17 @@ void gfx::draw_2d_quad(vec2 pos, vec2 size, vec4 color){
     glBindVertexArray(0);
 }
 
-void gfx::draw_2d_text(vec2 pos, int font_size, string text){
+void gfx::draw_2d_text(vec2 pos, int font_size, string text, vec4 color){
     /* Render font texture HERE */
     for (int i = 0; i<text.length(); i++){
         gfx::enable_texture(data2d::textures[NULL_TEX]);
-        gfx::draw_2d_quad(pos + vec2(i*font_size,0), vec2(font_size,font_size), vec4(1,0,0,1));
+        gfx::draw_2d_quad(pos + vec2(i*font_size,0), vec2(font_size,font_size), color);
         gfx::disable_texture();
     }
+}
+
+int gfx::text_2d_width(int font_size, string text){
+    return text.length() * font_size;
 }
 
 texture gfx::load_texture(const string &filename)

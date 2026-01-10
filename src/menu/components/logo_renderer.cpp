@@ -24,6 +24,6 @@ void menu_logo::render(){
     //gfx::enable_texture(data2d::textures[LOGO]);
     //gfx::draw_2d_quad(vec2(8,15), vec2(i_width,i_height), vec4(1,1,1,1));
     // Yep, im will be testing fonts IN LOGO COMPONENT 0_0
-    gfx::draw_2d_text(vec2(8,15), 16, "TEXT");
+    gfx::draw_2d_text(vec2(8,15), 16, "TEXT", vec4(0,0,0,1));
     //gfx::disable_texture();
 }
