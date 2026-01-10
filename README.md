@@ -2,7 +2,11 @@ Warning, game now indev
 # Open Jumper - 3D game about jumpstyle dancing
 
 ## Description
-Open Jumper - 3D game about jumpstyle dancing
+Open Jumper - 3D game about jumpstyle dancing writed on C++ language. In game available 0 maps and 1 jumper (player).
+In game you can see
+- 3D graphics
+- Nice controls
+- Combo system
 
 ## Authors
 Mykyta Polishyk - main developer of game
