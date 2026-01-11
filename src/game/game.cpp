@@ -117,9 +117,11 @@ game_core::game_core(){
     warmup = new game_warmup();
     controls = new game_controls();
     message = new game_message();
+    hud = new game_hud();
     reset();
 }
 
+// Reseting all game stuff
 void game_core::reset(){
     score = 0;
     game_started = false;
@@ -127,16 +129,14 @@ void game_core::reset(){
     warmup->reset();
     controls->reset();
     message->reset();
+    hud->reset();
     controls->speed = now_dance.beat_speed;
     warmup->timer_time = WARMUP_TIME;
 }
 
 void game_core::update(double tick){
-    // Updating scene for first
     warmup->update(tick);
     controls->update(tick);
     message->update(tick);
-
-    string buffer = "Now score:" + to_string(score);
-    write_dbg("GAME", buffer);
+    hud->update(tick);
 }

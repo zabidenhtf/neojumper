@@ -10,6 +10,7 @@
 #include "components/warmup.hpp"
 #include "components/controls.hpp"
 #include "components/message.hpp"
+#include "components/hud.hpp"
 
 #include "interface.hpp"
 #include "system.hpp"
@@ -60,6 +61,7 @@ public:
     game_warmup *warmup;
     game_controls *controls;
     game_message *message;
+    game_hud *hud;
 };
 
 extern game_core *game;
