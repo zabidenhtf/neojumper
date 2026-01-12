@@ -261,17 +261,19 @@ void gfx::draw_2d_text(vec2 pos, int font_size, string text, vec4 color){
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         // Finally render (with size)
+        int x = g->bitmap_left;
+        int y = g->bitmap_top;
         int w = g->bitmap.width;
         int h = g->bitmap.rows;
 
         gfx::enable_texture(char_texture);
-        gfx::draw_2d_quad(pos + vec2(i*font_size,0), vec2(w,h), color);
+        gfx::draw_2d_quad(pos + vec2(x+i*font_size/1.5,-y+font_size), vec2(w,h), color);
         gfx::disable_texture();
     }
 }
 
 int gfx::text_2d_width(int font_size, string text){
-    return text.length() * font_size;
+    return text.length() * font_size/1.5;
 }
 
 texture gfx::load_texture(const string &filename)
