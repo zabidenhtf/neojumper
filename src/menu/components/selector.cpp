@@ -118,7 +118,7 @@ void menu_selector::render_selections(double tick){
         // buttons
         vec4 color;
         bool selected;
-        // For each button different text
+        // For each selection different text
         string button_labels[4] = {
             "Play",
             "Credits",

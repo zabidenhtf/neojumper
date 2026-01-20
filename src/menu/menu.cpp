@@ -9,6 +9,7 @@ menu_core::menu_core(){
     selector = new menu_selector();
     logo = new menu_logo();
     background = new menu_background();
+    copyright = new menu_copyright();
 }
 
 void menu_core::update(double tick){
@@ -17,4 +18,5 @@ void menu_core::update(double tick){
     background->update(tick);
     logo->update(tick);
     selector->update(tick);
+    copyright->update(tick);
 }

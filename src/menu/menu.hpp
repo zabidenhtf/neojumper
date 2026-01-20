@@ -11,6 +11,7 @@
 #include "components/logo_renderer.hpp"
 #include "components/background.hpp"
 #include "components/selector.hpp"
+#include "components/copyright.hpp"
 #include "menu_environment.hpp"
 
 enum MENU_STATES{
@@ -27,6 +28,7 @@ public:
     menu_selector *selector;
     menu_logo *logo;
     menu_background *background;
+    menu_copyright *copyright;
 };
 
 extern menu_core* menu;
