@@ -118,15 +118,23 @@ void menu_selector::render_selections(double tick){
         // buttons
         vec4 color;
         bool selected;
+        // For each button different text
+        string button_labels[4] = {
+            "Play",
+            "Credits",
+            "Settings",
+            "Exit"
+        };
+
         // If selected change color
         if (i == button_selected_now){
-            color = vec4(1,0,0,1);
+            color = vec4(0,0.75,0,1);
             selected = true;
         }
         else{
             color = vec4(0,0,0,1);
             selected = false;
         } 
-        draw_selection(frame_pos + vec2(0, 4+i*(selection_height+8)), vec2(frame_width, selection_height), "Play", color, selected, tick);
+        draw_selection(frame_pos + vec2(0, 4+i*(selection_height+8)), vec2(frame_width, selection_height), button_labels[i], color, selected, tick);
     }
 }
