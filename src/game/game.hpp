@@ -44,8 +44,11 @@ struct dance_sequence{
 vector<DANCE_MOVEMENTS> movements;
 DANCE_LEVELS level;
 int movements_count = 0;
-double beat_speed = 1; // Speed of movements
+double beat_speed = 0.6; // Speed of movements
 };
+
+// Melodies (now only 1 for test)
+extern sound melody;
 
 // main core, there is all game content
 class game_core{

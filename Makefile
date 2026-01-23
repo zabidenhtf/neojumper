@@ -25,6 +25,10 @@ FREETYPE_LIB_WIN64 = -Llib/freetype/lib -lfreetype
 FREETYPE_LIB_WIN32 = -Llib/freetype/lib32 -lfreetype
 FREETYPE_LIB_LINUX = -lfreetype
 
+SNDFILE_LIB_LINUX = -lsndfile
+
+OPENAL_LIB_LINUX = -lopenal
+
 BINARIES_GLFW_WIN64 = lib/bin/win64/glfw3.dll lib/bin/win64/zlib1.dll lib/bin/win64/libassimp-6.dll
 BINARIES_GLFW_WIN32 = lib/bin/win32/glfw3.dll
 
@@ -72,6 +76,8 @@ else ifeq ($(PLATFORM),LINUX)
 	$(CXXFLAGS) \
 	$(GLFW_LIB_LINUX) \
 	-I/usr/include/freetype2 $(FREETYPE_LIB_LINUX) \
+	$(OPENAL_LIB_LINUX) \
+	$(SNDFILE_LIB_LINUX) \
 	$(ZLIB_LIB_LINUX) \
 	$(ASSIMP_LIB_LINUX) \
 	$(PNG_LIB_LINUX) \

@@ -3,6 +3,8 @@
 /* See the LICENSE file for details. */
 #include "selector.hpp"
 #include "data.hpp"
+#include "../../game/game.hpp"
+#include "../../scene/scene.hpp"
 
 menu_selector::menu_selector(){
     write_dbg("SELECTOR", "Selector initialisated");
@@ -41,6 +43,8 @@ void menu_selector::update(double tick){
                 switch (button_selected_now){
                 case PLAY:
                     write_dbg("SELECTOR", "Selected play");
+                    game->reset();
+                    scene->reset();
                     game_enabled = true;
                     break;
                 case EXIT:

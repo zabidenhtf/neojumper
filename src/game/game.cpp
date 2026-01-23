@@ -33,6 +33,9 @@ int dance_binds[] = {
 vector<DANCE_MOVEMENTS> pattern_jump_leftside = {KICK_LEFT_FORWARD, KICK_LEFT_FORWARD, KICK_RIGHT_FORWARD, KICK_RIGHT_BACKWARD, STAND_LEFT}; // On keyboard Q Q E C A
 vector<DANCE_MOVEMENTS> pattern_flip_leftside = {KICK_LEFT_FORWARD, KICK_LEFT_FORWARD, FLIP}; // On keyboard Q Q Space
 
+// Melodies (now only 1 for test)
+sound melody;
+
 dance_sequence game_core::generate_dance(DANCE_LEVELS level){
     dance_sequence buffer;
     buffer.level = level;
@@ -118,7 +121,6 @@ game_core::game_core(){
     controls = new game_controls();
     message = new game_message();
     hud = new game_hud();
-    reset();
 }
 
 // Reseting all game stuff
@@ -130,6 +132,8 @@ void game_core::reset(){
     controls->reset();
     message->reset();
     hud->reset();
+    melody = audio::load_sound("music/SimpleJump.ogg");
+    melody.play_global();
     controls->speed = now_dance.beat_speed;
     warmup->timer_time = WARMUP_TIME;
 }

@@ -4,6 +4,7 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+// Third party GFX libs
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -17,6 +18,12 @@
 #include <assimp/postprocess.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
+// Third party AUDIO libs
+#include <AL/al.h>
+#include <AL/alc.h>
+#include <sndfile.h>
+#include <inttypes.h>
+#include <AL/alext.h>
 
 #include "system.hpp"
 #include "includes.hpp"
@@ -50,6 +57,36 @@ struct texture{
     int height;
 };
 
+struct sound{
+    string path;
+    ALuint sound_buffer;
+    ALuint sound_source;
+    void play_global(){
+        // Sound configuration
+        alGenSources(1, &sound_source);
+        alSourcef(sound_source, AL_PITCH, 1.0f);
+        alSourcef(sound_source, AL_GAIN, 1.0f);
+        alSourcei(sound_source, AL_SOURCE_RELATIVE, AL_TRUE); // Global sound
+        alSource3f(sound_source, AL_POSITION, 0.0f, 0.0f, 0.0f);
+        alSourcei(sound_source, AL_BUFFER, this->sound_buffer);
+        alSourcePlay(sound_source);
+        write_dbg("AUDIO", "Playing " + path);
+    };
+    void play(vec3 pos){
+        // Sound configuration
+        alGenSources(1, &sound_source);
+        alSourcef(sound_source, AL_PITCH, 1.0f);
+        alSourcef(sound_source, AL_GAIN, 1.0f);
+        alSource3f(sound_source, AL_POSITION, pos.x, pos.y, pos.z);
+        alSourcei(sound_source, AL_BUFFER, this->sound_buffer);
+        alSourcePlay(sound_source);
+        write_dbg("AUDIO", "Playing " + path);
+    };
+    void stop(){
+        alSourceStop(sound_source);
+    };
+};
+
 // Interface GFX
 namespace gfx
 {
@@ -70,7 +107,7 @@ namespace gfx
     void blend_normal();
     void blend_additive();
     void kill();
-    // 3D stuff of my 3D Openjumper engine
+    // 3D stuff of my 3D Neojumper engine
     void set_camera(vec3 pos, vec3 look_at, double fov);
     void draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double yaw, double roll, bool have_lighting=true); // Just quad, but in 3D
     void draw_3d_box(vec3 pos, vec3 size, vec4 color);
@@ -86,6 +123,14 @@ namespace input
     bool button_pressed(int key);
     int last_button_pressed();
     void clear();
+}
+
+// Interface AUDIO
+namespace audio{
+    void init();
+    sound load_sound(string path);
+    void play_sound();
+    void kill();
 }
 
 #endif // INTERFACE_H

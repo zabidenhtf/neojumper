@@ -60,6 +60,7 @@ int main(){
 
     gfx::init();
     gfx::blend_normal();
+    audio::init();
     input::init(gfx::get_window());
     // Load textures
     // Game stuff
@@ -124,13 +125,9 @@ int main(){
         if (game_enabled == true){
             if (input::button_pressed(GLFW_KEY_ESCAPE)){
                 game_enabled = false;
+                melody.stop();
             }
         }
-
-        //if (input::button_pressed(GLFW_KEY_ENTER)){
-        //    game->reset();
-        //    scene->reset();
-        //}
 
         input::clear();
         gfx::swap();
