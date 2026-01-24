@@ -24,6 +24,7 @@ namespace data2d {
     vector<string> textures_paths;
     vector<texture> textures;
     void load_textures(){
+        // Simple null texture
         GLuint null_tex_id;
         glGenTextures(1, &null_tex_id);
         glBindTexture(GL_TEXTURE_2D, null_tex_id);
@@ -39,7 +40,7 @@ namespace data2d {
         null_tex.width = 1;
         null_tex.height = 1;
         data2d::textures.push_back(null_tex);
-        for (long long unsigned int i = 0; i<data2d::textures_paths.size(); i++){
+        for (int i = 0; i<data2d::textures_paths.size(); i++){
             data2d::textures.push_back(gfx::load_texture("assets/" + data2d::textures_paths[i]));
         }
     }
@@ -47,6 +48,16 @@ namespace data2d {
 
 namespace data_fonts {
     vector<string> font_paths;
+}   
+
+namespace data_audio {
+    vector<string> sounds_paths;
+    vector<sound_data> sounds;
+    void load_audio(){
+        for (int i = 0; i<data_audio::sounds_paths.size(); i++){
+            sounds.push_back(audio::load_sound("sounds/" + data_audio::sounds_paths[i])); // Pushing audio datas to vector
+        }
+    }
 }
 
 int main(){
@@ -94,11 +105,16 @@ int main(){
     data2d::textures_paths.push_back("ui/selection_state2.png");
     data2d::textures_paths.push_back("ui/selection_state3.png");
 
+    // Audio
+    // Melodies
+    data_audio::sounds_paths.push_back("music/SimpleJump.ogg");
+
     // Fonts
     data_fonts::font_paths.push_back("assets/fonts/eurostile_roman.ttf");
 
     gfx::load_font(data_fonts::font_paths[EUROSTILE_ROMAN],0);
     data2d::load_textures();
+    data_audio::load_audio();
 
     scene = new scene_core();
     game = new game_core();

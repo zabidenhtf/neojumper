@@ -57,9 +57,13 @@ struct texture{
     int height;
 };
 
-struct sound{
+struct sound_data{
     string path;
     ALuint sound_buffer;
+};
+
+struct sound{
+    sound_data data;
     ALuint sound_source;
     void play_global(){
         // Sound configuration
@@ -68,9 +72,9 @@ struct sound{
         alSourcef(sound_source, AL_GAIN, 1.0f);
         alSourcei(sound_source, AL_SOURCE_RELATIVE, AL_TRUE); // Global sound
         alSource3f(sound_source, AL_POSITION, 0.0f, 0.0f, 0.0f);
-        alSourcei(sound_source, AL_BUFFER, this->sound_buffer);
+        alSourcei(sound_source, AL_BUFFER, data.sound_buffer);
         alSourcePlay(sound_source);
-        write_dbg("AUDIO", "Playing " + path);
+        write_dbg("AUDIO", "Playing global " + data.path);
     };
     void play(vec3 pos){
         // Sound configuration
@@ -78,9 +82,9 @@ struct sound{
         alSourcef(sound_source, AL_PITCH, 1.0f);
         alSourcef(sound_source, AL_GAIN, 1.0f);
         alSource3f(sound_source, AL_POSITION, pos.x, pos.y, pos.z);
-        alSourcei(sound_source, AL_BUFFER, this->sound_buffer);
+        alSourcei(sound_source, AL_BUFFER, data.sound_buffer);
         alSourcePlay(sound_source);
-        write_dbg("AUDIO", "Playing " + path);
+        write_dbg("AUDIO", "Playing " + data.path);
     };
     void stop(){
         alSourceStop(sound_source);
@@ -128,7 +132,7 @@ namespace input
 // Interface AUDIO
 namespace audio{
     void init();
-    sound load_sound(string path);
+    sound_data load_sound(string path);
     void play_sound();
     void kill();
 }

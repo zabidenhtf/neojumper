@@ -2,6 +2,7 @@
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
 #include "game.hpp"
+#include "data.hpp"
 
 // To generate dance
 DANCE_MOVEMENTS movements_list[] = {
@@ -132,7 +133,7 @@ void game_core::reset(){
     controls->reset();
     message->reset();
     hud->reset();
-    melody = audio::load_sound("music/SimpleJump.ogg");
+    melody.data = data_audio::sounds[INGAME_MELODY1];
     melody.play_global();
     controls->speed = now_dance.beat_speed;
     warmup->timer_time = WARMUP_TIME;

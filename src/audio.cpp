@@ -31,11 +31,11 @@ void audio::init(){
 	write_dbg("AUDIO", text_buffer);
 }
 
-sound audio::load_sound(string filename){
+sound_data audio::load_sound(string filename){
 	// SO BIG THANKS FOR codetechandtutorials github user!
 	ALenum err, format;
 	ALuint buffer;
-	sound s_buffer;
+	sound_data s_buffer;
 	SNDFILE* sndfile;
 	SF_INFO sfinfo;
 	short* membuf;

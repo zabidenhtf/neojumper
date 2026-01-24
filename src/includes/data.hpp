@@ -18,7 +18,14 @@ namespace data_fonts {
     extern vector<string> font_paths;
 }
 
-enum{ // Texture
+// Audio stuff
+namespace data_audio {
+    extern vector<string> sounds_paths;
+    extern vector<sound_data> sounds;
+    extern void load_audio();
+}
+
+enum{ // Textures
     NULL_TEX,
     LOGO,
     DIGIT1,
@@ -55,6 +62,10 @@ enum{ // Texture
 
 enum{ // Fonts
     EUROSTILE_ROMAN
+};
+
+enum{ // Sounds
+    INGAME_MELODY1
 };
 
 #endif // DATA_H
