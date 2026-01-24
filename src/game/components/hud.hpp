@@ -11,9 +11,13 @@
 class game_hud : public component{
 public:
 	game_hud();
-	virtual void reset(){return;}; // Lol, this just a render of score
+	virtual void reset(); // Lol, this just a render of score
 	virtual void update(double tick);
 	virtual void render();
+private:
+	int tile_width;
+	int tile_height;
+	int height;
 };
 
 #endif

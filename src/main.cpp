@@ -104,6 +104,8 @@ int main(){
     data2d::textures_paths.push_back("ui/selection_state1.png");
     data2d::textures_paths.push_back("ui/selection_state2.png");
     data2d::textures_paths.push_back("ui/selection_state3.png");
+    // Hud stuff
+    data2d::textures_paths.push_back("hud/hud_bar_tile.png");
 
     // Audio
     // Melodies

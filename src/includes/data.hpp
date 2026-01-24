@@ -57,7 +57,10 @@ enum{ // Textures
     // Selector stuff
     SELECTION_STATE1,
     SELECTION_STATE2,
-    SELECTION_STATE3
+    SELECTION_STATE3,
+
+    // Hud stuff
+    HUD_BAR_TILE
 };
 
 enum{ // Fonts
