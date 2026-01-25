@@ -35,6 +35,7 @@ inline int screen_height;
 inline int shadow_resolution;
 inline float fov;
 inline string fullscreen;
+inline int sound_volume;
 
 extern vector<int> key_buffer; // keys buffer, it need to save keys
 
@@ -69,7 +70,7 @@ struct sound{
         // Sound configuration
         alGenSources(1, &sound_source);
         alSourcef(sound_source, AL_PITCH, 1.0f);
-        alSourcef(sound_source, AL_GAIN, 1.0f);
+        alSourcef(sound_source, AL_GAIN, static_cast<float>(sound_volume/100));
         alSourcei(sound_source, AL_SOURCE_RELATIVE, AL_TRUE); // Global sound
         alSource3f(sound_source, AL_POSITION, 0.0f, 0.0f, 0.0f);
         alSourcei(sound_source, AL_BUFFER, data.sound_buffer);
@@ -80,7 +81,7 @@ struct sound{
         // Sound configuration
         alGenSources(1, &sound_source);
         alSourcef(sound_source, AL_PITCH, 1.0f);
-        alSourcef(sound_source, AL_GAIN, 1.0f);
+        alSourcef(sound_source, AL_GAIN, static_cast<float>(sound_volume/100));
         alSource3f(sound_source, AL_POSITION, pos.x, pos.y, pos.z);
         alSourcei(sound_source, AL_BUFFER, data.sound_buffer);
         alSourcePlay(sound_source);

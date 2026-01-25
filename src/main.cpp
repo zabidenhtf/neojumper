@@ -68,6 +68,7 @@ int main(){
     fov = stoi(string(config::load_data("GFX", "fov", "90")));
     fullscreen = string(config::load_data("GFX", "fullscreen", "False"));
     shadow_resolution = stoi(string(config::load_data("GFX", "shadow_resolution", "512")));
+    sound_volume = stoi(string(config::load_data("AUDIO", "volume", "100")));
 
     gfx::init();
     gfx::blend_normal();
