@@ -40,4 +40,8 @@ void scene_environment::render(){
     gfx::enable_texture(data2d::textures[NULL_TEX]);
     gfx::set_camera(vec3(cam_pos_x,2,cam_pos_z), vec3(0,0,0), fov);
     gfx::draw_3d_plane(vec3(scene->scene_pos.x,0,scene->scene_pos.y), scene->scene_size,vec4(1,0,0,1), 0,90,0);
+
+    // Debug model render
+    model3D teapot = gfx::load_model("assets/models/teapot/teapot.obj");
+    gfx::draw_3d_model(teapot ,vec3(2,1.3,2),vec3(1,1,1), vec4(0,1,0,1), 0,0,0);
 }

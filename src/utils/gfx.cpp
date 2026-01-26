@@ -407,6 +407,45 @@ void gfx::set_camera(vec3 pos, vec3 look_at, double fov){
     glUniformMatrix4fv(glGetUniformLocation(shader3D, "view"), 1, GL_FALSE, value_ptr(view3D));
 }
 
+void gfx::draw_3d_model(model3D object_model, vec3 pos, vec3 size, vec4 color, double pitch, double yaw, double roll, bool have_lighting){
+    glEnable(GL_DEPTH_TEST);
+    glUseProgram(shader3D);
+
+    glUniform1i(glGetUniformLocation(shader3D, "tex"), 0);
+
+    // Shader params
+    glUniform4fv(glGetUniformLocation(shader3D, "objectColor"), 1, value_ptr(color));
+    glUniform3fv(glGetUniformLocation(shader3D, "lightPos"), 1, value_ptr(light_pos));
+    glUniform3fv(glGetUniformLocation(shader3D, "viewPos"), 1, value_ptr(cam_pos));
+
+    int buffer;
+    // Bool -> int
+    if (have_lighting == true){
+        buffer = 1;
+    }
+    else{
+        buffer = 0;
+    }
+
+    glUniform1i(glGetUniformLocation(shader3D, "HaveLighting"), buffer);
+
+    glUniform1i(glGetUniformLocation(shader3D, "HaveLighting"), buffer);
+
+    // model
+    mat4 model = mat4(1.0f);
+    model = translate(model, pos);
+    model = rotate(model, float(radians(roll)), vec3(0, 0, 1));
+    model = rotate(model, float(radians(yaw)), vec3(1, 0, 0));
+    model = rotate(model, float(radians(pitch)), vec3(0, 1, 0));
+    model = scale(model, size);
+    glUniformMatrix4fv(glGetUniformLocation(shader3D, "model"), 1, GL_FALSE, value_ptr(model));
+
+    // Render
+    glBindVertexArray(object_model.VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+
 void gfx::draw_3d_plane(vec3 pos, vec2 size, vec4 color, double pitch, double yaw, double roll, bool have_lighting) {
     glEnable(GL_DEPTH_TEST);
     glUseProgram(shader3D);
@@ -453,6 +492,70 @@ void gfx::draw_3d_box(vec3 pos, vec3 size, vec4 color) {
     draw_3d_plane(pos + vec3(-half.x,0,0), vec2(size.z, size.y), color, 90, 0, 0); // left
     draw_3d_plane(pos + vec3(half.x,0,0), vec2(size.z, size.y), color, 90, 0, 0); // right
 }
+
+model3D gfx::load_model(const string filename){
+    model3D buffer;
+    
+    vector<vertex3D> vertices;
+    vector<GLuint> indices;
+
+    // Creating VAO
+    glGenVertexArrays(1, &buffer.VAO);
+    glBindVertexArray(buffer.VAO);
+    glGenBuffers(1, &buffer.VBO);
+    glGenBuffers(1, &buffer.EBO);
+
+    glBindVertexArray(buffer.VAO);
+
+    // Reading model
+    const aiScene* scene = importer.ReadFile(filename.c_str(), aiProcess_Triangulate);
+    aiMesh* mesh;
+    if (scene){
+        mesh = scene->mMeshes[0];
+    }
+    else{
+        write_dbg("GFX", "Failed to parsing model");
+        return buffer;
+    }
+    // Put mesh's vertices into vertices vector
+    for(GLuint i = 0; i < mesh->mNumVertices; i++){
+        vertex3D vertex_buff;
+        vertex_buff.pos = vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z); // Writing position
+        if (mesh->HasNormals()){
+            vertex_buff.normal = vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z); // Writing normals
+        }
+        if (mesh->mTextureCoords[0]){
+            vertex_buff.tex = vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y); // Writing texture coords
+        }
+        vertices.push_back(vertex_buff);
+    }
+    // Put mesh's faces into indices vector
+    for (GLuint i = 0; i < mesh->mNumFaces; i++) {
+        aiFace face = mesh->mFaces[i];
+        for (GLuint j = 0; j < face.mNumIndices; j++)
+            indices.push_back(face.mIndices[j]);
+    }
+    glBindBuffer(GL_ARRAY_BUFFER, buffer.VBO);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertex3D), &vertices[0], GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex3D), (void*)0);
+    // Normals
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex3D), (void*)offsetof(vertex3D, normal));
+    // TexCoords
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex3D), (void*)offsetof(vertex3D, tex));
+
+    // Closing
+    glBindVertexArray(0);
+    return buffer;
+}
+
+// TODO: ADD LOAD_PLANE AND LOAD_QUAD FUNCTIONS
 
 void gfx::set_light(vec3 pos, vec3 look_at, vec4 color){
     light_pos = pos;
