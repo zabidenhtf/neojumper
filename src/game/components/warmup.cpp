@@ -46,22 +46,22 @@ void game_warmup::render(){
 
     switch (state){
     case 4:
-        gfx::enable_texture(data2d::textures[DIGIT3]);
+        gfx::enable_texture(data::textures::textures[DIGIT3]);
         gfx::draw_2d_quad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
         gfx::disable_texture();
         break;
     case 3:
-        gfx::enable_texture(data2d::textures[DIGIT2]);
+        gfx::enable_texture(data::textures::textures[DIGIT2]);
         gfx::draw_2d_quad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
         gfx::disable_texture();
         break;
     case 2:
-        gfx::enable_texture(data2d::textures[DIGIT1]);
+        gfx::enable_texture(data::textures::textures[DIGIT1]);
         gfx::draw_2d_quad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
         gfx::disable_texture();
         break;
     case 1:
-        gfx::enable_texture(data2d::textures[MESSAGE_GO]);
+        gfx::enable_texture(data::textures::textures[MESSAGE_GO]);
         gfx::draw_2d_quad(vec2(width/2-digit_size,150-digit_size/2),vec2(digit_size*2,digit_size), vec4(1,1,1,1)); // fixed size
         gfx::disable_texture();
         break;

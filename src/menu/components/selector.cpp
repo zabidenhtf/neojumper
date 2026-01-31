@@ -98,7 +98,7 @@ void menu_selector::draw_selection(vec2 pos, vec2 size, string text, vec4 color,
         }
         // Draw arrows
         // Left
-        gfx::enable_texture(data2d::textures[indecator_textures[selection_indecator_id]]);
+        gfx::enable_texture(data::textures::textures[indecator_textures[selection_indecator_id]]);
         gfx::draw_2d_quad(pos + vec2(text_x_pos-size.y*2, 0), vec2(size.y*2,size.y), vec4(1,1,1,1));
         // Right
         gfx::draw_2d_quad(pos + vec2(text_x_pos+gfx::text_2d_width(size.y, text) + size.y*2, 0), vec2(-size.y*2,size.y), vec4(1,1,1,1));
@@ -110,7 +110,7 @@ void menu_selector::render(){
     gfx::set_viewport(0,0,screen_width, screen_height);
     gfx::set_ortho(0,0, width,300);
 
-    gfx::enable_texture(data2d::textures[NULL_TEX]);
+    gfx::enable_texture(data::textures::textures[NULL_TEX]);
     // Frame with excellent borders
     gfx::draw_2d_quad(frame_pos - vec2(1,1), vec2(frame_width+2,frame_height+2), vec4(0,0,0,1));
     gfx::draw_2d_quad(frame_pos, vec2(frame_width,frame_height), vec4(1,1,1,1));

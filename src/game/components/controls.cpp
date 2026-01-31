@@ -83,7 +83,7 @@ void game_controls::render(){
 
     // pretty line
     for (int i = 0; i<screen_width/64; i++){
-        gfx::enable_texture(data2d::textures[BUTTONS_LINE]);
+        gfx::enable_texture(data::textures::textures[BUTTONS_LINE]);
         gfx::draw_2d_quad(vec2(i*64, height-size/2-4), vec2(64, 8),vec4(1,1,1,1));
         gfx::disable_texture();
     }
@@ -93,25 +93,25 @@ void game_controls::render(){
         if (i + step < game->now_dance.movements.size()){
             switch (game->now_dance.movements[i+step]){
                 case KICK_LEFT_FORWARD:
-                    gfx::enable_texture(data2d::textures[ACTION_KICK_LEFT_FORWARD]);
+                    gfx::enable_texture(data::textures::textures[ACTION_KICK_LEFT_FORWARD]);
                     break;
                 case KICK_RIGHT_FORWARD:
-                    gfx::enable_texture(data2d::textures[ACTION_KICK_RIGHT_FORWARD]);
+                    gfx::enable_texture(data::textures::textures[ACTION_KICK_RIGHT_FORWARD]);
                     break;
                 case KICK_LEFT_BACKWARD:
-                    gfx::enable_texture(data2d::textures[ACTION_KICK_LEFT_BACKWARD]);
+                    gfx::enable_texture(data::textures::textures[ACTION_KICK_LEFT_BACKWARD]);
                     break;
                 case KICK_RIGHT_BACKWARD:
-                    gfx::enable_texture(data2d::textures[ACTION_KICK_RIGHT_BACKWARD]);
+                    gfx::enable_texture(data::textures::textures[ACTION_KICK_RIGHT_BACKWARD]);
                     break;
                 case STAND_LEFT:
-                    gfx::enable_texture(data2d::textures[ACTION_STAND_LEFT]);
+                    gfx::enable_texture(data::textures::textures[ACTION_STAND_LEFT]);
                     break;
                 case STAND_RIGHT:
-                    gfx::enable_texture(data2d::textures[ACTION_STAND_RIGHT]);
+                    gfx::enable_texture(data::textures::textures[ACTION_STAND_RIGHT]);
                     break;
                 case FLIP:
-                    gfx::enable_texture(data2d::textures[ACTION_FLIP]);
+                    gfx::enable_texture(data::textures::textures[ACTION_FLIP]);
                     break;
             }
             float x = i*(size+distance);
@@ -121,7 +121,7 @@ void game_controls::render(){
         }
     }
     // helpfull arrow
-    gfx::enable_texture(data2d::textures[BUTTON_ARROW]);
+    gfx::enable_texture(data::textures::textures[BUTTON_ARROW]);
     gfx::draw_2d_quad(vec2(size/8, height-size), vec2(size/4, size/4),vec4(1,1,1,1));
     gfx::disable_texture();
 }

@@ -33,7 +33,7 @@ void game_message::render(){
     float m_height = 150*time;
     float m_width = m_height*2;
 
-    gfx::enable_texture(data2d::textures[txture]);
+    gfx::enable_texture(data::textures::textures[txture]);
     gfx::draw_2d_quad(vec2(width/2-m_width/2,150-m_height/2),vec2(m_width,m_height), vec4(1,1,1,1));
     gfx::disable_texture();
 }

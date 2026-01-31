@@ -10,8 +10,8 @@ game_hud::game_hud(){
 }
 
 void game_hud::reset(){
-	tile_width = data2d::textures[HUD_BAR_TILE].width;
-	tile_height = data2d::textures[HUD_BAR_TILE].height;
+	tile_width = data::textures::textures[HUD_BAR_TILE].width;
+	tile_height = data::textures::textures[HUD_BAR_TILE].height;
 	height = 2;
 }
 
@@ -24,7 +24,7 @@ void game_hud::render(){
     gfx::set_ortho(0,0, screen_width,screen_height);
 
     // Drawing tiled bar at top
-	gfx::enable_texture(data2d::textures[HUD_BAR_TILE]);
+	gfx::enable_texture(data::textures::textures[HUD_BAR_TILE]);
 	for (int y = 0; y<height; y++){
 		for (int x = 0; x<screen_width/tile_width; x++){
 			gfx::draw_2d_quad(vec2(x*tile_width,y*tile_height), vec2(tile_width, tile_height), vec4(1,1,1,1));

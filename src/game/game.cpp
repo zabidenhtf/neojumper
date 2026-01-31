@@ -133,7 +133,7 @@ void game_core::reset(){
     controls->reset();
     message->reset();
     hud->reset();
-    melody.data = data_audio::sounds[INGAME_MELODY1];
+    melody.data = data::audio::sounds[INGAME_MELODY1];
     melody.play_global();
     controls->speed = now_dance.beat_speed;
     warmup->timer_time = WARMUP_TIME;

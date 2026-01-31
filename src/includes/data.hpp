@@ -7,22 +7,22 @@
 #include "interface.hpp"
 #include "includes.hpp"
 
-// 2D stuff
-namespace data2d {
-    extern vector<string> textures_paths;
-    extern vector<texture> textures;
-    extern void load_textures();
-}
-
-namespace data_fonts {
-    extern vector<string> font_paths;
-}
-
-// Audio stuff
-namespace data_audio {
-    extern vector<string> sounds_paths;
-    extern vector<sound_data> sounds;
-    extern void load_audio();
+namespace data{
+    namespace textures{
+        inline vector<string> textures_paths;
+        inline vector<texture> textures; // TODO: rename as data
+        extern void push_path(string path);
+        extern void load_textures();
+    }
+    namespace fonts{
+        inline vector<string> font_paths;
+    }
+    namespace audio{
+        inline vector<string> sounds_paths;
+        inline vector<sound_data> sounds;
+        extern void push_path(string path);
+        extern void load_audio();
+    }
 }
 
 enum{ // Textures
