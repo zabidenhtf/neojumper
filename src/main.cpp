@@ -21,6 +21,8 @@ scene_core* scene = nullptr;
 bool game_enabled = false;
 
 int main(){
+    // Initializating
+    Data = new DataSystem();
     config::init();
 
     screen_width = stoi(string(config::load_data("GFX", "screen_width", "800")));
@@ -36,49 +38,49 @@ int main(){
     input::init(gfx::get_window());
     // Load textures
     // Game stuff
-    data::textures::push_path("menu/logo.png");
-    data::textures::push_path("game/digit1.png");
-    data::textures::push_path("game/digit2.png");
-    data::textures::push_path("game/digit3.png");
-    data::textures::push_path("game/message_go.png");
-    data::textures::push_path("game/message_excellent.png");
+    Data->PushTexturePath("menu/logo.png");
+    Data->PushTexturePath("game/digit1.png");
+    Data->PushTexturePath("game/digit2.png");
+    Data->PushTexturePath("game/digit3.png");
+    Data->PushTexturePath("game/message_go.png");
+    Data->PushTexturePath("game/message_excellent.png");
     // Action buttons
-    data::textures::push_path("actions/action_kick_left_forward.png");
-    data::textures::push_path("actions/action_kick_right_forward.png");
-    data::textures::push_path("actions/action_kick_left_backward.png");
-    data::textures::push_path("actions/action_kick_right_backward.png");
-    data::textures::push_path("actions/action_stand_left.png");
-    data::textures::push_path("actions/action_stand_right.png");
-    data::textures::push_path("actions/action_flip.png");
-    data::textures::push_path("game/button_arrow.png");
-    data::textures::push_path("game/buttons_line.png");
+    Data->PushTexturePath("actions/action_kick_left_forward.png");
+    Data->PushTexturePath("actions/action_kick_right_forward.png");
+    Data->PushTexturePath("actions/action_kick_left_backward.png");
+    Data->PushTexturePath("actions/action_kick_right_backward.png");
+    Data->PushTexturePath("actions/action_stand_left.png");
+    Data->PushTexturePath("actions/action_stand_right.png");
+    Data->PushTexturePath("actions/action_flip.png");
+    Data->PushTexturePath("game/button_arrow.png");
+    Data->PushTexturePath("game/buttons_line.png");
     // Skybox
-    data::textures::push_path("sky/up.png");
-    data::textures::push_path("sky/down.png");
-    data::textures::push_path("sky/front.png");
-    data::textures::push_path("sky/back.png");
-    data::textures::push_path("sky/left.png");
-    data::textures::push_path("sky/right.png");
+    Data->PushTexturePath("sky/up.png");
+    Data->PushTexturePath("sky/down.png");
+    Data->PushTexturePath("sky/front.png");
+    Data->PushTexturePath("sky/back.png");
+    Data->PushTexturePath("sky/left.png");
+    Data->PushTexturePath("sky/right.png");
     // Menu
-    data::textures::push_path("menu/background_tile.png");
+    Data->PushTexturePath("menu/background_tile.png");
     // Selector stuff
-    data::textures::push_path("ui/selection_state1.png");
-    data::textures::push_path("ui/selection_state2.png");
-    data::textures::push_path("ui/selection_state3.png");
+    Data->PushTexturePath("ui/selection_state1.png");
+    Data->PushTexturePath("ui/selection_state2.png");
+    Data->PushTexturePath("ui/selection_state3.png");
     // Hud stuff
-    data::textures::push_path("hud/hud_bar_tile.png");
+    Data->PushTexturePath("hud/hud_bar_tile.png");
 
     // Audio
     // Melodies
-    data::audio::push_path("music/SimpleJump.ogg");
+    Data->PushSoundPath("music/SimpleJump.ogg");
 
+    // On some time abonded
     // Fonts
-    data::fonts::font_paths.push_back("assets/fonts/eurostile_roman.ttf");
+    //data::fonts::font_paths.push_back("assets/fonts/eurostile_roman.ttf");
 
     // Loading all stuff
-    gfx::load_font(data::fonts::font_paths[EUROSTILE_ROMAN],0);
-    data::textures::load_textures();
-    data::audio::load_audio();
+    gfx::load_font("assets/fonts/eurostile_roman.ttf",0);
+    Data->LoadEverything();
 
     scene = new scene_core();
     game = new game_core();

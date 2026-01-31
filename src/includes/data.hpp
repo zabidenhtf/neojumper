@@ -1,29 +1,33 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#ifndef DATA_H
-#define DATA_H
-
 #include "interface.hpp"
 #include "includes.hpp"
 
-namespace data{
-    namespace textures{
-        inline vector<string> textures_paths;
-        inline vector<texture> textures; // TODO: rename as data
-        extern void push_path(string path);
-        extern void load_textures();
-    }
-    namespace fonts{
-        inline vector<string> font_paths;
-    }
-    namespace audio{
-        inline vector<string> sounds_paths;
-        inline vector<sound_data> sounds;
-        extern void push_path(string path);
-        extern void load_audio();
-    }
-}
+#pragma once
+
+class DataSystem{
+public:
+    DataSystem();
+    // Get functions
+    texture GetTextureByID(int ID);
+    sound_data GetSoundByID(int ID);
+    // Push functions
+    void PushTexturePath(string Path);
+    void PushSoundPath(string Path);
+    // Load functions
+    void LoadEverything();
+    void LoadTextures();
+    void LoadSounds();
+private:
+    // Data
+    vector<string> TexturesPaths;
+    vector<texture> Textures;
+    vector<string> SoundPaths;
+    vector<sound_data> Sounds;
+};
+
+extern DataSystem *Data; // Global data pointer
 
 enum{ // Textures
     NULL_TEX,
@@ -70,5 +74,3 @@ enum{ // Fonts
 enum{ // Sounds
     INGAME_MELODY1
 };
-
-#endif // DATA_H

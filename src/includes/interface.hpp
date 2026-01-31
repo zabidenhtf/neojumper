@@ -111,7 +111,7 @@ namespace gfx
     void draw_2d_text(vec2 pos, int text_size, int text_resolution, string text, vec4 color);
     int text_2d_width(int text_size, string text);
     texture load_texture(const string &filename);
-    void enable_texture(texture &txture);
+    void enable_texture(texture txture);
     void disable_texture();
     double screen_aspect();
     void blend_normal();

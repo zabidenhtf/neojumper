@@ -17,11 +17,11 @@ void menu_logo::render(){
     gfx::set_viewport(0,0,screen_width, screen_height);
     gfx::set_ortho(0,0, width,300);
     // Last commit in 2025 year
-    float image_aspect = static_cast<double>(data::textures::textures[LOGO].width) /  static_cast<double>(data::textures::textures[LOGO].height);
+    float image_aspect = static_cast<double>(Data->GetTextureByID(LOGO).width) /  static_cast<double>(Data->GetTextureByID(LOGO).height);
     float i_height = 300/3;
     float i_width = i_height*image_aspect;
 
-    gfx::enable_texture(data::textures::textures[LOGO]);
+    gfx::enable_texture(Data->GetTextureByID(LOGO));
     gfx::draw_2d_quad(vec2(8,15), vec2(i_width,i_height), vec4(1,1,1,1));
     gfx::disable_texture();
 }

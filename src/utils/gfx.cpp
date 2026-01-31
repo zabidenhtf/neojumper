@@ -362,7 +362,7 @@ texture gfx::load_texture(const string &filename)
     return txture;
 }
 
-void gfx::enable_texture(texture &txture){
+void gfx::enable_texture(texture txture){
     glUseProgram(shader2D);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, txture.texture_id);
@@ -567,17 +567,17 @@ void gfx::draw_skybox(){
     vec3 size = vec3(16,16,16);
     vec3 half = size * 0.5f;
 
-    enable_texture(data::textures::textures[SKYBOX_DOWN]);
+    enable_texture(Data->GetTextureByID(SKYBOX_DOWN));
     draw_3d_plane(cam_pos + vec3(0,-half.y,0), vec2(size.x, size.z), vec4(1,1,1,1), 0, 90, 180, false); // bottom
-    enable_texture(data::textures::textures[SKYBOX_UP]);
+    enable_texture(Data->GetTextureByID(SKYBOX_UP));
     draw_3d_plane(cam_pos + vec3(0,half.y,0), vec2(size.x, size.z), vec4(1,1,1,1), 0, 90, 180, false); // top
-    enable_texture(data::textures::textures[SKYBOX_FRONT]);
+    enable_texture(Data->GetTextureByID(SKYBOX_FRONT));
     draw_3d_plane(cam_pos + vec3(0,0,half.z), vec2(size.x, size.y), vec4(1,1,1,1), 0, 0, 180, false); // front
-    enable_texture(data::textures::textures[SKYBOX_BACK]);
+    enable_texture(Data->GetTextureByID(SKYBOX_BACK));
     draw_3d_plane(cam_pos + vec3(0,0,-half.z), vec2(size.x, size.y), vec4(1,1,1,1), 0, 180, 0, false); // back
-    enable_texture(data::textures::textures[SKYBOX_LEFT]);
+    enable_texture(Data->GetTextureByID(SKYBOX_LEFT));
     draw_3d_plane(cam_pos + vec3(-half.x,0,0), vec2(size.z, size.y), vec4(1,1,1,1), 90, 0, 180, false); // left
-    enable_texture(data::textures::textures[SKYBOX_RIGHT]);
+    enable_texture(Data->GetTextureByID(SKYBOX_RIGHT));
     draw_3d_plane(cam_pos + vec3(half.x,0,0), vec2(size.z, size.y), vec4(1,1,1,1), 90, 180, 0, false); // right
     disable_texture();
 }
