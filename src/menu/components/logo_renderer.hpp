@@ -1,8 +1,7 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#ifndef MENU_LOGO_H
-#define MENU_LOGO_H
+#pragma once
 
 #include "interface.hpp"
 #include "system.hpp"
@@ -16,5 +15,3 @@ public:
     virtual void update(double tick);
     virtual void render();
 };
-
-#endif // MENU_LOGO_H

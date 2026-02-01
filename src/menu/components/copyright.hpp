@@ -1,8 +1,7 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#ifndef MENU_COPYRIGHT_H
-#define MENU_COPYRIGHT_H
+#pragma once
 
 #include "interface.hpp"
 #include "system.hpp"
@@ -20,5 +19,3 @@ private:
 	string copyright_text;
 	string version_text;
 };
-
-#endif

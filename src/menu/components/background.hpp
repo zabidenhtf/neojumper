@@ -1,8 +1,7 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#ifndef MENU_BACKGROUND_H
-#define MENU_BACKGROUND_H
+#pragma once
 
 #include "interface.hpp"
 #include "system.hpp"
@@ -19,5 +18,3 @@ private:
     int tile_width;
     int tile_height;
 };
-
-#endif // MENU_BACKGROUND_H

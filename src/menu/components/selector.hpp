@@ -1,8 +1,7 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#ifndef MENU_SELECTOR_H
-#define MENU_SELECTOR_H
+#pragma once
 
 #include "interface.hpp"
 #include "system.hpp"
@@ -36,4 +35,3 @@ private:
     float frame_height;
     vec2 frame_pos;
 };
-#endif

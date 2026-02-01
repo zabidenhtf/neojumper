@@ -1,8 +1,7 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#ifndef GAME_MESSAGE_H
-#define GAME_MESSAGE_H
+#pragma once
 
 #include "interface.hpp"
 #include "system.hpp"
@@ -21,5 +20,3 @@ private:
     bool active = false;
     double active_time;
 };
-
-#endif // GAME_MESSAGE_H

@@ -1,8 +1,7 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#ifndef GAME_MENU_H
-#define GAME_MENU_H
+#pragma once
 
 #include "interface.hpp"
 #include "system.hpp"
@@ -32,5 +31,3 @@ public:
 };
 
 extern menu_core* menu;
-
-#endif // GAME_MENU_H

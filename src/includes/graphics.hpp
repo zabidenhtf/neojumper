@@ -50,7 +50,7 @@ struct GraphicsModel{ // model structure with draw stuff
 class GraphicsSystem{
 public:
 	GLFWwindow *GetWindow(){return Root;};
-	float GetTime(){return glfwGetTime();}
+	float GetTime(){return glfwGetTime();};
 	GraphicsSystem();
 	void CreateWindowAndContext(); // Creating OpenGL context
 	bool ShouldWindowClose(); // Interface for glfwShouldClose()

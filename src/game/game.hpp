@@ -1,8 +1,7 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#ifndef GAME_CORE_H
-#define GAME_CORE_H
+#pragma once
 
 #define WARMUP_TIME 4
 
@@ -68,5 +67,3 @@ public:
 };
 
 extern game_core *game;
-
-#endif // GAME_CORE_H
