@@ -36,36 +36,23 @@ If you pressed more than 5 action buttons correctly, you will be get a combo.
 When combo score for each action button will be 40
 
 ## Building
-### Windows
-For build you need
-* MinGW
-* make
-* G++
-<br>
-Use the powershell, and write
-<br>
-`
-git clone https://github.com/zabidenhtf/openjumper.git
-cd openjumper
-make PLATFORM=WINDOWS
-`
+To build NeoJumper you have to install:
+* C++ compiler (Like on Unix systems g++, or on Windows systems mingw32)
+* GLFW library
+* Assimp library
+* Libpng library (also with zlib)
+* Freetype library
+* Cmake building system
 
-### Linux
-Its similar to windows
-For build you need
-* g++ // it can be preinstalled into your distro
-* libglfw3-dev
-* libfreetype-dev
-* libassimp-dev
-* make // too
-<br>
-Use the terminal, and write
-<br>
-`
-git clone https://github.com/zabidenhtf/openjumper.git
-cd openjumper
-make PLATFORM=LINUX
-`
+After installing this tools and libs you must to open terminal (Or in windows CMD), and write this:
+```
+git clone https://github.com/zabidenhtf/neojumper.git
+cd neojumper
+mkdir build
+cd build
+cmake ..
+make
+```
 
 -------------
 Milestone 0
