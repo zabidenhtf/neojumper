@@ -74,11 +74,6 @@ void GraphicsSystem::CreateWindowAndContext(){
     glEnable(GL_DEPTH_TEST);
 
     glDepthFunc(GL_LESS);
-
-    // Loading important models
-    QuadModel = LoadQuadModel();
-   	PlaneModel = LoadPlaneModel();
-
    	// 2D stuff
     // Reading raw shaders
     string Vertex2DShaderSource = read_file("shaders/shader2D.vert");
