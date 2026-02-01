@@ -23,6 +23,9 @@ GraphicsSystem::GraphicsSystem(){
     }
 
     CreateWindowAndContext();
+
+    QuadModel = LoadQuadModel();
+	PlaneModel = LoadPlaneModel();
 }
 
 void GraphicsSystem::CreateWindowAndContext(){
