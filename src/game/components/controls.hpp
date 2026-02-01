@@ -23,7 +23,7 @@ public:
     double speed;
     int step;
 private:
-    int size = screen_height/12;
+    int size;
     int distance = 35;
     bool press_time;
     bool can_press = true;

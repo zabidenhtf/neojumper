@@ -3,6 +3,7 @@
 /* See the LICENSE file for details. */
 #include "interface.hpp"
 #include "system.hpp"
+#include "graphics.hpp"
 #include "data.hpp"
 #include "game/game.hpp"
 #include "scene/scene.hpp"
@@ -21,21 +22,16 @@ scene_core* scene = nullptr;
 bool game_enabled = false;
 
 int main(){
-    // Initializating
-    Data = new DataSystem();
+    // Initializating systems
     config::init();
+    Data = new DataSystem();
+    Graphics = new GraphicsSystem();
 
-    screen_width = stoi(string(config::load_data("GFX", "screen_width", "800")));
-    screen_height = stoi(string(config::load_data("GFX", "screen_height", "600")));
-    fov = stoi(string(config::load_data("GFX", "fov", "90")));
-    fullscreen = string(config::load_data("GFX", "fullscreen", "False"));
-    shadow_resolution = stoi(string(config::load_data("GFX", "shadow_resolution", "512")));
     sound_volume = stoi(string(config::load_data("AUDIO", "volume", "100")));
 
-    gfx::init();
-    gfx::blend_normal();
+    Graphics->SetBlendNormal();
     audio::init();
-    input::init(gfx::get_window());
+    input::init(Graphics->GetWindow());
     // Load textures
     // Game stuff
     Data->PushTexturePath("menu/logo.png");
@@ -79,16 +75,16 @@ int main(){
     //data::fonts::font_paths.push_back("assets/fonts/eurostile_roman.ttf");
 
     // Loading all stuff
-    gfx::load_font("assets/fonts/eurostile_roman.ttf",0);
+    Graphics->LoadFont("assets/fonts/eurostile_roman.ttf",0);
     Data->LoadEverything();
 
     scene = new scene_core();
     game = new game_core();
     menu = new menu_core();
 
-    while(!glfwWindowShouldClose(gfx::get_window())){
-        gfx::clear(0,0,0);
-        double frame_start = glfwGetTime();
+    while(!Graphics->ShouldWindowClose()){
+        Graphics->ClearScreen(vec3(0,0,0));
+        double frame_start = Graphics->GetTime();
 
         double delta = frame_start - last_time;
         last_time = frame_start;
@@ -112,9 +108,9 @@ int main(){
         }
 
         input::clear();
-        gfx::swap();
+        Graphics->PollEvents();
 
-        double frame_end = glfwGetTime();
+        double frame_end = Graphics->GetTime();
         double time_taken = frame_end - frame_start;
 
         if (time_taken < frame_time) {

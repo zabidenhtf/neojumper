@@ -2,14 +2,18 @@
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
 #include "controls.hpp"
-#include "../game.hpp"
+
 #include "data.hpp"
+#include "graphics.hpp"
+
+#include "../game.hpp"
 
 game_controls::game_controls(){
     write_dbg("CONTROLS","initialisated");
 }
 
 void game_controls::reset(){
+    size = Graphics->GetHeight()/12;
     time=0;
     step_time=0;
     speed = 0.5;
@@ -76,16 +80,15 @@ void game_controls::update(double tick){
 }
 
 void game_controls::render(){
-    float width = screen_width / 1.5;
-    float height = screen_height / 1.5;
-    gfx::set_viewport(0,0,screen_width, screen_height);
-    gfx::set_ortho(0,0, width,height);
-
+    float width = Graphics->GetWidth() / 1.5;
+    float height = Graphics->GetHeight() / 1.5;
+    Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
+    Graphics->SetOrtho(width, height);
     // pretty line
-    for (int i = 0; i<screen_width/64; i++){
-        gfx::enable_texture(Data->GetTextureByID(BUTTONS_LINE));
-        gfx::draw_2d_quad(vec2(i*64, height-size/2-4), vec2(64, 8),vec4(1,1,1,1));
-        gfx::disable_texture();
+    for (int i = 0; i<Graphics->GetWidth()/64; i++){
+        Graphics->EnableTexture(Data->GetTextureByID(BUTTONS_LINE));
+        Graphics->DrawQuad(vec2(i*64, height-size/2-4), vec2(64, 8),vec4(1,1,1,1));
+        Graphics->DisableTexture();
     }
 
     // Making many buttons of dance, and then animate it
@@ -93,35 +96,35 @@ void game_controls::render(){
         if (i + step < game->now_dance.movements.size()){
             switch (game->now_dance.movements[i+step]){
                 case KICK_LEFT_FORWARD:
-                    gfx::enable_texture(Data->GetTextureByID(ACTION_KICK_LEFT_FORWARD));
+                    Graphics->EnableTexture(Data->GetTextureByID(ACTION_KICK_LEFT_FORWARD));
                     break;
                 case KICK_RIGHT_FORWARD:
-                    gfx::enable_texture(Data->GetTextureByID(ACTION_KICK_RIGHT_FORWARD));
+                    Graphics->EnableTexture(Data->GetTextureByID(ACTION_KICK_RIGHT_FORWARD));
                     break;
                 case KICK_LEFT_BACKWARD:
-                    gfx::enable_texture(Data->GetTextureByID(ACTION_KICK_LEFT_BACKWARD));
+                    Graphics->EnableTexture(Data->GetTextureByID(ACTION_KICK_LEFT_BACKWARD));
                     break;
                 case KICK_RIGHT_BACKWARD:
-                    gfx::enable_texture(Data->GetTextureByID(ACTION_KICK_RIGHT_BACKWARD));
+                    Graphics->EnableTexture(Data->GetTextureByID(ACTION_KICK_RIGHT_BACKWARD));
                     break;
                 case STAND_LEFT:
-                    gfx::enable_texture(Data->GetTextureByID(ACTION_STAND_LEFT));
+                    Graphics->EnableTexture(Data->GetTextureByID(ACTION_STAND_LEFT));
                     break;
                 case STAND_RIGHT:
-                    gfx::enable_texture(Data->GetTextureByID(ACTION_STAND_RIGHT));
+                    Graphics->EnableTexture(Data->GetTextureByID(ACTION_STAND_RIGHT));
                     break;
                 case FLIP:
-                    gfx::enable_texture(Data->GetTextureByID(ACTION_FLIP));
+                    Graphics->EnableTexture(Data->GetTextureByID(ACTION_FLIP));
                     break;
             }
             float x = i*(size+distance);
             float time_x = step_time*(size+distance)/speed;
-            gfx::draw_2d_quad(vec2(x - time_x + size/2, height-size), vec2(size, size),vec4(1,1,1,1));
-            gfx::disable_texture();
+            Graphics->DrawQuad(vec2(x - time_x + size/2, height-size), vec2(size, size),vec4(1,1,1,1));
+            Graphics->DisableTexture();
         }
     }
     // helpfull arrow
-    gfx::enable_texture(Data->GetTextureByID(BUTTON_ARROW));
-    gfx::draw_2d_quad(vec2(size/8, height-size), vec2(size/4, size/4),vec4(1,1,1,1));
-    gfx::disable_texture();
+    Graphics->EnableTexture(Data->GetTextureByID(BUTTON_ARROW));
+    Graphics->DrawQuad(vec2(size/8, height-size), vec2(size/4, size/4),vec4(1,1,1,1));
+    Graphics->DisableTexture();
 }

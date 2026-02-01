@@ -2,7 +2,9 @@
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
 #include "logo_renderer.hpp"
+
 #include "data.hpp"
+#include "graphics.hpp"
 
 menu_logo::menu_logo(){
     write_dbg("MENU LOGO", "Menu logo initialisated");
@@ -13,15 +15,15 @@ void menu_logo::update(double tick){
 }
 
 void menu_logo::render(){
-    int width = 300*gfx::screen_aspect();
-    gfx::set_viewport(0,0,screen_width, screen_height);
-    gfx::set_ortho(0,0, width,300);
+    int width = 300*Graphics->GetScreenAspect();
+    Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
+    Graphics->SetOrtho(width, 300);
     // Last commit in 2025 year
-    float image_aspect = static_cast<double>(Data->GetTextureByID(LOGO).width) /  static_cast<double>(Data->GetTextureByID(LOGO).height);
+    float image_aspect = static_cast<double>(Data->GetTextureByID(LOGO).Width) /  static_cast<double>(Data->GetTextureByID(LOGO).Height);
     float i_height = 300/3;
     float i_width = i_height*image_aspect;
 
-    gfx::enable_texture(Data->GetTextureByID(LOGO));
-    gfx::draw_2d_quad(vec2(8,15), vec2(i_width,i_height), vec4(1,1,1,1));
-    gfx::disable_texture();
+    Graphics->EnableTexture(Data->GetTextureByID(LOGO));
+    Graphics->DrawQuad(vec2(8,15), vec2(i_width,i_height), vec4(1,1,1,1));
+    Graphics->DisableTexture();
 }

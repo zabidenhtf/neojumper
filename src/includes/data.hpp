@@ -4,13 +4,15 @@
 #include "interface.hpp"
 #include "includes.hpp"
 
+#include "graphics.hpp"
+
 #pragma once
 
 class DataSystem{
 public:
     DataSystem();
     // Get functions
-    texture GetTextureByID(int ID);
+    GraphicsTexture GetTextureByID(int ID);
     sound_data GetSoundByID(int ID);
     // Push functions
     void PushTexturePath(string Path);
@@ -22,7 +24,7 @@ public:
 private:
     // Data
     vector<string> TexturesPaths;
-    vector<texture> Textures;
+    vector<GraphicsTexture> Textures;
     vector<string> SoundPaths;
     vector<sound_data> Sounds;
 };

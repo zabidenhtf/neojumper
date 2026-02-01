@@ -3,6 +3,8 @@
 /* See the LICENSE file for details. */
 #include "copyright.hpp"
 
+#include "graphics.hpp"
+
 menu_copyright::menu_copyright(){
 	reset();
 }
@@ -17,9 +19,9 @@ void menu_copyright::update(double tick){
 }
 
 void menu_copyright::render(){
-	gfx::set_viewport(0,0,screen_width, screen_height);
-    gfx::set_ortho(0,0, screen_width,screen_height);
+    Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
+    Graphics->SetOrtho(Graphics->GetWidth(), Graphics->GetHeight());
     // Just draw text, nothing special
-	gfx::draw_2d_text(vec2(12,screen_height-(24+12)*2), 16, 16, version_text, vec4(0,0,0,1));
-	gfx::draw_2d_text(vec2(12,screen_height-24-12), 16, 16, copyright_text, vec4(0,0,0,1));
+	Graphics->DrawText(vec2(12,Graphics->GetHeight()-(24+12)*2), 16, 16, version_text, vec4(0,0,0,1));
+	Graphics->DrawText(vec2(12,Graphics->GetHeight()-24-12), 16, 16, copyright_text, vec4(0,0,0,1));
 }

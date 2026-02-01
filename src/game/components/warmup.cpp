@@ -3,15 +3,16 @@
 /* See the LICENSE file for details. */
 #include "warmup.hpp"
 //#include <iostream>
-#include "../game.hpp"
 #include "data.hpp"
+#include "graphics.hpp"
+
+#include "../game.hpp"
 
 game_warmup::game_warmup(){
     write_dbg("WARMUP","Timer initialisated");
 }
 
 void game_warmup::reset(){
-    write_dbg("WARMUP","Timer reset");
     state = 4;
     time = 0;
     state_time = 0;
@@ -38,32 +39,33 @@ void game_warmup::update(double tick){
 }
 
 void game_warmup::render(){
-    int width = 300*gfx::screen_aspect();
-    gfx::set_viewport(0,0,screen_width, screen_height);
-    gfx::set_ortho(0,0, width,300);
+    int width = 300*Graphics->GetScreenAspect();
+    Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
+    Graphics->SetOrtho(width, 300);
 
     double digit_size = 150*state_time;
 
     switch (state){
     case 4:
-        gfx::enable_texture(Data->GetTextureByID(DIGIT3));
-        gfx::draw_2d_quad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
-        gfx::disable_texture();
+        Graphics->EnableTexture(Data->GetTextureByID(DIGIT3));
+        Graphics->DrawQuad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
+        Graphics->DisableTexture();
         break;
     case 3:
-        gfx::enable_texture(Data->GetTextureByID(DIGIT2));
-        gfx::draw_2d_quad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
-        gfx::disable_texture();
+        Graphics->EnableTexture(Data->GetTextureByID(DIGIT2));
+        Graphics->DrawQuad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
+        Graphics->DisableTexture();
         break;
     case 2:
-        gfx::enable_texture(Data->GetTextureByID(DIGIT1));
-        gfx::draw_2d_quad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
-        gfx::disable_texture();
+        Graphics->EnableTexture(Data->GetTextureByID(DIGIT1));
+        Graphics->DrawQuad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
+        Graphics->DisableTexture();
         break;
     case 1:
-        gfx::enable_texture(Data->GetTextureByID(MESSAGE_GO));
-        gfx::draw_2d_quad(vec2(width/2-digit_size,150-digit_size/2),vec2(digit_size*2,digit_size), vec4(1,1,1,1)); // fixed size
-        gfx::disable_texture();
+        // Drawing more long quad than digit quad
+        Graphics->EnableTexture(Data->GetTextureByID(MESSAGE_GO));
+        Graphics->DrawQuad(vec2(width/2-digit_size,150-digit_size/2),vec2(digit_size*2,digit_size), vec4(1,1,1,1)); // fixed size
+        Graphics->DisableTexture();
         break;
     }
 }

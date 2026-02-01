@@ -2,7 +2,10 @@
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
 #include "selector.hpp"
+
 #include "data.hpp"
+#include "graphics.hpp"
+
 #include "../../game/game.hpp"
 #include "../../scene/scene.hpp"
 
@@ -15,7 +18,7 @@ void menu_selector::reset(){
     button_selector_max = 3;
     button_selector_min = 0;
     button_selected_now = button_selector_min;
-    width = 300*gfx::screen_aspect();
+    width = 300*Graphics->GetScreenAspect();
     frame_width = width/3;
     selection_height = 16;
     frame_height = (selection_height+8)*(button_selector_max+1);
@@ -49,7 +52,7 @@ void menu_selector::update(double tick){
                     break;
                 case EXIT:
                     write_dbg("SELECTOR", "Selected exit");
-                    gfx::kill();
+                    Graphics->Kill();
                     break;
                 default:
                     write_dbg("SELECTOR", "INDEV");
@@ -73,8 +76,9 @@ void menu_selector::draw_selection(vec2 pos, vec2 size, string text, vec4 color,
     static float timer;
     static int selection_indecator_id = 3;
     static bool direction = false;
-    float text_x_pos = (size.x-gfx::text_2d_width(size.y, text))/2;
-    gfx::draw_2d_text(pos + vec2(text_x_pos,0), size.y, (screen_height/300)*size.y, text, color);  
+    // Drawing text
+    float text_x_pos = (size.x-Graphics->GetTextWidth(size.y, text))/2;
+    Graphics->DrawText(pos + vec2(text_x_pos,0), size.y, (Graphics->GetHeight()/300)*size.y, text, color);  
     if (selected == true){
         // Updating texture
         timer+=tick;
@@ -92,29 +96,27 @@ void menu_selector::draw_selection(vec2 pos, vec2 size, string text, vec4 color,
                     selection_indecator_id--;
                 }
             }
-
-            write_dbg("SELECTOR", to_string(selection_indecator_id));
             timer = 0;
         }
         // Draw arrows
         // Left
-        gfx::enable_texture(Data->GetTextureByID(indecator_textures[selection_indecator_id]));
-        gfx::draw_2d_quad(pos + vec2(text_x_pos-size.y*2, 0), vec2(size.y*2,size.y), vec4(1,1,1,1));
+        Graphics->EnableTexture(Data->GetTextureByID(indecator_textures[selection_indecator_id]));
+        Graphics->DrawQuad(pos + vec2(text_x_pos-size.y*2, 0), vec2(size.y*2,size.y), vec4(1,1,1,1));
         // Right
-        gfx::draw_2d_quad(pos + vec2(text_x_pos+gfx::text_2d_width(size.y, text) + size.y*2, 0), vec2(-size.y*2,size.y), vec4(1,1,1,1));
-        gfx::disable_texture();
+        Graphics->DrawQuad(pos + vec2(text_x_pos+Graphics->GetTextWidth(size.y, text) + size.y*2, 0), vec2(-size.y*2,size.y), vec4(1,1,1,1));
+        Graphics->DisableTexture();
     }
 }
 
 void menu_selector::render(){
-    gfx::set_viewport(0,0,screen_width, screen_height);
-    gfx::set_ortho(0,0, width,300);
+    Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
+    Graphics->SetOrtho(width, 300);
 
-    gfx::enable_texture(Data->GetTextureByID(NULL_TEX));
+    Graphics->EnableTexture(Data->GetTextureByID(NULL_TEX));
     // Frame with excellent borders
-    gfx::draw_2d_quad(frame_pos - vec2(1,1), vec2(frame_width+2,frame_height+2), vec4(0,0,0,1));
-    gfx::draw_2d_quad(frame_pos, vec2(frame_width,frame_height), vec4(1,1,1,1));
-    gfx::disable_texture();
+    Graphics->DrawQuad(frame_pos - vec2(1,1), vec2(frame_width+2,frame_height+2), vec4(0,0,0,1));
+    Graphics->DrawQuad(frame_pos, vec2(frame_width,frame_height), vec4(1,1,1,1));
+    Graphics->DisableTexture();
 }
 
 void menu_selector::render_selections(double tick){

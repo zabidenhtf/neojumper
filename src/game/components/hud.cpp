@@ -2,7 +2,10 @@
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
 #include "hud.hpp"
+
 #include "data.hpp"
+#include "graphics.hpp"
+
 #include "../game.hpp"
 
 game_hud::game_hud(){
@@ -10,8 +13,8 @@ game_hud::game_hud(){
 }
 
 void game_hud::reset(){
-	tile_width = Data->GetTextureByID(HUD_BAR_TILE).width;
-	tile_height = Data->GetTextureByID(HUD_BAR_TILE).height;
+	tile_width = Data->GetTextureByID(HUD_BAR_TILE).Width;
+	tile_height = Data->GetTextureByID(HUD_BAR_TILE).Height;
 	height = 2;
 }
 
@@ -20,17 +23,17 @@ void game_hud::update(double tick){
 }
 
 void game_hud::render(){
-    gfx::set_viewport(0,0,screen_width, screen_height);
-    gfx::set_ortho(0,0, screen_width,screen_height);
+    Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
+    Graphics->SetOrtho(Graphics->GetWidth(), Graphics->GetHeight());
 
     // Drawing tiled bar at top
-	gfx::enable_texture(Data->GetTextureByID(HUD_BAR_TILE));
+	Graphics->EnableTexture(Data->GetTextureByID(HUD_BAR_TILE));
 	for (int y = 0; y<height; y++){
-		for (int x = 0; x<screen_width/tile_width; x++){
-			gfx::draw_2d_quad(vec2(x*tile_width,y*tile_height), vec2(tile_width, tile_height), vec4(1,1,1,1));
+		for (int x = 0; x<Graphics->GetWidth()/tile_width; x++){
+			Graphics->DrawQuad(vec2(x*tile_width,y*tile_height), vec2(tile_width, tile_height), vec4(1,1,1,1));
 		}
 	}	
 	// Drawing score text
-	string score_string = "Score:" + to_string(game->score);
-	gfx::draw_2d_text(vec2(height/2,height/2), tile_height*height-(height*2), tile_height*height-(height*2), score_string, vec4(1,1,1,1));
+	string ScoreString = "Score:" + to_string(game->score);
+	Graphics->DrawText(vec2(height/2,height/2), tile_height*height-(height*2), tile_height*height-(height*2), ScoreString, vec4(1,1,1,1));
 }

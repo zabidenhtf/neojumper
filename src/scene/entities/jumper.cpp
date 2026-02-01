@@ -2,6 +2,10 @@
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
 #include "jumper.hpp"
+
+#include "data.hpp"
+#include "graphics.hpp"
+
 #include "../../game/game.hpp"
 
 entity_jumper_player::entity_jumper_player(){
@@ -39,5 +43,5 @@ void entity_jumper_player::update(double tick){
 }
 
 void entity_jumper_player::render(){
-    gfx::draw_3d_box(pos+vec3(0,1,0), vec3(1,2,1), vec4(0.75,0.75,0.75,1));
+    Graphics->DrawBox(pos+vec3(0,1,0), vec3(1,2,1), vec4(0.75,0.75,0.75,1));
 }

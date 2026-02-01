@@ -15,7 +15,7 @@ DataSystem::DataSystem(){
 }
 
 // Get functions
-texture DataSystem::GetTextureByID(int ID){
+GraphicsTexture DataSystem::GetTextureByID(int ID){
     return Textures[ID];
 }
 sound_data DataSystem::GetSoundByID(int ID){
@@ -39,23 +39,24 @@ void DataSystem::LoadEverything(){
 void DataSystem::LoadTextures(){
     // Simple null texture
     // TODO: Add load_null_texture function
-    GLuint null_tex_raw;
-    glGenTextures(1, &null_tex_raw);
-    glBindTexture(GL_TEXTURE_2D, null_tex_raw);
+    GLuint NullTexRaw;
+    glGenTextures(1, &NullTexRaw);
+    glBindTexture(GL_TEXTURE_2D, NullTexRaw);
 
+    // Drawing 1 white pixel
     unsigned char pixel[4] = {255, 255, 255, 255};
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixel);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    texture null_tex;
-    null_tex.texture_id = null_tex_raw;
-    null_tex.width = 1;
-    null_tex.height = 1;
-    Textures.push_back(null_tex); // Pushing to vector null texture
+    GraphicsTexture NullTex;
+    NullTex.Raw = NullTexRaw;
+    NullTex.Width = 1;
+    NullTex.Height = 1;
+    Textures.push_back(NullTex); // Pushing to vector null texture
     for (int i = 0; i<TexturesPaths.size(); i++){
-        Textures.push_back(gfx::load_texture("assets/" + TexturesPaths[i])); // Loading another stuff
+        Textures.push_back(Graphics->LoadTexture("assets/" + TexturesPaths[i])); // Loading another stuff
     }
 }
 void DataSystem::LoadSounds(){
