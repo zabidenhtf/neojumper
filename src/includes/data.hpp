@@ -4,6 +4,7 @@
 #include "interface.hpp"
 #include "includes.hpp"
 
+#include "audio.hpp"
 #include "graphics.hpp"
 
 #pragma once
@@ -13,7 +14,7 @@ public:
     DataSystem();
     // Get functions
     GraphicsTexture GetTextureByID(int ID);
-    sound_data GetSoundByID(int ID);
+    SoundData GetSoundByID(int ID);
     // Push functions
     void PushTexturePath(string Path);
     void PushSoundPath(string Path);
@@ -26,7 +27,7 @@ private:
     vector<string> TexturesPaths;
     vector<GraphicsTexture> Textures;
     vector<string> SoundPaths;
-    vector<sound_data> Sounds;
+    vector<SoundData> Sounds;
 };
 
 extern DataSystem *Data; // Global data pointer

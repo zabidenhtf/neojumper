@@ -35,7 +35,7 @@ vector<DANCE_MOVEMENTS> pattern_jump_leftside = {KICK_LEFT_FORWARD, KICK_LEFT_FO
 vector<DANCE_MOVEMENTS> pattern_flip_leftside = {KICK_LEFT_FORWARD, KICK_LEFT_FORWARD, FLIP}; // On keyboard Q Q Space
 
 // Melodies (now only 1 for test)
-sound melody;
+SoundSource Melody;
 
 dance_sequence game_core::generate_dance(DANCE_LEVELS level){
     dance_sequence buffer;
@@ -133,8 +133,8 @@ void game_core::reset(){
     controls->reset();
     message->reset();
     hud->reset();
-    melody.data = Data->GetSoundByID(INGAME_MELODY1);
-    melody.play_global();
+    Melody.Data = Data->GetSoundByID(INGAME_MELODY1);
+    Melody.PlayGlobal();
     controls->speed = now_dance.beat_speed;
     warmup->timer_time = WARMUP_TIME;
 }

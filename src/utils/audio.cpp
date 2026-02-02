@@ -1,41 +1,79 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#include "interface.hpp"
+#include "audio.hpp"
+#include <climits>
 
-// Devices define
-ALCdevice* sound_device;
-ALCcontext* sound_context;
+AudioSystem *Audio;
 
-void audio::init(){
-	sound_device = alcOpenDevice(nullptr); // Get sound device
-	if (!sound_device){
+/* SOUND SOURCE */
+SoundSource::SoundSource(){
+	// Creating AL source
+    alGenSources(1, &Source);
+    write_dbg("AUDIO", "Created sound source");
+}
+
+void SoundSource::PlayGlobal(){
+	// Configurating source
+    alSourcef(Source, AL_PITCH, 1.0f);
+    alSourcef(Source, AL_GAIN, static_cast<float>(Audio->GetVolume())/100);
+    alSourcei(Source, AL_SOURCE_RELATIVE, AL_TRUE); // Global sound
+    alSource3f(Source, AL_POSITION, 0.0f, 0.0f, 0.0f);
+    alSourcei(Source, AL_BUFFER, Data.Raw);
+    alSourcePlay(Source); // Playing sound
+	ALint state;
+	alGetSourcei(Source, AL_SOURCE_STATE, &state);
+
+	if (state == AL_PLAYING) {
+	    write_dbg("AUDIO", "Playing " + Data.Path);
+	}
+}
+
+void SoundSource::Play(vec3 Position){
+	// Configurating source
+    alSourcef(Source, AL_PITCH, 1.0f);
+    alSourcef(Source, AL_GAIN, static_cast<float>(Audio->GetVolume())/100);
+    alSource3f(Source, AL_POSITION, Position.x, Position.y, Position.z);
+    alSourcei(Source, AL_BUFFER, Data.Raw);
+    alSourcePlay(Source); // Playing sound
+	ALint state;
+	alGetSourcei(Source, AL_SOURCE_STATE, &state);
+
+	if (state == AL_PLAYING) {
+	    write_dbg("AUDIO", "Playing " + Data.Path);
+	}
+}
+
+/* AUDIO SYSTEM */
+AudioSystem::AudioSystem(){
+	SoundDevice = alcOpenDevice(nullptr); // Get sound device
+	if (!SoundDevice){
 		write_dbg("AUDIO", "Failed to find sound device");
 	}
 
-	sound_context = alcCreateContext(sound_device, nullptr); // Creating context
-	if (!sound_context){
+	SoundContext = alcCreateContext(SoundDevice, nullptr); // Creating context
+	if (!SoundContext){
 		write_dbg("AUDIO", "Failed to create sound context");
 	}
-	alcMakeContextCurrent(sound_context);
+	alcMakeContextCurrent(SoundContext);
 	// Finding device
-	const ALCchar* name = NULL;
-	if (alcIsExtensionPresent(sound_device, "ALC_ENUMERATE_ALL_EXT")){
-		name = alcGetString(sound_device, ALC_ALL_DEVICES_SPECIFIER);
+	const ALCchar* Name = NULL;
+	if (alcIsExtensionPresent(SoundDevice, "ALC_ENUMERATE_ALL_EXT")){
+		Name = alcGetString(SoundDevice, ALC_ALL_DEVICES_SPECIFIER);
 	}
-	if (!name || alcGetError(sound_device) != AL_NO_ERROR){
-		name = alcGetString(sound_device, ALC_DEVICE_SPECIFIER);
+	if (!Name || alcGetError(SoundDevice) != AL_NO_ERROR){
+		Name = alcGetString(SoundDevice, ALC_DEVICE_SPECIFIER);
 	}
 
-	string text_buffer = "Opened " + string(name) + " device";
-	write_dbg("AUDIO", text_buffer);
+	string TextBuffer = "Opened " + string(Name) + " device";
+	write_dbg("AUDIO", TextBuffer);
 }
 
-sound_data audio::load_sound(string filename){
+SoundData AudioSystem::LoadSound(string Path){
 	// SO BIG THANKS FOR codetechandtutorials github user!
 	ALenum err, format;
 	ALuint buffer;
-	sound_data s_buffer;
+	SoundData SoundRetBuffer;
 	SNDFILE* sndfile;
 	SF_INFO sfinfo;
 	short* membuf;
@@ -43,10 +81,10 @@ sound_data audio::load_sound(string filename){
 	ALsizei num_bytes;
 
 	/* Open the audio file and check that it's usable. */
-	sndfile = sf_open(filename.c_str(), SFM_READ, &sfinfo);
+	sndfile = sf_open(Path.c_str(), SFM_READ, &sfinfo);
 	if (!sndfile)
 	{
-		write_dbg("AUDIO", "Could not open audio in " + filename);
+		write_dbg("AUDIO", "Could not open audio in " + Path);
 	}
 	if (sfinfo.frames < 1 || sfinfo.frames >(sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels)
 	{
@@ -107,8 +145,8 @@ sound_data audio::load_sound(string filename){
 			alDeleteBuffers(1, &buffer);
 	}
 
-	s_buffer.path = filename;
-	s_buffer.sound_buffer = buffer;  // add to the list of known buffers
+	SoundRetBuffer.Path = Path;
+	SoundRetBuffer.Raw = buffer;  // add to the list of known buffers
 
-	return s_buffer;
+	return SoundRetBuffer;
 }

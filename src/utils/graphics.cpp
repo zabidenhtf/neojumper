@@ -24,6 +24,8 @@ GraphicsSystem::GraphicsSystem(){
 
     CreateWindowAndContext();
 
+    SetBlendNormal();
+
     QuadModel = LoadQuadModel();
 	PlaneModel = LoadPlaneModel();
 }

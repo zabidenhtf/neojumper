@@ -3,8 +3,11 @@
 /* See the LICENSE file for details. */
 #include "interface.hpp"
 #include "system.hpp"
+
 #include "graphics.hpp"
+#include "audio.hpp"
 #include "data.hpp"
+
 #include "game/game.hpp"
 #include "scene/scene.hpp"
 #include "menu/menu.hpp"
@@ -26,11 +29,8 @@ int main(){
     config::init();
     Data = new DataSystem();
     Graphics = new GraphicsSystem();
+    Audio = new AudioSystem();
 
-    sound_volume = stoi(string(config::load_data("AUDIO", "volume", "100")));
-
-    Graphics->SetBlendNormal();
-    audio::init();
     input::init(Graphics->GetWindow());
     // Load textures
     // Game stuff
@@ -68,7 +68,7 @@ int main(){
 
     // Audio
     // Melodies
-    Data->PushSoundPath("music/SimpleJump.ogg");
+    Data->PushSoundPath("music/SimpleJump.wav");
 
     // On some time abonded
     // Fonts
@@ -103,7 +103,7 @@ int main(){
         if (game_enabled == true){
             if (input::button_pressed(GLFW_KEY_ESCAPE)){
                 game_enabled = false;
-                melody.stop();
+                Melody.Stop();
             }
         }
 

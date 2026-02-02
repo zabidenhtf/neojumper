@@ -15,6 +15,8 @@
 #include "system.hpp"
 #include "includes.hpp"
 
+#include "audio.hpp"
+
 
 enum DANCE_MOVEMENTS{
 KICK_LEFT_FORWARD,
@@ -47,7 +49,7 @@ double beat_speed = 0.6; // Speed of movements
 };
 
 // Melodies (now only 1 for test)
-extern sound melody;
+extern SoundSource Melody;
 
 // main core, there is all game content
 class game_core{

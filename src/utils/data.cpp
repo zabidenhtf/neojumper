@@ -18,7 +18,7 @@ DataSystem::DataSystem(){
 GraphicsTexture DataSystem::GetTextureByID(int ID){
     return Textures[ID];
 }
-sound_data DataSystem::GetSoundByID(int ID){
+SoundData DataSystem::GetSoundByID(int ID){
     return Sounds[ID];
 }
 
@@ -61,6 +61,6 @@ void DataSystem::LoadTextures(){
 }
 void DataSystem::LoadSounds(){
     for (int i = 0; i<SoundPaths.size(); i++){
-        Sounds.push_back(audio::load_sound("sounds/" + SoundPaths[i])); // Pushing audio datas to vector
+        Sounds.push_back(Audio->LoadSound("sounds/" + SoundPaths[i])); // Pushing audio datas to vector
     }
 }
