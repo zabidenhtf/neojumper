@@ -8,12 +8,12 @@ AudioSystem *Audio;
 
 /* SOUND SOURCE */
 SoundSource::SoundSource(){
-	// Creating AL source
-    alGenSources(1, &Source);
     write_dbg("AUDIO", "Created sound source");
 }
 
 void SoundSource::PlayGlobal(){
+	// Creating AL source
+    alGenSources(1, &Source);
 	// Configurating source
     alSourcef(Source, AL_PITCH, 1.0f);
     alSourcef(Source, AL_GAIN, static_cast<float>(Audio->GetVolume())/100);
@@ -30,6 +30,8 @@ void SoundSource::PlayGlobal(){
 }
 
 void SoundSource::Play(vec3 Position){
+	// Creating AL source
+    alGenSources(1, &Source);
 	// Configurating source
     alSourcef(Source, AL_PITCH, 1.0f);
     alSourcef(Source, AL_GAIN, static_cast<float>(Audio->GetVolume())/100);
