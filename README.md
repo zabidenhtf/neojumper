@@ -54,6 +54,9 @@ cmake ..
 make
 ```
 
+## Follow development
+More news about NeoJumper you can find in my development blog here: neojumper.blogspot.com
+
 -------------
 Milestone 0
 
