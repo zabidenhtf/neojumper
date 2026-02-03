@@ -3,22 +3,22 @@
 /* See the LICENSE file for details. */
 #include "copyright.hpp"
 
-#include "graphics.hpp"
+#include "utils/graphics.hpp"
 
-menu_copyright::menu_copyright(){
-	reset();
+MenuCopyright::MenuCopyright(){
+	Reset();
 }
 
-void menu_copyright::reset(){
+void MenuCopyright::Reset(){
 	copyright_text = string(GAME_MILESTONE) + " | Copyright (C) 2025-2026 Mykyta Polishyk";
 	version_text = "Version: " + string(GAME_VERSION);
 }
 
-void menu_copyright::update(double tick){
-	render();
+void MenuCopyright::Update(float Tick){
+	Render();
 }
 
-void menu_copyright::render(){
+void MenuCopyright::Render(){
     Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
     Graphics->SetOrtho(Graphics->GetWidth(), Graphics->GetHeight());
     // Just draw text, nothing special

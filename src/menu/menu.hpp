@@ -3,8 +3,8 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
+
 #include "includes.hpp"
 
 #include "components/logo_renderer.hpp"
@@ -18,16 +18,17 @@ enum MENU_STATES{
     MENU_NEWGAME
 };
 
-class menu_core{
+class MenuCore{
 public:
-    menu_core();
-    void update(double tick);
+    MenuCore();
+    void Update(float Tick);
     MENU_STATES state = MENU_MAIN;
-    menu_environment *environment;
-    menu_selector *selector;
-    menu_logo *logo;
-    menu_background *background;
-    menu_copyright *copyright;
+    // Components
+    MenuEnvironment *Environment;
+    MenuSelector *Selector;
+    MenuLogo *Logo;
+    MenuBackground *Background;
+    MenuCopyright *Copyright;
 };
 
-extern menu_core* menu;
+extern MenuCore* Menu; // Global pointer

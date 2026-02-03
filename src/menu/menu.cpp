@@ -3,20 +3,20 @@
 /* See the LICENSE file for details. */
 #include "menu.hpp"
 
-menu_core::menu_core(){
-    write_dbg("MENU", "Menu initialisated");
-    environment = new menu_environment();
-    selector = new menu_selector();
-    logo = new menu_logo();
-    background = new menu_background();
-    copyright = new menu_copyright();
+MenuCore::MenuCore(){
+    Console.WriteDebug("MENU", "Menu initialisated");
+    Environment = new MenuEnvironment();
+    Selector = new MenuSelector();
+    Logo = new MenuLogo();
+    Background = new MenuBackground();
+    Copyright = new MenuCopyright();
 }
 
-void menu_core::update(double tick){
+void MenuCore::Update(float Tick){
     // Updating all stuff
-    environment->update(tick);
-    background->update(tick);
-    logo->update(tick);
-    selector->update(tick);
-    copyright->update(tick);
+    Environment->Update(Tick);
+    Background->Update(Tick);
+    Logo->Update(Tick);
+    Selector->Update(Tick);
+    Copyright->Update(Tick);
 }

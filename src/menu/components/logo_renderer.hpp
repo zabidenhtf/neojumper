@@ -3,15 +3,14 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
 #include "includes.hpp"
 #include "component.hpp"
 
-class menu_logo : public component{
+class MenuLogo : public Component{
 public:
-    menu_logo();
-    virtual void reset(){return;};
-    virtual void update(double tick);
-    virtual void render();
+    MenuLogo();
+    virtual void Reset(){return;};
+    virtual void Update(float Tick);
+    virtual void Render();
 };

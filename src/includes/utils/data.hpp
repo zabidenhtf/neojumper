@@ -1,11 +1,10 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#include "interface.hpp"
 #include "includes.hpp"
 
-#include "audio.hpp"
-#include "graphics.hpp"
+#include "utils/graphics.hpp"
+#include "utils/audio.hpp"
 
 #pragma once
 

@@ -3,12 +3,13 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
+#include "utils/graphics.hpp"
+
 #include "includes.hpp"
 #include "component.hpp"
 
-extern bool game_enabled;
+extern bool GameEnabled;
 
 enum{
     PLAY,
@@ -17,14 +18,14 @@ enum{
     EXIT
 };
 
-class menu_selector : public component{
+class MenuSelector : public Component{
 public:
-    menu_selector();
-    void draw_selection(vec2 pos, vec2 size, string text, vec4 color, bool selected, double tick);
-    virtual void reset();
-    virtual void update(double tick);
-    virtual void render();
-    void render_selections(double tick);
+    MenuSelector();
+    void DrawSelection(vec2 pos, vec2 size, string text, vec4 color, bool selected, float Tick);
+    virtual void Reset();
+    virtual void Update(float Tick);
+    virtual void Render();
+    void RenderSelection(float Tick);
 private:
     int width;
     int button_selector_max;

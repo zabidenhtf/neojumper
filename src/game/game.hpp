@@ -11,11 +11,10 @@
 #include "components/message.hpp"
 #include "components/hud.hpp"
 
-#include "interface.hpp"
-#include "system.hpp"
-#include "includes.hpp"
+#include "utils/system.hpp"
+#include "utils/audio.hpp"
 
-#include "audio.hpp"
+#include "includes.hpp"
 
 
 enum DANCE_MOVEMENTS{
@@ -39,33 +38,35 @@ enum DANCE_SIDE{
 	RIGHT
 };
 
-extern int dance_binds[]; //binds
+extern int DanceBinds[]; //binds
 
-struct dance_sequence{
-vector<DANCE_MOVEMENTS> movements;
-DANCE_LEVELS level;
-int movements_count = 0;
-double beat_speed = 0.6; // Speed of movements
+struct DanceSequence{
+vector<DANCE_MOVEMENTS> Movements;
+DANCE_LEVELS Level;
+int MovementsCount = 0;
+double BeatSpeed = 0.6; // Speed of movements
 };
 
 // Melodies (now only 1 for test)
 extern SoundSource Melody;
 
-// main core, there is all game content
-class game_core{
+class GameCore{
 public:
-    dance_sequence generate_dance(DANCE_LEVELS level);
-    game_core();
-    void reset();
-    void update(double tick);
-    bool game_started;
-    dance_sequence now_dance;
-    int score = 0;
-
-    game_warmup *warmup;
-    game_controls *controls;
-    game_message *message;
-    game_hud *hud;
+    void AddScore(int N){Score+N;}; // Add score
+    int GetScore(){return Score;}; // Interface for score
+    DanceSequence GenerateDance(DANCE_LEVELS level);
+    GameCore();
+    void Reset();
+    void Update(float Tick);
+    bool GameStarted; // If warmup ended it true
+    DanceSequence NowDance; // Dance sequence now
+    // Compontents
+    GameWarmup *Warmup;
+    GameControls *Controls;
+    GameMessage *Message;
+    GameHud *Hud;
+private:
+    int Score = 0;
 };
 
-extern game_core *game;
+extern GameCore *Game;

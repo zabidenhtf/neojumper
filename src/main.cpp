@@ -1,12 +1,13 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#include "interface.hpp"
-#include "system.hpp"
 
-#include "graphics.hpp"
-#include "audio.hpp"
-#include "data.hpp"
+#include "utils/system.hpp"
+#include "utils/graphics.hpp"
+#include "utils/audio.hpp"
+#include "utils/data.hpp"
+#include "utils/input.hpp"
+#include "utils/config.hpp"
 
 #include "game/game.hpp"
 #include "scene/scene.hpp"
@@ -18,20 +19,22 @@ const float FPS = 60.00f;
 const float frame_time = 1.0 / FPS;
 double last_time = glfwGetTime();
 
-menu_core* menu = nullptr;
-game_core* game = nullptr;
-scene_core* scene = nullptr;
+// Cores global objects
+MenuCore* Menu = nullptr;
+GameCore* Game = nullptr;
+SceneCore* Scene = nullptr;
 
-bool game_enabled = false;
+bool GameEnabled = false;
 
 int main(){
+    Console.Write("Launched NeoJumper " + string(GAME_MILESTONE));
     // Initializating systems
-    config::init();
+    Config = new ConfigureSystem();
     Data = new DataSystem();
     Graphics = new GraphicsSystem();
     Audio = new AudioSystem();
+    Input::Init(); // TODO: make it objective
 
-    input::init(Graphics->GetWindow());
     // Load textures
     // Game stuff
     Data->PushTexturePath("menu/logo.png");
@@ -78,9 +81,9 @@ int main(){
     Graphics->LoadFont("assets/fonts/eurostile_roman.ttf",0);
     Data->LoadEverything();
 
-    scene = new scene_core();
-    game = new game_core();
-    menu = new menu_core();
+    Scene = new SceneCore();
+    Game = new GameCore();
+    Menu = new MenuCore();
 
     while(!Graphics->ShouldWindowClose()){
         Graphics->ClearScreen(vec3(0,0,0));
@@ -89,25 +92,25 @@ int main(){
         double delta = frame_start - last_time;
         last_time = frame_start;
 
-        switch (game_enabled){
+        switch (GameEnabled){
         case true:
-            scene->update(delta);
-            game->update(delta);
+            Scene->Update(delta);
+            Game->Update(delta);
             break;
         case false:
-            menu->update(delta);
+            Menu->Update(delta);
             break;
         }
 
         // Exit from game to main menu
-        if (game_enabled == true){
-            if (input::button_pressed(GLFW_KEY_ESCAPE)){
-                game_enabled = false;
+        if (GameEnabled == true){
+            if (Input::ButtonPressed(GLFW_KEY_ESCAPE)){
+                GameEnabled = false;
                 Melody.Stop();
             }
         }
 
-        input::clear();
+        Input::Clear();
         Graphics->PollEvents();
 
         double frame_end = Graphics->GetTime();

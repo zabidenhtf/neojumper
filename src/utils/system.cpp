@@ -1,42 +1,32 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#include "system.hpp"
+#include "utils/system.hpp"
+// Some STL includes
 #include <iostream>
-#include <sstream>
-#include <fstream>
 #include <random>
-#include <SimpleIni.h>
+#include <sstream>
 
-static CSimpleIniA ini;
+ConsoleSystem Console;
 
-void write(std::string msg){
-    std::cout << msg << "\n";
+/* CONSOLE SYSTEM */
+void ConsoleSystem::Write(string Message){
+    cout << Message << "\n";
 }
 
-void write_dbg(std::string about, std::string msg){
-    std::cout << "[" << about << "] " << msg << "\n";
+void ConsoleSystem::WriteDebug(string Tag, string Message){
+    cout << "[" << Tag << "] " << Message << "\n";
 }
 
-int randint(int min, int max){
-    static std::mt19937 rng(std::random_device{}());
-    std::uniform_int_distribution<int> dist(min, max);
+int RandomInt(int Min, int Max){
+    static mt19937 rng(random_device{}());
+    uniform_int_distribution<int> dist(Min, Max);
     return dist(rng);
 }
 
-std::string read_file(const char* path){
-    std::ifstream file(path);
-    std::stringstream ss;
+string ReadFile(string Path){
+    ifstream file(Path.c_str());
+    stringstream ss;
     ss << file.rdbuf();
     return ss.str();
-}
-
-bool config::init() {
-    ini.SetUnicode();
-    SI_Error rc = ini.LoadFile("config.ini");
-    return rc >= 0;
-}
-
-const char* config::load_data(const char* section, const char* key, const char* standart) {
-    return ini.GetValue(section, key, standart);
 }

@@ -3,16 +3,16 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
+
 #include "component.hpp"
 
-class menu_environment : public component{
+class MenuEnvironment : public Component{
 public:
-    menu_environment();
-    virtual void reset();
-    virtual void update(double tick);
-    virtual void render();
+    MenuEnvironment();
+    virtual void Reset();
+    virtual void Update(float Tick);
+    virtual void Render();
 private:
     // For light debug and render debug
     float cam_pos_x = 1;

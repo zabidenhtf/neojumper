@@ -1,24 +1,21 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#ifndef SCENE_JUMPER_H
-#define SCENE_JUMPER_H
 
-#include "interface.hpp"
-#include "system.hpp"
+#pragma once
+
+#include "utils/system.hpp"
+#include "utils/graphics.hpp"
+
 #include "../entity.hpp"
 
-class entity_jumper_player : public entity{
+class EntityJumper : public Entity{
 public:
-    entity_jumper_player();
-    virtual void reset();
-    virtual void update(double tick);
-    virtual void render();
+    EntityJumper();
+    virtual void Reset();
+    virtual void Update(float Tick);
+    virtual void Render();
 private:
-    void move_forward(double tick, double speed);
-    void move_backward(double tick, double speed);
-    vec3 pos;
-    float direction;
+    vec3 pos; // Position of jumper
+    float direction; // Direction of jumper
 };
-
-#endif // SCENE_JUMPER_H

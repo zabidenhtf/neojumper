@@ -2,21 +2,23 @@
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
 #include "menu_environment.hpp"
-#include "data.hpp"
 
-menu_environment::menu_environment(){
-    write_dbg("MENU ENVIRONMENT", "Menu environment initialisated");
-    reset();
+#include "utils/data.hpp"
+#include "utils/graphics.hpp"
+
+MenuEnvironment::MenuEnvironment(){
+    Console.WriteDebug("MENU ENVIRONMENT", "Menu environment initialisated");
+    Reset();
 }
 
-void menu_environment::reset(){
+void MenuEnvironment::Reset(){
     return;
 }
 
-void menu_environment::update(double tick){
-    render();
+void MenuEnvironment::Update(float Tick){
+    Render();
 }
-void menu_environment::render(){
+void MenuEnvironment::Render(){
     Graphics->SetLight(vec3(3,3,3), vec3(0,0,0), vec4(1,1,1,1));
     Graphics->DrawSkybox();
     Graphics->EnableTexture(Data->GetTextureByID(NULL_TEX));

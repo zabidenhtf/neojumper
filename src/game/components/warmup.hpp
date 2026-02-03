@@ -3,21 +3,21 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
+
 #include "component.hpp"
 
-class game_warmup : public component
+class GameWarmup : public Component
 {
 public:
-    game_warmup();
-    virtual void reset();
-    virtual void update(double tick);
-    virtual void render();
-    double timer_time;
+    GameWarmup();
+    virtual void Reset();
+    virtual void Update(float Tick);
+    virtual void Render();
+    float WarmupTime;
 private:
-    bool active = true;
-    int state;
-    double time;
-    double state_time;
+    bool Active = true;
+    int State;
+    float Time; // Time global
+    float StateTime;
 };

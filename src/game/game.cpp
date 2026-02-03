@@ -2,10 +2,11 @@
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
 #include "game.hpp"
-#include "data.hpp"
+
+#include "utils/data.hpp"
 
 // To generate dance
-DANCE_MOVEMENTS movements_list[] = {
+DANCE_MOVEMENTS MovementsList[] = {
 KICK_LEFT_FORWARD,
 KICK_RIGHT_FORWARD,
 KICK_LEFT_BACKWARD,
@@ -15,12 +16,12 @@ STAND_RIGHT,
 FLIP
 };
 
-DANCE_LEVELS levels_list[]{
+DANCE_LEVELS LevelsList[]{
 EASY,
 NORMAL,
 HARD
 };
-int dance_binds[] = {
+int DanceBinds[] = {
                      GLFW_KEY_Q, // KICK_LEFT_FORWARD
                      GLFW_KEY_E, // KICK_RIGHT_FORWARD
                      GLFW_KEY_Z, // KICK_LEFT_BACKWARD
@@ -31,117 +32,122 @@ int dance_binds[] = {
                      }; // Binds
 
 // Dance patterns
-vector<DANCE_MOVEMENTS> pattern_jump_leftside = {KICK_LEFT_FORWARD, KICK_LEFT_FORWARD, KICK_RIGHT_FORWARD, KICK_RIGHT_BACKWARD, STAND_LEFT}; // On keyboard Q Q E C A
-vector<DANCE_MOVEMENTS> pattern_flip_leftside = {KICK_LEFT_FORWARD, KICK_LEFT_FORWARD, FLIP}; // On keyboard Q Q Space
+vector<DANCE_MOVEMENTS> PatternJumpLeftSide = {KICK_LEFT_FORWARD, KICK_LEFT_FORWARD, KICK_RIGHT_FORWARD, KICK_RIGHT_BACKWARD, STAND_LEFT}; // On keyboard Q Q E C A
+vector<DANCE_MOVEMENTS> PatternFlipLeftSide = {KICK_LEFT_FORWARD, KICK_LEFT_FORWARD, FLIP}; // On keyboard Q Q Space
 
 // Melodies (now only 1 for test)
 SoundSource Melody;
 
-dance_sequence game_core::generate_dance(DANCE_LEVELS level){
-    dance_sequence buffer;
-    buffer.level = level;
+// Generate dance
+DanceSequence GameCore::GenerateDance(DANCE_LEVELS level){
+    DanceSequence Buffer;
+    Buffer.Level = level;
 
     // For level patterns count cloning patterns
     for (int i = 0; i < level; i++){
-        DANCE_MOVEMENTS movement;
+        DANCE_MOVEMENTS Movement;
         // Selector
-        int d = randint(0,1);
+        int d = RandomInt(0,1);
         if (d == 0){
-            for (int x = 0; x<pattern_jump_leftside.size(); x++){
-                movement = pattern_jump_leftside[x];
-                buffer.movements.push_back(movement);
+            for (int x = 0; x<PatternJumpLeftSide.size(); x++){
+                Movement = PatternJumpLeftSide[x];
+                Buffer.Movements.push_back(Movement);
                 // Debug output
-                switch (movement){
+                switch (Movement){
                     case KICK_LEFT_FORWARD:
-                        write_dbg("GAME:generate_dance", "Added KICK_LEFT_FORWARD to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added KICK_LEFT_FORWARD to dance");
                         break;
                     case KICK_RIGHT_FORWARD:
-                        write_dbg("GAME:generate_dance", "Added KICK_RIGHT_FORWARD to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added KICK_RIGHT_FORWARD to dance");
                         break;
                     case KICK_LEFT_BACKWARD:
-                        write_dbg("GAME:generate_dance", "Added KICK_LEFT_BACKWARD to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added KICK_LEFT_BACKWARD to dance");
                         break;
                     case KICK_RIGHT_BACKWARD:
-                        write_dbg("GAME:generate_dance", "Added KICK_RIGHT_BACKWARD to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added KICK_RIGHT_BACKWARD to dance");
                         break;
                     case STAND_LEFT:
-                        write_dbg("GAME:generate_dance", "Added STAND_LEFT to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added STAND_LEFT to dance");
                         break;
                     case STAND_RIGHT:
-                        write_dbg("GAME:generate_dance", "Added STAND_RIGHT to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added STAND_RIGHT to dance");
                         break;
                     case FLIP:
-                        write_dbg("GAME:generate_dance", "Added FLIP to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added FLIP to dance");
                         break;
                 }
-                buffer.movements_count ++;
+                Buffer.MovementsCount ++;
             }
         }
         else{
-             for (int x = 0; x<pattern_flip_leftside.size(); x++){
-                movement = pattern_flip_leftside[x];
-                buffer.movements.push_back(movement);
+             for (int x = 0; x<PatternFlipLeftSide.size(); x++){
+                Movement = PatternFlipLeftSide[x];
+                Buffer.Movements.push_back(Movement);
                 // Debug output
-                switch (movement){
+                switch (Movement){
                     case KICK_LEFT_FORWARD:
-                        write_dbg("GAME:generate_dance", "Added KICK_LEFT_FORWARD to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added KICK_LEFT_FORWARD to dance");
                         break;
                     case KICK_RIGHT_FORWARD:
-                        write_dbg("GAME:generate_dance", "Added KICK_RIGHT_FORWARD to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added KICK_RIGHT_FORWARD to dance");
                         break;
                     case KICK_LEFT_BACKWARD:
-                        write_dbg("GAME:generate_dance", "Added KICK_LEFT_BACKWARD to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added KICK_LEFT_BACKWARD to dance");
                         break;
                     case KICK_RIGHT_BACKWARD:
-                        write_dbg("GAME:generate_dance", "Added KICK_RIGHT_BACKWARD to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added KICK_RIGHT_BACKWARD to dance");
                         break;
                     case STAND_LEFT:
-                        write_dbg("GAME:generate_dance", "Added STAND_LEFT to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added STAND_LEFT to dance");
                         break;
                     case STAND_RIGHT:
-                        write_dbg("GAME:generate_dance", "Added STAND_RIGHT to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added STAND_RIGHT to dance");
                         break;
                     case FLIP:
-                        write_dbg("GAME:generate_dance", "Added FLIP to dance");
+                        Console.WriteDebug("GAME:generate_dance", "Added FLIP to dance");
                         break;
                 }
-                buffer.movements_count ++;
+                Buffer.MovementsCount ++;
             }
         }
         
     }
 
-    return buffer;
+    return Buffer;
 }
 
-game_core::game_core(){
-    write_dbg("GAME", "game launched");
+GameCore::GameCore(){
+    Console.WriteDebug("GAME", "game launched");
 
     // Initialisating all components
-    warmup = new game_warmup();
-    controls = new game_controls();
-    message = new game_message();
-    hud = new game_hud();
+    Warmup = new GameWarmup();
+    Controls = new GameControls();
+    Message = new GameMessage();
+    Hud = new GameHud();
 }
 
 // Reseting all game stuff
-void game_core::reset(){
-    score = 0;
-    game_started = false;
-    now_dance = generate_dance(levels_list[randint(0,2)]);
-    warmup->reset();
-    controls->reset();
-    message->reset();
-    hud->reset();
+void GameCore::Reset(){
+    // Resetings game params
+    Score = 0;
+    GameStarted = false;
+    NowDance = GenerateDance(LevelsList[RandomInt(0,2)]);
+    // Reseting components
+    Warmup->Reset();
+    Controls->Reset();
+    Message->Reset();
+    Hud->Reset();
+    // Adding melody
     Melody.Data = Data->GetSoundByID(INGAME_MELODY1);
     Melody.PlayGlobal();
-    controls->speed = now_dance.beat_speed;
-    warmup->timer_time = WARMUP_TIME;
+    // Configuring components
+    Controls->Speed = NowDance.BeatSpeed;
+    Warmup->WarmupTime = WARMUP_TIME;
 }
 
-void game_core::update(double tick){
-    warmup->update(tick);
-    controls->update(tick);
-    message->update(tick);
-    hud->update(tick);
+void GameCore::Update(float Tick){
+    Warmup->Update(Tick);
+    Controls->Update(Tick);
+    Message->Update(Tick);
+    Hud->Update(Tick);
 }

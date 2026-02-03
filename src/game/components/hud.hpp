@@ -3,18 +3,18 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
+
 #include "component.hpp"
 
-class game_hud : public component{
+class GameHud : public Component{
 public:
-	game_hud();
-	virtual void reset(); // Lol, this just a render of score
-	virtual void update(double tick);
-	virtual void render();
+	GameHud();
+	virtual void Reset(); // Lol, this just a render of score
+	virtual void Update(float Tick);
+	virtual void Render();
 private:
-	int tile_width;
-	int tile_height;
-	int height;
+	int TileWidth;
+	int TileHeight;
+	int Height;
 };

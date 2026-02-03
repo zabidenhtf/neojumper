@@ -3,20 +3,20 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
+
 #include "component.hpp"
 
-class game_message : public component{
+class GameMessage : public Component{
 public:
-    game_message();
-    void spawn(int txture);
-    virtual void reset(){};
-    virtual void update(double tick);
-    virtual void render();
+    GameMessage();
+    void Add(int Texture); // Spawning message on screen
+    virtual void Reset(){};
+    virtual void Update(float Tick);
+    virtual void Render();
 private:
-    double time;
-    int txture;
-    bool active = false;
-    double active_time;
+    float Time;
+    int Texture;
+    bool Active = false;
+    float ActiveTime;
 };

@@ -1,8 +1,9 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#include "graphics.hpp"
-#include "data.hpp"
+#include "utils/graphics.hpp"
+#include "utils/data.hpp"
+#include "utils/config.hpp"
 
 #include <png.h>
 
@@ -11,10 +12,10 @@ GraphicsSystem *Graphics; // Global graphics object
 GraphicsSystem::GraphicsSystem(){
 	Root = nullptr;
 	// Setting params
-	Width = stoi(string(config::load_data("GFX", "screen_width", "800")));
-	Height = stoi(string(config::load_data("GFX", "screen_height", "800")));
-	Fov = stoi(string(config::load_data("GFX", "fov", "90")));
-	string FullscreenBuffer = string(config::load_data("GFX", "fullscreen", "False"));
+	Width = stoi(Config->LoadData("GFX", "screen_width", "800"));
+	Height = stoi(Config->LoadData("GFX", "screen_height", "800"));
+	Fov = stoi(Config->LoadData("GFX", "fov", "90"));
+	string FullscreenBuffer = Config->LoadData("GFX", "fullscreen", "False");
 	if (FullscreenBuffer == "True"){ // String -> Bool
    		Fullscreen = true;
     }
@@ -25,7 +26,7 @@ GraphicsSystem::GraphicsSystem(){
     CreateWindowAndContext();
 
     SetBlendNormal();
-
+    // Creating models
     QuadModel = LoadQuadModel();
 	PlaneModel = LoadPlaneModel();
 }
@@ -33,7 +34,7 @@ GraphicsSystem::GraphicsSystem(){
 void GraphicsSystem::CreateWindowAndContext(){
     // GLFW initialization
 	if (glfwInit()){
-        write_dbg("GFX", "GLFW initialisated");
+        Console.WriteDebug("GFX", "GLFW initialisated");
     }
 
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
@@ -47,15 +48,15 @@ void GraphicsSystem::CreateWindowAndContext(){
 			break;
 	}
 	if (!Root){
-		write_dbg("GFX", "Failed to create window");
+		Console.WriteDebug("GFX", "Failed to create window");
 	}
     glfwMakeContextCurrent(Root);
     // GLAD initialization
     if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        write_dbg("GFX", "GLAD initialisated");
+        Console.WriteDebug("GFX", "GLAD initialisated");
     } 
     else {
-        write_dbg("GFX", "Failed to initialize GLAD");
+        Console.WriteDebug("GFX", "Failed to initialize GLAD");
         return;
     }
 
@@ -63,10 +64,10 @@ void GraphicsSystem::CreateWindowAndContext(){
 
     // Freetype initialization
     if (!error){
-        write_dbg("GFX", "Freetype intialisated");
+        Console.WriteDebug("GFX", "Freetype intialisated");
     }
     else{
-        write_dbg("GFX", "Failed to initialisate Freetype");
+        Console.WriteDebug("GFX", "Failed to initialisate Freetype");
     }
 
     // Creating shaders
@@ -78,8 +79,8 @@ void GraphicsSystem::CreateWindowAndContext(){
     glDepthFunc(GL_LESS);
    	// 2D stuff
     // Reading raw shaders
-    string Vertex2DShaderSource = read_file("shaders/shader2D.vert");
-    string Fragment2DShaderSource = read_file("shaders/shader2D.frag");
+    string Vertex2DShaderSource = ReadFile("shaders/shader2D.vert");
+    string Fragment2DShaderSource = ReadFile("shaders/shader2D.frag");
 
     GLuint Vertex2DShader = glCreateShader(GL_VERTEX_SHADER);
     const char* Vertex2DShaderSource_cstring = Vertex2DShaderSource.c_str();
@@ -98,8 +99,8 @@ void GraphicsSystem::CreateWindowAndContext(){
 
     // 3D stuff
     // Reading raw shaders
-    string Vertex3DShaderSource = read_file("shaders/shader3D.vert");
-    string Fragment3DShaderSource = read_file("shaders/shader3D.frag");
+    string Vertex3DShaderSource = ReadFile("shaders/shader3D.vert");
+    string Fragment3DShaderSource = ReadFile("shaders/shader3D.frag");
 
     GLuint Vertex3DShader = glCreateShader(GL_VERTEX_SHADER);
     const char* Vertex3DShaderSource_cstring = Vertex3DShaderSource.c_str();
@@ -143,10 +144,10 @@ void GraphicsSystem::LoadFont(string path, int id){
     
     // If error returning
     if (!error){
-        write_dbg("GFX", "Loaded "+path+" font");
+        Console.WriteDebug("GFX", "Loaded "+path+" font");
     }
     else{
-        write_dbg("GFX", "Failed to load font");
+        Console.WriteDebug("GFX", "Failed to load font");
         return;
     }
 }
@@ -159,7 +160,7 @@ GraphicsTexture GraphicsSystem::LoadTexture(const string &path)
     // Reading PNG
     ifstream file(path, ios::binary);
     if (!file) {
-        write_dbg("GFX", "Failed to open " + path + " image");
+        Console.WriteDebug("GFX", "Failed to open " + path + " image");
         return Texture;
     }
     vector<unsigned char> file_data((istreambuf_iterator<char>(file)),
@@ -168,7 +169,7 @@ GraphicsTexture GraphicsSystem::LoadTexture(const string &path)
 
     // Check PNG
     if (file_data.size() < 8 || png_sig_cmp(file_data.data(), 0, 8)) {
-        write_dbg("GFX", "File " + path + " is not a PNG");
+        Console.WriteDebug("GFX", "File " + path + " is not a PNG");
         return Texture;
     }
 
@@ -180,7 +181,7 @@ GraphicsTexture GraphicsSystem::LoadTexture(const string &path)
 
     if (setjmp(png_jmpbuf(png_ptr))) {
         png_destroy_read_struct(&png_ptr, &info_ptr, nullptr);
-        write_dbg("GFX", "Error reading PNG " + path);
+        Console.WriteDebug("GFX", "Error reading PNG " + path);
         return Texture;
     }
 
@@ -231,7 +232,7 @@ GraphicsTexture GraphicsSystem::LoadTexture(const string &path)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Texture.Width, Texture.Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data.data());
 
-    write_dbg("GFX", "Loaded " + path + " image");
+    Console.WriteDebug("GFX", "Loaded " + path + " image");
     return Texture;
 }
 
@@ -374,7 +375,7 @@ GraphicsModel GraphicsSystem::LoadModel(const string path){
         mesh = scene->mMeshes[0];
     }
     else{
-        write_dbg("GFX", "Failed to parsing model");
+        Console.WriteDebug("GFX", "Failed to parsing model");
         return Buffer;
     }
     // Put mesh's vertices into vertices vector

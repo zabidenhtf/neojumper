@@ -3,18 +3,18 @@
 /* See the LICENSE file for details. */
 #include "logo_renderer.hpp"
 
-#include "data.hpp"
-#include "graphics.hpp"
+#include "utils/data.hpp"
+#include "utils/graphics.hpp"
 
-menu_logo::menu_logo(){
-    write_dbg("MENU LOGO", "Menu logo initialisated");
+MenuLogo::MenuLogo(){
+    Console.WriteDebug("MENU LOGO", "Menu logo initialisated");
 }
 
-void menu_logo::update(double tick){
-    render();
+void MenuLogo::Update(float Tick){
+    Render();
 }
 
-void menu_logo::render(){
+void MenuLogo::Render(){
     int width = 300*Graphics->GetScreenAspect();
     Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
     Graphics->SetOrtho(width, 300);

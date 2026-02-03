@@ -3,68 +3,70 @@
 /* See the LICENSE file for details. */
 #include "warmup.hpp"
 //#include <iostream>
-#include "data.hpp"
-#include "graphics.hpp"
+
+#include "utils/data.hpp"
+#include "utils/graphics.hpp"
 
 #include "../game.hpp"
 
-game_warmup::game_warmup(){
-    write_dbg("WARMUP","Timer initialisated");
+GameWarmup::GameWarmup(){
+    Console.WriteDebug("WARMUP","Timer initialisated");
 }
 
-void game_warmup::reset(){
-    state = 4;
-    time = 0;
-    state_time = 0;
-    active = true;
+void GameWarmup::Reset(){
+    State = 4;
+    Time = 0;
+    StateTime = 0;
+    Active = true;
 }
 
-void game_warmup::update(double tick){
-    if (active == true){
-        time += tick;
-        state_time += tick;
+void GameWarmup::Update(float Tick){
+    if (Active == true){
+        Time += Tick;
+        StateTime += Tick;
         //write_dbg("WARMUP","updating\n"); // Some debug stuff
         //std::cout << state_time;
-        if (time > timer_time){
-            active = false;
-            write("Game started\n");
-            game->game_started = true;
+        // If global time bigger than warmup time starting game
+        if (Time > WarmupTime){
+            Active = false;
+            Console.Write("Game started\n");
+            Game->GameStarted = true;
         }
-        else if (state_time > timer_time/4){
-            state-=1;
-            state_time = 0;
+        else if (StateTime > WarmupTime/4){
+            State-=1;
+            StateTime = 0;
         }
-        render();
+        Render();
     }
 }
 
-void game_warmup::render(){
+void GameWarmup::Render(){
     int width = 300*Graphics->GetScreenAspect();
     Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
     Graphics->SetOrtho(width, 300);
 
-    double digit_size = 150*state_time;
+    float DigitSize = 150*StateTime;
 
-    switch (state){
+    switch (State){
     case 4:
         Graphics->EnableTexture(Data->GetTextureByID(DIGIT3));
-        Graphics->DrawQuad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
+        Graphics->DrawQuad(vec2(width/2-DigitSize/2,150-DigitSize/2),vec2(DigitSize,DigitSize), vec4(1,1,1,1));
         Graphics->DisableTexture();
         break;
     case 3:
         Graphics->EnableTexture(Data->GetTextureByID(DIGIT2));
-        Graphics->DrawQuad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
+        Graphics->DrawQuad(vec2(width/2-DigitSize/2,150-DigitSize/2),vec2(DigitSize,DigitSize), vec4(1,1,1,1));
         Graphics->DisableTexture();
         break;
     case 2:
         Graphics->EnableTexture(Data->GetTextureByID(DIGIT1));
-        Graphics->DrawQuad(vec2(width/2-digit_size/2,150-digit_size/2),vec2(digit_size,digit_size), vec4(1,1,1,1));
+        Graphics->DrawQuad(vec2(width/2-DigitSize/2,150-DigitSize/2),vec2(DigitSize,DigitSize), vec4(1,1,1,1));
         Graphics->DisableTexture();
         break;
     case 1:
         // Drawing more long quad than digit quad
         Graphics->EnableTexture(Data->GetTextureByID(MESSAGE_GO));
-        Graphics->DrawQuad(vec2(width/2-digit_size,150-digit_size/2),vec2(digit_size*2,digit_size), vec4(1,1,1,1)); // fixed size
+        Graphics->DrawQuad(vec2(width/2-DigitSize,150-DigitSize/2),vec2(DigitSize*2,DigitSize), vec4(1,1,1,1)); // fixed size
         Graphics->DisableTexture();
         break;
     }

@@ -3,29 +3,27 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
+
 #include "component.hpp"
 
-class game_controls : public component
+class GameControls : public Component
 {
 public:
-    game_controls();
-    virtual void reset();
-    virtual void update(double tick);
-    virtual void render();
+    GameControls();
+    virtual void Reset();
+    virtual void Update(float Tick);
+    virtual void Render();
 
-    void draw_action_button(vec2 pos);
-
-    double time;
-    double step_time;
-    double speed;
-    int step;
+    float Time; // Global time after warmup
+    float StepTime; // Step time
+    float Speed; // Speed of buttons
+    int Step; // Step now
 private:
-    int size;
-    int distance = 35;
-    bool press_time;
-    bool can_press = true;
-    bool combo;
-    int combo_step;
+    int Size; // Size of action buttons
+    int Distance = 35; // Gap between buttons
+    bool PressTime;
+    bool CanPress = true;
+    bool Combo;
+    int ComboStep;
 };

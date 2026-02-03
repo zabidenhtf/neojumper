@@ -1,14 +1,14 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
-#include "audio.hpp"
+#include "utils/audio.hpp"
 #include <climits>
 
 AudioSystem *Audio;
 
 /* SOUND SOURCE */
 SoundSource::SoundSource(){
-    write_dbg("AUDIO", "Created sound source");
+    Console.WriteDebug("AUDIO", "Created sound source");
 }
 
 void SoundSource::PlayGlobal(){
@@ -25,7 +25,7 @@ void SoundSource::PlayGlobal(){
 	alGetSourcei(Source, AL_SOURCE_STATE, &state);
 
 	if (state == AL_PLAYING) {
-	    write_dbg("AUDIO", "Playing " + Data.Path);
+	    Console.WriteDebug("AUDIO", "Playing " + Data.Path);
 	}
 }
 
@@ -42,7 +42,7 @@ void SoundSource::Play(vec3 Position){
 	alGetSourcei(Source, AL_SOURCE_STATE, &state);
 
 	if (state == AL_PLAYING) {
-	    write_dbg("AUDIO", "Playing " + Data.Path);
+	    Console.WriteDebug("AUDIO", "Playing " + Data.Path);
 	}
 }
 
@@ -50,12 +50,12 @@ void SoundSource::Play(vec3 Position){
 AudioSystem::AudioSystem(){
 	SoundDevice = alcOpenDevice(nullptr); // Get sound device
 	if (!SoundDevice){
-		write_dbg("AUDIO", "Failed to find sound device");
+		Console.WriteDebug("AUDIO", "Failed to find sound device");
 	}
 
 	SoundContext = alcCreateContext(SoundDevice, nullptr); // Creating context
 	if (!SoundContext){
-		write_dbg("AUDIO", "Failed to create sound context");
+		Console.WriteDebug("AUDIO", "Failed to create sound context");
 	}
 	alcMakeContextCurrent(SoundContext);
 	// Finding device
@@ -68,7 +68,7 @@ AudioSystem::AudioSystem(){
 	}
 
 	string TextBuffer = "Opened " + string(Name) + " device";
-	write_dbg("AUDIO", TextBuffer);
+	Console.WriteDebug("AUDIO", TextBuffer);
 }
 
 SoundData AudioSystem::LoadSound(string Path){
@@ -86,11 +86,11 @@ SoundData AudioSystem::LoadSound(string Path){
 	sndfile = sf_open(Path.c_str(), SFM_READ, &sfinfo);
 	if (!sndfile)
 	{
-		write_dbg("AUDIO", "Could not open audio in " + Path);
+		Console.WriteDebug("AUDIO", "Could not open audio in " + Path);
 	}
 	if (sfinfo.frames < 1 || sfinfo.frames >(sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels)
 	{
-		write_dbg("AUDIO", "Bad sample count");
+		Console.WriteDebug("AUDIO", "Bad sample count");
 		sf_close(sndfile);
 	}
 
@@ -112,7 +112,7 @@ SoundData AudioSystem::LoadSound(string Path){
 	}
 	if (!format)
 	{
-		write_dbg("AUDIO", "Unsupported channel count");
+		Console.WriteDebug("AUDIO", "Unsupported channel count");
 		sf_close(sndfile);
 	}
 
@@ -124,7 +124,7 @@ SoundData AudioSystem::LoadSound(string Path){
 	{
 		free(membuf);
 		sf_close(sndfile);
-		write_dbg("AUDIO", "Failed to read samples");
+		Console.WriteDebug("AUDIO", "Failed to read samples");
 	}
 	num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
 
@@ -142,7 +142,7 @@ SoundData AudioSystem::LoadSound(string Path){
 	err = alGetError();
 	if (err != AL_NO_ERROR)
 	{
-		write_dbg("AUDIO", "OpenAL Error: " + string(alGetString(err)));
+		Console.WriteDebug("AUDIO", "OpenAL Error: " + string(alGetString(err)));
 		if (buffer && alIsBuffer(buffer))
 			alDeleteBuffers(1, &buffer);
 	}

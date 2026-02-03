@@ -3,18 +3,17 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
 #include "includes.hpp"
 #include "component.hpp"
 #include "version.hpp"
 
-class menu_copyright : public component{
+class MenuCopyright : public Component{
 public:
-	menu_copyright();
-	virtual void reset();
-	virtual void update(double tick);
-	virtual void render();
+	MenuCopyright();
+	virtual void Reset();
+	virtual void Update(float Tick);
+	virtual void Render();
 private:
 	string copyright_text;
 	string version_text;

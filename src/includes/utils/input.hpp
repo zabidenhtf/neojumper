@@ -12,20 +12,19 @@
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-
-#include "system.hpp"
+#include "utils/system.hpp"
 #include "includes.hpp"
 
 using namespace glm;
 
-extern vector<int> key_buffer; // keys buffer, it need to save keys
+extern vector<int> KeyBuffer; // keys buffer, it need to save keys
 
 // Interface INPUT
-namespace input
+namespace Input
 {
-    void callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-    void init(GLFWwindow* window);
-    bool button_pressed(int key);
-    int last_button_pressed();
-    void clear();
+    void Callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    void Init();
+    bool ButtonPressed(int key);
+    int LastButtonPressed();
+    void Clear();
 }

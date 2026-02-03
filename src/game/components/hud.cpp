@@ -3,37 +3,37 @@
 /* See the LICENSE file for details. */
 #include "hud.hpp"
 
-#include "data.hpp"
-#include "graphics.hpp"
+#include "utils/data.hpp"
+#include "utils/graphics.hpp"
 
 #include "../game.hpp"
 
-game_hud::game_hud(){
-	write_dbg("GAME HUD", "Hud initialisated");
+GameHud::GameHud(){
+	Console.WriteDebug("GAME HUD", "Hud initialisated");
 }
 
-void game_hud::reset(){
-	tile_width = Data->GetTextureByID(HUD_BAR_TILE).Width;
-	tile_height = Data->GetTextureByID(HUD_BAR_TILE).Height;
-	height = 2;
+void GameHud::Reset(){
+	TileWidth = Data->GetTextureByID(HUD_BAR_TILE).Width;
+	TileHeight = Data->GetTextureByID(HUD_BAR_TILE).Height;
+	Height = 2;
 }
 
-void game_hud::update(double tick){
-	render();
+void GameHud::Update(float Tick){
+	Render();
 }
 
-void game_hud::render(){
+void GameHud::Render(){
     Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
     Graphics->SetOrtho(Graphics->GetWidth(), Graphics->GetHeight());
 
     // Drawing tiled bar at top
 	Graphics->EnableTexture(Data->GetTextureByID(HUD_BAR_TILE));
-	for (int y = 0; y<height; y++){
-		for (int x = 0; x<Graphics->GetWidth()/tile_width; x++){
-			Graphics->DrawQuad(vec2(x*tile_width,y*tile_height), vec2(tile_width, tile_height), vec4(1,1,1,1));
+	for (int y = 0; y<Height; y++){
+		for (int x = 0; x<Graphics->GetWidth()/TileWidth; x++){
+			Graphics->DrawQuad(vec2(x*TileWidth,y*TileHeight), vec2(TileWidth, TileHeight), vec4(1,1,1,1));
 		}
 	}	
 	// Drawing score text
-	string ScoreString = "Score:" + to_string(game->score);
-	Graphics->DrawText(vec2(height/2,height/2), tile_height*height-(height*2), tile_height*height-(height*2), ScoreString, vec4(1,1,1,1));
+	string ScoreString = "Score:" + to_string(Game->GetScore());
+	Graphics->DrawText(vec2(Height/2,Height/2), TileHeight*Height-(Height*2), TileHeight*Height-(Height*2), ScoreString, vec4(1,1,1,1));
 }

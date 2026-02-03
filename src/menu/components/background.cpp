@@ -3,22 +3,22 @@
 /* See the LICENSE file for details. */
 #include "background.hpp"
 
-#include "data.hpp"
-#include "graphics.hpp"
+#include "utils/data.hpp"
+#include "utils/graphics.hpp"
 
 #include <cmath>
 
-menu_background::menu_background(){
-    write_dbg("MENU BACKGROUND", "Menu background initialisated");
-    tile_width = Data->GetTextureByID(BACKGROUND_TILE).Width;
-    tile_height = Data->GetTextureByID(BACKGROUND_TILE).Height;
+MenuBackground::MenuBackground(){
+    Console.WriteDebug("MENU BACKGROUND", "Menu background initialisated");
+    TileWidth = Data->GetTextureByID(BACKGROUND_TILE).Width;
+    TileHeight = Data->GetTextureByID(BACKGROUND_TILE).Height;
 }
 
-void menu_background::update(double tick){
-    render();
+void MenuBackground::Update(float Tick){
+    Render();
 }
 
-void menu_background::render(){
+void MenuBackground::Render(){
     Graphics->SetViewport(ceil(Graphics->GetWidth()/2.5), Graphics->GetHeight());
     Graphics->SetOrtho(ceil(Graphics->GetWidth()/2.5),Graphics->GetHeight());
     // Border near the background (but it dont work and im dont understand why)
@@ -26,10 +26,10 @@ void menu_background::render(){
     Graphics->DrawQuad(vec2(8,0), vec2(Graphics->GetWidth()/2.5, Graphics->GetHeight()), vec4(0,0,0,1));
     Graphics->DisableTexture();
     // Background
-    for (int y = 0; y < ceil(Graphics->GetHeight()/tile_height) + 1; y++){
-        for (int x = 0; x < ceil(Graphics->GetWidth()/2.5/tile_width); x++){
+    for (int y = 0; y < ceil(Graphics->GetHeight()/TileHeight) + 1; y++){
+        for (int x = 0; x < ceil(Graphics->GetWidth()/2.5/TileWidth); x++){
             Graphics->EnableTexture(Data->GetTextureByID(BACKGROUND_TILE));
-            Graphics->DrawQuad(vec2(x*tile_width,y*tile_height), vec2(tile_width,tile_height), vec4(1,1,1,1));
+            Graphics->DrawQuad(vec2(x*TileWidth,y*TileHeight), vec2(TileWidth,TileHeight), vec4(1,1,1,1));
             Graphics->DisableTexture();
         }
     }

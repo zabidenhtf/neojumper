@@ -3,18 +3,18 @@
 /* See the LICENSE file for details. */
 #include "selector.hpp"
 
-#include "data.hpp"
-#include "graphics.hpp"
+#include "utils/data.hpp"
+#include "utils/input.hpp"
 
 #include "../../game/game.hpp"
 #include "../../scene/scene.hpp"
 
-menu_selector::menu_selector(){
-    write_dbg("SELECTOR", "Selector initialisated");
-    reset();
+MenuSelector::MenuSelector(){
+    Console.WriteDebug("SELECTOR", "Selector initialisated");
+    Reset();
 }
 
-void menu_selector::reset(){
+void MenuSelector::Reset(){
     button_selector_max = 3;
     button_selector_min = 0;
     button_selected_now = button_selector_min;
@@ -25,54 +25,52 @@ void menu_selector::reset(){
     frame_pos = vec2(16,128);
 }
 
-void menu_selector::update(double tick){
+void MenuSelector::Update(float Tick){
     // Selector update
-    if (!key_buffer.empty()){
-            switch(key_buffer.back()){
+        switch(Input::LastButtonPressed()){
             case GLFW_KEY_DOWN:
                 if (button_selected_now != button_selector_max){
                     button_selected_now += 1;
-                    write_dbg("SELECTOR", "Selector down");
+                    Console.WriteDebug("SELECTOR", "Selector down");
                 }
                 break;
             case GLFW_KEY_UP:
                 if (button_selected_now != button_selector_min){
                     button_selected_now -= 1;
-                    write_dbg("SELECTOR", "Selector up");
+                    Console.WriteDebug("SELECTOR", "Selector up");
 
                 }
                 break;
             case GLFW_KEY_ENTER:
                 switch (button_selected_now){
                 case PLAY:
-                    write_dbg("SELECTOR", "Selected play");
-                    game->reset();
-                    scene->reset();
-                    game_enabled = true;
+                    Console.WriteDebug("SELECTOR", "Selected play");
+                    Game->Reset();
+                    Scene->Reset();
+                    GameEnabled = true;
                     break;
                 case EXIT:
-                    write_dbg("SELECTOR", "Selected exit");
+                    Console.WriteDebug("SELECTOR", "Selected exit");
                     Graphics->Kill();
                     break;
                 default:
-                    write_dbg("SELECTOR", "INDEV");
+                    Console.WriteDebug("SELECTOR", "INDEV");
                     break;
 
-                }
-                break;
             }
+            break;
     }
-    render();
-    render_selections(tick);
+    Render();
+    RenderSelection(Tick);
 }
 
-vector<int> indecator_textures= {
+vector<int> IndecatorTextures= {
     SELECTION_STATE1,
     SELECTION_STATE2,
     SELECTION_STATE3
 };
 
-void menu_selector::draw_selection(vec2 pos, vec2 size, string text, vec4 color, bool selected, double tick){
+void MenuSelector::DrawSelection(vec2 pos, vec2 size, string text, vec4 color, bool selected, float Tick){
     static float timer;
     static int selection_indecator_id = 3;
     static bool direction = false;
@@ -81,12 +79,12 @@ void menu_selector::draw_selection(vec2 pos, vec2 size, string text, vec4 color,
     Graphics->DrawText(pos + vec2(text_x_pos,0), size.y, (Graphics->GetHeight()/300)*size.y, text, color);  
     if (selected == true){
         // Updating texture
-        timer+=tick;
+        timer+=Tick;
         if (timer >= 0.1) {
             if (direction) {
                 selection_indecator_id++;
-                if (selection_indecator_id >= indecator_textures.size()) {
-                    selection_indecator_id = indecator_textures.size() - 1;
+                if (selection_indecator_id >= IndecatorTextures.size()) {
+                    selection_indecator_id = IndecatorTextures.size() - 1;
                     direction = false; // changing direction
                 }
             } else {
@@ -100,7 +98,7 @@ void menu_selector::draw_selection(vec2 pos, vec2 size, string text, vec4 color,
         }
         // Draw arrows
         // Left
-        Graphics->EnableTexture(Data->GetTextureByID(indecator_textures[selection_indecator_id]));
+        Graphics->EnableTexture(Data->GetTextureByID(IndecatorTextures[selection_indecator_id]));
         Graphics->DrawQuad(pos + vec2(text_x_pos-size.y*2, 0), vec2(size.y*2,size.y), vec4(1,1,1,1));
         // Right
         Graphics->DrawQuad(pos + vec2(text_x_pos+Graphics->GetTextWidth(size.y, text) + size.y*2, 0), vec2(-size.y*2,size.y), vec4(1,1,1,1));
@@ -108,7 +106,7 @@ void menu_selector::draw_selection(vec2 pos, vec2 size, string text, vec4 color,
     }
 }
 
-void menu_selector::render(){
+void MenuSelector::Render(){
     Graphics->SetViewport(Graphics->GetWidth(), Graphics->GetHeight());
     Graphics->SetOrtho(width, 300);
 
@@ -119,7 +117,7 @@ void menu_selector::render(){
     Graphics->DisableTexture();
 }
 
-void menu_selector::render_selections(double tick){
+void MenuSelector::RenderSelection(float Tick){
     for (int i = 0; i < button_selector_max + 1; i++){
         // buttons
         vec4 color;
@@ -141,6 +139,6 @@ void menu_selector::render_selections(double tick){
             color = vec4(0,0,0,1);
             selected = false;
         } 
-        draw_selection(frame_pos + vec2(0, 4+i*(selection_height+8)), vec2(frame_width, selection_height), button_labels[i], color, selected, tick);
+        DrawSelection(frame_pos + vec2(0, 4+i*(selection_height+8)), vec2(frame_width, selection_height), button_labels[i], color, selected, Tick);
     }
 }

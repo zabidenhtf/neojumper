@@ -3,9 +3,9 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-class component{
+class Component{
 public:
-    virtual void reset() = 0;
-    virtual void update(double tick) = 0;
-    virtual void render() = 0;
+    virtual void Reset() = 0;
+    virtual void Update(float Tick) = 0;
+    virtual void Render() = 0;
 };

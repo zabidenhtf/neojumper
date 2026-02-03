@@ -3,18 +3,18 @@
 /* See the LICENSE file for details. */
 #pragma once
 
-#include "interface.hpp"
-#include "system.hpp"
+#include "utils/system.hpp"
+
 #include "includes.hpp"
 #include "component.hpp"
 
-class menu_background : public component{
+class MenuBackground : public Component{
 public:
-    menu_background();
-    virtual void reset(){return;};
-    virtual void update(double tick);
-    virtual void render();
+    MenuBackground();
+    virtual void Reset(){return;};
+    virtual void Update(float Tick);
+    virtual void Render();
 private:
-    int tile_width;
-    int tile_height;
+    int TileWidth;
+    int TileHeight;
 };
