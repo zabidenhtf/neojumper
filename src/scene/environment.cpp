@@ -45,6 +45,6 @@ void SceneEnvironment::Render(){
     Graphics->DrawPlane(vec3(Scene->ScenePosition.x,0,Scene->ScenePosition.y), Scene->SceneSize,vec4(1,0,0,1), 0,90,0);
 
     // Debug model render
-    GraphicsModel teapot = Graphics->LoadModel("assets/models/teapot/teapot.obj");
+    GraphicsModel teapot = Data->LoadModel("assets/models/teapot/teapot.obj");
     Graphics->DrawModel(teapot ,vec3(2,1.3,2),vec3(1,1,1), vec4(0,1,0,1), 0,0,0);
 }

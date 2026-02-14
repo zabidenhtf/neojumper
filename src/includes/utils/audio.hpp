@@ -1,6 +1,10 @@
 /* Copyright (C) 2025-2026 Mykyta Polishyk */
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
+#include "utils/system.hpp"
+#include "utils/data.hpp"
+#include "includes.hpp"
+
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <sndfile.h>
@@ -11,18 +15,9 @@
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-#include "includes.hpp"
-#include "utils/system.hpp"
-
 #pragma once
 
 using namespace glm;
-
-struct SoundData{ // Sound data with raw audio data and path
-    string Path;
-    ALuint Raw;
-    int BPM; // Beats per min
-};
 
 class SoundSource{ // Source of sound
 public:
@@ -38,7 +33,6 @@ private:
 class AudioSystem{
 public:
 	AudioSystem(); // Constructor
-	SoundData LoadSound(string Path);
 	int GetVolume(){return SoundVolume;};
 private:
 	int SoundVolume; // Global sound volume

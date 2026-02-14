@@ -2,6 +2,7 @@
 /* This project is licensed under the GNU General Public License v3.0 or later. */
 /* See the LICENSE file for details. */
 #include "utils/system.hpp"
+#include "utils/data.hpp"
 
 #include "includes.hpp"
 
@@ -25,29 +26,6 @@
 
 using namespace glm;
 
-struct vertex2D
-{
-    vec2 Position;
-    vec2 TexturePos;
-};
-
-struct vertex3D
-{
-    vec3 Position;
-    vec2 TexturePos;
-    vec3 Normal;
-};
-
-struct GraphicsTexture{ // 2D texture structure
-	GLuint Raw;
-	int Width;
-	int Height;
-};
-
-struct GraphicsModel{ // model structure with draw stuff
-	GLuint VAO, VBO, EBO;
-};
-
 class GraphicsSystem{
 public:
 	GLFWwindow *GetWindow(){return Root;};
@@ -58,7 +36,6 @@ public:
 	void SetOrtho(int w, int h); // Set Ortho
 	void SetViewport(int w, int h); // Set Viewport
 	void LoadFont(string path, int id); // Loading freetype font
-	GraphicsTexture LoadTexture(const string &path); // Loading PNG image using libpng
 	void PollEvents(); // Updating window and polling events
 	void ClearScreen(vec3 Color); // Clear screen with Color
 	void EnableTexture(GraphicsTexture texture); // Enable texture
@@ -66,9 +43,9 @@ public:
 	float GetScreenAspect(); // Get Screen aspect in float
 	void SetBlendNormal(); // Set blending type on normal
 	void SetBlendAdditive(); // Set blending type on additive
+	// It not in data.cpp because this is basic premitives
 	GraphicsModel LoadPlaneModel(); // Loading simple 3D plane model
 	GraphicsModel LoadQuadModel(); // Loading simple 2D quad model
-	GraphicsModel LoadModel(const string path);
 	void DrawModel(GraphicsModel Model, vec3 Position, vec3 Size, vec4 Color, float Pitch, float Yaw, float Roll, bool HaveLighting=true); // Draw 3D model
 	void DrawPlane(vec3 Position, vec2 Size, vec4 Color, float Pitch, float Yaw, float Roll, bool HaveLighting=true); // Draw 3D plane (aka 3D quad)
 	void DrawBox(vec3 Position, vec3 Size, vec4 Color, bool HaveLighting=true); // Draw 3D box
@@ -101,8 +78,6 @@ private:
 	// Lighting
 	vec3 LightPos = vec3(16,16,16);
 	vec3 LightLookAt = vec3(0,0,0);
-
-	Assimp::Importer importer;
 
 	// FT stuff
 	FT_Library    library;
